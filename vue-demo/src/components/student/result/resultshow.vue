@@ -1,8 +1,8 @@
 <template>
   <div>
     <div id="head">学科成绩
-      <p class="english">Result</p>   
-    </div>   
+      <p class="english">Result</p>
+    </div>
     <div class="part">
     <p>我是成绩内容，55555555555555</p>
     <p>我是成绩内容，55555555555555</p>
@@ -25,10 +25,8 @@ export default {
 
 <style scoped>
 #head{
-  background-color: white;
   font-size: 20px;
   height: 100px;
-  margin-top: 8%;
 }
 
 .english{
@@ -38,7 +36,7 @@ export default {
 }
 
 .part{
-  margin-top: -4%;
+  margin-top: -15px;
   background-color: rgb(228, 228, 228);
 }
 </style>

@@ -1,6 +1,9 @@
 <template>
 
   <div id="app">
+    <div id="nav_box">
+      <img src="../../assets/soft.png" id="logo">
+    </div>
     <div id="content">
       <div id="loginbox">
         <router-link to="/login/login">登录</router-link>
@@ -37,10 +40,11 @@ export default {
   height: 100%;
 }
 #content{
-  width: 102%;
-  height: 800px;
+  width: 100%;
+  top: 60px;
+  bottom: 0;
+  position: absolute;
   background-color: #27217c;
-  margin:-1%;
 }
 #loginbox{
   width: 30%;

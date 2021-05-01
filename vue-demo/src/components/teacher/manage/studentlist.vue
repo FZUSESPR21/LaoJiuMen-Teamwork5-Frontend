@@ -17,10 +17,8 @@ export default {
 
 <style scoped>
 #head{
-  background-color: white;
   font-size: 20px;
   height: 100px;
-  margin-top: 8%;
 }
 
 .english{
@@ -30,7 +28,7 @@ export default {
 }
 
 .part{
-  margin-top: -4%;
+  margin-top: -15px;
   background-color: rgb(228, 228, 228);
 }
 </style>

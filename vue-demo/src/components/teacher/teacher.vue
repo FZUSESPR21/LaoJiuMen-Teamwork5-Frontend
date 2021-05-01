@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header></Header>
+    <Teacherheader></Teacherheader>
     <cloudimg></cloudimg>
     <div id="content">
       <router-view></router-view>
@@ -11,13 +11,13 @@
 <script>
 import Cloudimg from '../Layout/cloudimg.vue';
 import Header from "../Layout/TeacherHeader";
-import photo from "../Layout/photo";
+import Teacherheader from "../Layout/TeacherHeader";
 
 export default {
   name: "teacher",
   components: {
+    Teacherheader,
     Header,
-    photo,
     Cloudimg
   }
 }
@@ -25,8 +25,9 @@ export default {
 
 <style scoped>
 #content{
-  
-  margin-top: -10%;
+  width: 70%;
+  position: relative;
+  margin-top: -100px;
   margin-left: 15%;
   margin-right: 15%;
 }
