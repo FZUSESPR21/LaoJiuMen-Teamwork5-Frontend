@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div id="head">首页</div>
+    <div id="head">首页</div>
     <h3>我是首页</h3>
     <p>我是首页内容，1111111111111</p>
     <el-button type="warning" >警告按钮</el-button>

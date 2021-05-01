@@ -5,23 +5,16 @@
       <p class="english">Source</p>
     </div>
     <div class="part">
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
+
     </div>
   </div>
 </template>
 
 <script>
+import Sourcebar from "./sourcebar";
 export default {
-  name: "sourcelist"
+  name: "sourcelist",
+  components: {Sourcebar}
 }
 </script>
 
