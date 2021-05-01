@@ -1,10 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import commentlist from "../components/teacher/comment/commentlist";
-import commentdetail from "../components/student/comment/commentdetail";
-import owncommentlist from "../components/student/comment/owncommentlist";
-import owncommentdetail from "../components/student/comment/owncommentdetail";
-
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -72,6 +67,16 @@ const SubmittedHomeworkDetail = () =>
   import('../components/student/activity/submittedhomeworkdetail')
 const Quiz = () =>
   import('../components/student/activity/quiz')
+const commentlist = () =>
+  import('../components/student/comment/commentlist')
+const commentdetail = () =>
+  import('../components/student/comment/commentdetail')
+const owncommentlist = () =>
+  import('../components/student/comment/owncommentlist')
+const owncommentdetail = () =>
+  import('../components/student/comment/owncommentdetail')
+
+
 //1.安装插件
 Vue.use(Router)
 
