@@ -158,4 +158,5 @@ export default new Router({
 })
 
 
+
 //3.在vue里挂载
