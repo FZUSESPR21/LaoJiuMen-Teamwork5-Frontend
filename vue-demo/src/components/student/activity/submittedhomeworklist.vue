@@ -10,9 +10,7 @@
       ></el-table-column>
       <el-table-column label="操作" v-if="showOper">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+          <router-link to="/student/activity/submittedhomeworkdetail" tag="button" >查看</router-link>
         </template>
       </el-table-column>
     </el-table>

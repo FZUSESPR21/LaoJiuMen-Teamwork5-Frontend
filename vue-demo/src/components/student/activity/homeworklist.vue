@@ -7,15 +7,18 @@
         :prop="item.prop"
         :label="item.label"
         :width="item.width"
+        align="center"
       ></el-table-column>
-      <el-table-column label="操作" v-if="showOper">
+      <el-table-column label="操作" v-if="showOper" align="center">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)">查看</el-button>
+          <router-link to="/student/activity/homeworkdetail" tag="button" >查看</router-link>
+
         </template>
+
       </el-table-column>
+
     </el-table>
+
   </div>
 </template>
 
@@ -50,9 +53,9 @@
       };
     },
     methods: {
-      handleEdit(index, row) {
-        console.log(index, row);
-      },
+      lookClick() {
+        this.$router.push('/student/activity/homeworkdetail')
+      }
     },
   };
 </script>
