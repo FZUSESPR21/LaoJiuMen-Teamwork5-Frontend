@@ -79,7 +79,7 @@ export default {
 }
 #forgetbox{
   margin-top: 40px;
-  margin-right: 40px;
+  margin-right: 45px;
   text-align: right;
 }
 #forget{
