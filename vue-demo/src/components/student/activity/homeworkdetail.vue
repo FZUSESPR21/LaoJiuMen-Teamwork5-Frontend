@@ -25,7 +25,7 @@
 
 <script>
 
-import editor from "../source/editor";
+import editor from "./editor";
 export default {
   name: "homeworkdetail",
   data() {
@@ -55,12 +55,7 @@ export default {
   },
 
   methods: {
-    submit() {
 
-    },
-    cancel() {
-
-    }
   },
 }
 </script>

@@ -7,8 +7,9 @@
         :prop="item.prop"
         :label="item.label"
         :width="item.width"
+        align="center"
       ></el-table-column>
-      <el-table-column label="操作" v-if="showOper">
+      <el-table-column label="操作" v-if="showOper" align="center">
         <template slot-scope="scope">
           <router-link to="/student/activity/submittedhomeworkdetail" tag="button" >查看</router-link>
         </template>
