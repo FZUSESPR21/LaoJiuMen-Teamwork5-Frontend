@@ -1,6 +1,11 @@
 <template>
   <div>
-    <el-table :data="tableData" style="width: 100%" border>
+    <el-table id="table"
+              :data="tableData"
+              style="width: 100%"
+              :row-class-name="tableRowClass"
+              :header-cell-style="headeRowClass"
+              :row-style="tableRowStyle">
       <el-table-column
         v-for="(item,i) in tableCol"
         :key="i"
@@ -8,23 +13,20 @@
         :label="item.label"
         :width="item.width"
         align="center"
-      ></el-table-column>
+        show-overflow-tooltip>
+      </el-table-column>
+
       <el-table-column label="操作" v-if="showOper" align="center" width="150">
         <template slot-scope="scope">
 <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >查看</router-link>-->
-          <el-button @click="lookClick(scope.row)">查看</el-button>
+          <el-button @click="lookClick(scope.row)" id="lookbutton">查看</el-button>
         </template>
-
       </el-table-column>
-
     </el-table>
-
   </div>
 </template>
 
 <script>
-  import axios from "axios";
-
   export default {
     name: "homeworklist",
     data() {
@@ -59,21 +61,8 @@
     },
     methods: {
       lookClick(e) {
-        /*alert(JSON.stringify(e))*/
-        // alert(e.endDate)
         this.name = e.name
         this.endDate = e.endDate
-        /*this.$confirm('此操作将永久删除该用户信息，是否继续？', '提示', {
-          confirmButtonText: '确定',
-          cancleButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$axios.post('delete', {id: e.id})
-            .then(alert('删除成功'),
-              location.reload()
-            )
-        })*/
-        // this.$router.push({name: '/', params: {参数名: '参数值'})
         this.$router.push({
           path: '/student/activity/homeworkdetail',
           query: {
@@ -83,29 +72,27 @@
           }
         })
         // this.$router.push({name: '/student/activity/homeworkdetail', params: {userId: this.userID,name: this.name}})
-      }
+      },
 
+      headeRowClass({row, column, rowIndex, columnIndex}){
+        //表头的背景颜色
+        if(rowIndex==0){
+          return 'background:#DCDCDC; ';
+        }
+      },
     },
-
   };
-
-  /*axios({
-    url: 'http://123.207.32.32:8000/home/multidata'
-  }).then(res => {
-    console.log(res)
-  })
-
-  axios.all([axios({
-    url: 'http://123.207.32.32:8000/home/multidata'
-  }), axios({
-    url: '',
-    params: ''
-  })]).then(axios.spread((res1, res2) => {
-    console.log(res1);
-    console.log(res2);
-  }))*/
 </script>
 
 <style scoped>
+#table {
+  font-weight: normal;
+}
+
+#lookbutton {
+  background-color: white;
+  color: dodgerblue;
+  border: 2px
+}
 
 </style>

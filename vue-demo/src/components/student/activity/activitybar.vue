@@ -10,7 +10,7 @@
         <el-menu-item index="1">
           <i class="el-icon-location"></i>
 <!--          <span slot="title">课程作业</span>-->
-          <router-link to="/student/activity/homeworklist"  tag="button" >课程作业</router-link>
+          <router-link to="/student/activity/homeworklist"  tag="button" class="button">课程作业</router-link>
         </el-menu-item>
 
         <el-menu-item index="2">
@@ -21,7 +21,7 @@
         <el-menu-item index="3">
           <i class="el-icon-document"></i>
 <!--          <span slot="title">已提交作业</span>-->
-          <router-link to="/student/activity/submittedhomeworklist" tag="button" >已提交作业</router-link>
+          <router-link to="/student/activity/submittedhomeworklist" tag="button" class="button">已提交作业</router-link>
         </el-menu-item>
 
         <el-menu-item index="4">
@@ -50,3 +50,11 @@
     }
   }
 </script>
+
+<style>
+.button{
+  background-color: white;
+  border: 2px
+}
+
+</style>

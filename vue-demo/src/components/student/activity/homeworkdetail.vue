@@ -1,40 +1,40 @@
 <template>
-  <div align="center">
-    <span>{{this.$route.query.userId}}</span>
-    <h4>作业详情</h4>
+  <div id="div1">
+    <sapn id="tag">作业详情</sapn>
     <el-table :data="tableData" style="width: 100%;" border>
       <el-table-column
         v-for="(item,i) in tableCol"
         :key="i"
         :prop="item.prop"
-        :width="item.width"
-
-      ></el-table-column>
+        :width="item.width">
+      </el-table-column>
     </el-table>
 
-    <div>
-      <editor></editor>
-      <el-button @click="submit">提交</el-button>
-      <el-button @click="cancel">取消</el-button>
+    <div id="div2" align="center">
+      <vue-editor id="editor" v-model="content"></vue-editor>
+      <br>
+      <el-button @click="submit" id="button1">提交</el-button>
+      <el-button @click="cancel" id="button2">取消</el-button>
 <!--      <router-link to="/student/activity/submittedhomeworkdetail" tag="button" >提交</router-link>
       <router-link to="/student/activity/homeworklist" tag="button" >取消</router-link>-->
     </div>
-
   </div>
-
 </template>
 
 <script>
+// Basic Use - Covers most scenarios
+import { VueEditor } from 'vue2-editor'
 
-import editor from "./editor";
+
+
 export default {
   name: "homeworkdetail",
   data() {
     return {
       showOper:true,
       tableCol: [
-        {prop: "key", label: "键", width: 500,},
-        {prop: "value", label: "值", width: 500},
+        {prop: "key", label: "键", width: 200},
+        {prop: "value", label: "值", width: 600},
 
       ],
 
@@ -52,7 +52,7 @@ export default {
     };
   },
   components: {//使用编辑器
-    editor
+    VueEditor
   },
 
   methods: {
@@ -69,5 +69,23 @@ export default {
 </script>
 
 <style scoped>
+#tag {
+  font-weight:bold;
+  color: #000000;
+  background-color: white;
+}
 
+#div1 {
+  background-color: white;
+}
+
+#button1 {
+  color: white;
+  background-color: dodgerblue;
+}
+
+#button2 {
+  color: dodgerblue;
+  background-color: white;
+}
 </style>
