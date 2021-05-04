@@ -12,7 +12,7 @@
       <el-table-column label="操作" v-if="showOper" align="center" width="150">
         <template slot-scope="scope">
 <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >查看</router-link>-->
-          <el-button @click="lookClick">查看</el-button>
+          <el-button @click="lookClick(scope.row)">查看</el-button>
         </template>
 
       </el-table-column>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+  import axios from "axios";
+
   export default {
     name: "homeworklist",
     data() {
@@ -50,14 +52,58 @@
 
         ],
 
+        userID: 'LQ',
+        name: '',
+        endDate: ''
       };
     },
     methods: {
-      lookClick() {
-        this.$router.push('/student/activity/homeworkdetail')
+      lookClick(e) {
+        /*alert(JSON.stringify(e))*/
+        // alert(e.endDate)
+        this.name = e.name
+        this.endDate = e.endDate
+        /*this.$confirm('此操作将永久删除该用户信息，是否继续？', '提示', {
+          confirmButtonText: '确定',
+          cancleButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$axios.post('delete', {id: e.id})
+            .then(alert('删除成功'),
+              location.reload()
+            )
+        })*/
+        // this.$router.push({name: '/', params: {参数名: '参数值'})
+        this.$router.push({
+          path: '/student/activity/homeworkdetail',
+          query: {
+            userId: this.userID,
+            name: this.name,
+            endDate: this.endDate
+          }
+        })
+        // this.$router.push({name: '/student/activity/homeworkdetail', params: {userId: this.userID,name: this.name}})
       }
+
     },
+
   };
+
+  /*axios({
+    url: 'http://123.207.32.32:8000/home/multidata'
+  }).then(res => {
+    console.log(res)
+  })
+
+  axios.all([axios({
+    url: 'http://123.207.32.32:8000/home/multidata'
+  }), axios({
+    url: '',
+    params: ''
+  })]).then(axios.spread((res1, res2) => {
+    console.log(res1);
+    console.log(res2);
+  }))*/
 </script>
 
 <style scoped>

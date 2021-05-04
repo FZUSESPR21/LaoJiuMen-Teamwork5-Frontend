@@ -1,5 +1,6 @@
 <template>
   <div align="center">
+    <span>{{this.$route.query.userId}}</span>
     <h4>作业详情</h4>
     <el-table :data="tableData" style="width: 100%;" border>
       <el-table-column
@@ -38,10 +39,10 @@ export default {
       ],
 
       tableData: [
-        {key: "标题：", value: "实验二"},
-        {key: "截止时间：", value: "2020-01-01"},
+        {key: "标题：", value: this.$route.query.name},
+        {key: "截止时间：", value: this.$route.query.endDate},
         {key: "评分方式：", value: "打分制：10.0分"},
-        {key: "作业内容：", value: "2020-01-01"},
+        {key: "作业内容：", value: ""},
 
       ],
 
@@ -60,8 +61,10 @@ export default {
     },
     cancel() {
       this.$router.push('/student/activity/homeworklist')
-    }
+    },
+
   },
+
 }
 </script>
 
