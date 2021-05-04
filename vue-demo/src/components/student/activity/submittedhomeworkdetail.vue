@@ -3,7 +3,7 @@
     <div>
       <span>提交情况</span>
       <div>
-        <el-button @click="download">下载</el-button>
+        <el-button @click="downloadClick">下载</el-button>
       </div>
       <el-input v-model="input1" rows="3" type="textarea" placeholder="回答的内容" resize="none"></el-input>
     </div>
@@ -22,6 +22,11 @@ export default {
     return {
       input1: '',
       input2: ''
+    }
+  },
+  methods: {
+    downloadClick() {
+
     }
   }
 }

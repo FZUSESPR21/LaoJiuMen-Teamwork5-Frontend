@@ -13,10 +13,10 @@
 
     <div>
       <editor></editor>
-<!--      <el-button @click="submit">提交</el-button>-->
-      <router-link to="/student/activity/submittedhomeworkdetail" tag="button" >提交</router-link>
-<!--      <el-button @click="cancel">取消</el-button>-->
-      <router-link to="/student/activity/homeworklist" tag="button" >取消</router-link>
+      <el-button @click="submit">提交</el-button>
+      <el-button @click="cancel">取消</el-button>
+<!--      <router-link to="/student/activity/submittedhomeworkdetail" tag="button" >提交</router-link>
+      <router-link to="/student/activity/homeworklist" tag="button" >取消</router-link>-->
     </div>
 
   </div>
@@ -55,7 +55,12 @@ export default {
   },
 
   methods: {
-
+    submit() {
+      this.$router.push('/student/activity/submittedhomeworkdetail')
+    },
+    cancel() {
+      this.$router.push('/student/activity/homeworklist')
+    }
   },
 }
 </script>
