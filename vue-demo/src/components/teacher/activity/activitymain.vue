@@ -3,15 +3,24 @@
     <div id="head">课程活动
         <p class="english">Activity</p>
     </div>
+
+    <div class="sidebar">
+      <activitybar></activitybar>
+    </div>
+
     <div class="part">
-    <p>我是老师课程活动内容，33333333333333</p>
+    <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
+import activitybar from "./activitybar";
 export default {
-  name: "activitymain"
+  name: "activitymain",
+  components: {
+    activitybar
+  }
 }
 </script>
 
@@ -28,7 +37,13 @@ export default {
 }
 
 .part{
-  margin-top: -15px;
+  margin-top: 0px;
   background-color: rgb(228, 228, 228);
+  float:left;
+}
+
+.sidebar{
+  margin-top: 0;
+  float: left;
 }
 </style>
