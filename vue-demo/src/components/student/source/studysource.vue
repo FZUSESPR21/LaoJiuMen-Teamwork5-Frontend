@@ -51,6 +51,10 @@ export default {
         return 'background:#DCDCDC; ';
       }
     },
+
+    downloadClick() {
+      
+    }
   },
 }
 </script>
