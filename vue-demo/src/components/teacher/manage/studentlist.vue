@@ -37,7 +37,7 @@
           <el-button size="mini" id="totaldeletebtn">删除</el-button>
           <el-button size="mini" id="uploadbtn" icon="el-icon-upload2">上传Excel生成学生列表</el-button>
           <el-button size="mini" id="downloadbtn" icon="el-icon-download">下载上传须知</el-button>
-          <el-button size="mini" type="primary" id="newstu">新增</el-button>
+          <el-button size="mini" type="primary" id="newstu" @click="createstudent">新增</el-button>
           <el-pagination
             background
             layout="prev, pager, next"
@@ -97,6 +97,11 @@ export default {
           email:'1111111115@qq.com'
         }
       ]
+    }
+  },
+  methods:{
+    createstudent:function (){
+      this.$router.push('/teacher/manage/createstudent')
     }
   }
 }
