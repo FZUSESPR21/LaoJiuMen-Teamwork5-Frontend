@@ -2,19 +2,24 @@
   <div>
     <div id="login">
       <p id="title">登录</p>
-      <div id="type">
-        <el-radio v-model="type" label="student">学生</el-radio>
-        <el-radio v-model="type" label="teacher">教师</el-radio>
-      </div>
-      <div id="accountbox">
-        <el-input placeholder="请输入账号" v-model="account" clearable id="account" prefix-icon="el-icon-user-solid"></el-input>
-      </div>
-      <div id="pwdbox">
-        <el-input placeholder="请输入密码" v-model="pwd" show-password id="pwd" prefix-icon="el-icon-lock"></el-input>
-      </div>
-      <div>
-        <button @click="login" id="loginbtn">登录</button>
-      </div>
+      <el-form>
+        <el-form-item id="type">
+          <el-radio-group v-model="type">
+            <el-radio label="student">学生</el-radio>
+            <el-radio label="teacher">教师</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item id="accountbox">
+          <el-input placeholder="请输入账号" v-model="account" clearable id="account" prefix-icon="el-icon-user-solid"></el-input>
+        </el-form-item>
+        <el-form-item id="pwdbox">
+          <el-input placeholder="请输入密码" v-model="pwd" show-password id="pwd" prefix-icon="el-icon-lock"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <button @click="login" id="loginbtn">登录</button>
+        </el-form-item>
+      </el-form>
+
     </div>
     <div id="forgetbox">
       <router-link to="/login/setPassword" id="forget">忘记密码？</router-link>
@@ -62,7 +67,7 @@ export default {
   text-align: center;
 }
 #accountbox{
-  margin-top: 25px;
+  margin-top: 10px;
 }
 #pwdbox{
   margin-top: 20px;
@@ -88,5 +93,8 @@ export default {
 }
 a:link,a:active{
   color: black;
+}
+.el-form-item{
+  margin-bottom: 0;
 }
 </style>

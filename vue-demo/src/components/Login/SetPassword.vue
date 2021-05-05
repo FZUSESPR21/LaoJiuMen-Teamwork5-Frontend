@@ -2,29 +2,33 @@
   <div>
     <div id="login">
       <p id="title">设置新密码</p>
-      <div id="type">
-        <el-radio v-model="type" label="student">学生</el-radio>
-        <el-radio v-model="type" label="teacher">教师</el-radio>
-      </div>
-      <div id="emailbox">
-        <el-input placeholder="请输入邮箱" v-model="email" clearable id="email" prefix-icon="el-icon-message"></el-input>
-      </div>
-      <div id="verificationbox">
-        <el-input placeholder="请输入验证码" v-model="verification" id="verification" prefix-icon="el-icon-key" style="float: left; width: 180px;margin-right: 5px"></el-input>
-        <el-button id="verificationbtn" >发送验证码</el-button>
-      </div>
-      <div id="accountbox">
-        <el-input placeholder="请输入账号" v-model="account" clearable id="account" prefix-icon="el-icon-user-solid"></el-input>
-      </div>
-      <div id="newpwdbox">
-        <el-input placeholder="请输入新密码" v-model="pwd" show-password id="pwd" prefix-icon="el-icon-lock"></el-input>
-      </div>
-      <div id="againpwdbox">
-        <el-input placeholder="请再次输入新密码" v-model="pwdconfirm" show-password id="pwdconfirm" prefix-icon="el-icon-lock"></el-input>
-      </div>
-      <div>
-        <button @click="setnewpwd" id="confirmbtn">确定</button>
-      </div>
+      <el-form>
+        <el-form-item id="type">
+          <el-radio-group v-model="type">
+            <el-radio label="student">学生</el-radio>
+            <el-radio label="teacher">教师</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item id="emailbox">
+          <el-input placeholder="请输入邮箱" v-model="email" clearable id="email" prefix-icon="el-icon-message"></el-input>
+        </el-form-item>
+        <el-form-item id="verificationbox">
+          <el-input placeholder="请输入验证码" v-model="verification" id="verification" prefix-icon="el-icon-key" style="float: left; width: 180px;margin-right: 5px"></el-input>
+          <el-button id="verificationbtn" >发送验证码</el-button>
+        </el-form-item>
+        <el-form-item id="accountbox">
+          <el-input placeholder="请输入账号" v-model="account" clearable id="account" prefix-icon="el-icon-user-solid"></el-input>
+        </el-form-item>
+        <el-form-item id="newpwdbox">
+          <el-input placeholder="请输入新密码" v-model="pwd" show-password id="pwd" prefix-icon="el-icon-lock"></el-input>
+        </el-form-item>
+        <el-form-item id="againpwdbox">
+          <el-input placeholder="请再次输入新密码" v-model="pwdconfirm" show-password id="pwdconfirm" prefix-icon="el-icon-lock"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <button @click="setnewpwd" id="confirmbtn">确定</button>
+        </el-form-item>
+      </el-form>
     </div>
     <div id="directloginbox">
       <router-link to="/login/login" id="directlogin">直接登录</router-link>
@@ -63,13 +67,13 @@ export default {
   text-align: center;
   font-size: 28px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 #type{
   text-align: center;
 }
 #emailbox{
-  margin-top: 15px;
+  margin-top: 5px;
 }
 #verificationbox{
   margin-top: 15px;
@@ -105,6 +109,9 @@ export default {
 }
 a:link,a:active{
   color: black;
+}
+.el-form-item{
+  margin-bottom: 0;
 }
 </style>
 
