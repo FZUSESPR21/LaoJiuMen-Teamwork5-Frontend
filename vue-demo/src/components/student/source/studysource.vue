@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-table :data="tableData" style="width: 100%" border>
+    <el-table :data="tableData"
+              style="width: 100%"
+              :header-cell-style="headeRowClass">
       <el-table-column
         v-for="(item,i) in tableCol"
         :key="i"
@@ -13,7 +15,7 @@
       <el-table-column label="操作" v-if="showOper" align="center" width="150">
         <template slot-scope="scope">
 <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >下载</router-link>-->
-          <el-button @click="downloadClick">下载</el-button>
+          <el-button @click="downloadClick" id="downloadbutton">下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -27,8 +29,8 @@ export default {
     return {
       showOper:true,
       tableCol: [
-        {prop: "name", label: "名称", width: 100},
-        {prop: "num", label: "下载量", width: 150},
+        {prop: "name", label: "名称", width: 300},
+        {prop: "num", label: "下载量", width: 300},
 
       ],
 
@@ -43,11 +45,20 @@ export default {
     };
   },
   methods: {
-
+    headeRowClass({row, column, rowIndex, columnIndex}){
+      //表头的背景颜色
+      if(rowIndex==0){
+        return 'background:#DCDCDC; ';
+      }
+    },
   },
 }
 </script>
 
 <style scoped>
-
+#downloadbutton {
+  background-color: white;
+  color: dodgerblue;
+  border: 2px
+}
 </style>
