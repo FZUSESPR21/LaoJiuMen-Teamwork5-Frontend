@@ -32,22 +32,24 @@
         <el-form-item>
           <i class="el-icon-star-on"></i>
           <span class="text">截止时间</span>
-          <el-input v-model="publishForm.deadline" placeholder="请输入截止时间" resize="none"></el-input>
+          <el-input v-model="date1" placeholder="请输入截止时间" resize="none"></el-input>
           <el-date-picker
-              v-model="value1"
+              v-model="date1"
               type="datetime"
-              placeholder="选择日期时间">
+              placeholder="选择日期时间"
+              value-format="yyyy年MM月dd日 HH:mm:ss">
           </el-date-picker>
         </el-form-item>
 
         <el-form-item>
           <i class="el-icon-star-on"></i>
           <span class="text">发布时间</span>
-          <el-input v-model="publishForm.releasetime" placeholder="请输入发布时间" resize="none"></el-input>
+          <el-input v-model="date2" placeholder="请输入发布时间" resize="none"></el-input>
           <el-date-picker
-            v-model="value1"
+            v-model="date2"
             type="datetime"
-            placeholder="选择日期时间">
+            placeholder="选择日期时间"
+            value-format="yyyy年MM月dd日 HH:mm:ss">
           </el-date-picker>
         </el-form-item>
 
@@ -119,9 +121,8 @@ export default {
           }
         }]
       },
-      value1: '',
-      value2: '',
-      value3: ''
+      date1: '',
+      date2: '',
 
     }
   },
