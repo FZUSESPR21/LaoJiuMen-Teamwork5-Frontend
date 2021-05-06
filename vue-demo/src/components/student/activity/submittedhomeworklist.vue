@@ -16,7 +16,7 @@
       <el-table-column label="操作" v-if="showOper" align="center" width="150">
         <template slot-scope="scope">
 <!--          <router-link to="/student/activity/submittedhomeworkdetail" tag="button" >查看</router-link>-->
-          <el-button @click="lookClick" id="lookbutton">查看</el-button>
+          <el-button size="mini" @click="lookClick" class="button" icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -60,7 +60,7 @@ export default {
 </script>
 
 <style scoped>
-#lookbutton {
+.button {
   background-color: white;
   color: dodgerblue;
   border: 2px

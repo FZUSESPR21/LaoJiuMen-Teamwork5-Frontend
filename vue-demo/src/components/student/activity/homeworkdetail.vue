@@ -13,8 +13,8 @@
     <div id="div2" align="center">
       <vue-editor id="editor" v-model="content"></vue-editor>
       <br>
-      <el-button @click="submit" id="button1">提交</el-button>
-      <el-button @click="cancel" id="button2">取消</el-button>
+      <el-button type="primary" plain size="mini" @click="submit" id="button1">提交</el-button>
+      <el-button type="primary" plain size="mini" @click="cancel" id="button2">取消</el-button>
 <!--      <router-link to="/student/activity/submittedhomeworkdetail" tag="button" >提交</router-link>
       <router-link to="/student/activity/homeworklist" tag="button" >取消</router-link>-->
     </div>

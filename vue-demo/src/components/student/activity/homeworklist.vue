@@ -2,10 +2,9 @@
   <div>
     <el-table id="table"
               :data="tableData"
+              stripe
               style="width: 100%"
-              :row-class-name="tableRowClass"
-              :header-cell-style="headeRowClass"
-              :row-style="tableRowStyle">
+              :header-cell-style="headeRowClass">
       <el-table-column
         v-for="(item,i) in tableCol"
         :key="i"
@@ -19,7 +18,7 @@
       <el-table-column label="操作" v-if="showOper" align="center" width="150">
         <template slot-scope="scope">
 <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >查看</router-link>-->
-          <el-button @click="lookClick(scope.row)" id="lookbutton">查看</el-button>
+          <el-button size="mini" @click="lookClick(scope.row)" class="button" icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -80,7 +79,7 @@
           return 'background:#DCDCDC; ';
         }
       },
-      
+
     },
   };
 </script>
@@ -90,10 +89,9 @@
   font-weight: normal;
 }
 
-#lookbutton {
+.button {
   background-color: white;
   color: dodgerblue;
-  border: 2px
 }
 
 </style>
