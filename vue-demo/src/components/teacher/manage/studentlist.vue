@@ -10,7 +10,7 @@
           :value="item.value">
         </el-option>
       </el-select>
-      <el-button type="primary" size="mini">新建班级</el-button>
+      <el-button type="primary" size="mini" @click="createclass">新建班级</el-button>
     </div>
     <div id="stulistbox">
       <div id="stulist">
@@ -119,6 +119,9 @@ export default {
   methods:{
     createstudent (){
       this.$router.push('/teacher/manage/createstudent')
+    },
+    createclass(){
+      this.$router.push('/teacher/manage/createclass')
     },
     deleteOne (index){
 
