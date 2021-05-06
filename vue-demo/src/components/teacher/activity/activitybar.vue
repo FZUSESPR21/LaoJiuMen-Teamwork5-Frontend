@@ -16,7 +16,7 @@
         <el-menu-item index="2">
           <i class="el-icon-menu"></i>
 <!--          <span slot="title">发布作业</span>-->
-          <router-link to="/teacher/activity/publishhomework" tag="button" class="button">作业列表</router-link>
+          <router-link to="/teacher/activity/publishhomework" tag="button" class="button">发布作业</router-link>
         </el-menu-item>
 
         <el-menu-item index="3">
@@ -50,6 +50,7 @@
 .button{
   background-color: white;
   border: 2px
+
 }
 
 </style>

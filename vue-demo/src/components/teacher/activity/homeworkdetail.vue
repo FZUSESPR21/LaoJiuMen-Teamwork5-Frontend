@@ -1,6 +1,7 @@
 <template>
   <div id="div1">
     <div>
+      <i class="el-icon-document"></i>
       <sapn id="tag">作业详情</sapn>
       <el-table :data="tableData" style="width: 100%;" border>
         <el-table-column
@@ -12,10 +13,14 @@
       </el-table>
     </div>
 
+    <br>
+
     <div>
+      <i class="el-icon-finished"></i>
       <sapn id="tag">提交列表</sapn>
       <el-table id="table"
                 :data="tableData2"
+                stripe
                 style="width: 100%"
                 :header-cell-style="headeRowClass">
         <el-table-column
@@ -24,14 +29,12 @@
           :prop="item.prop"
           :label="item.label"
           :width="item.width"
-          align="center"
-          show-overflow-tooltip>
+          align="center">
         </el-table-column>
 
         <el-table-column label="作业详情" v-if="showOper" align="center" width="150">
           <template slot-scope="scope">
-            <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >查看</router-link>-->
-            <el-button @click="lookClick(scope.row)" id="lookbutton">查看</el-button>
+            <el-button size="mini" @click="lookClick(scope.row)" class="button" icon="el-icon-view">查看</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -99,7 +102,14 @@ export default {
           endDate: this.endDate
         }
       })
-    }
+    },
+
+    headeRowClass({row, column, rowIndex, columnIndex}){
+      //表头的背景颜色
+      if(rowIndex==0){
+        return 'background:#DCDCDC; ';
+      }
+    },
 
   },
 
@@ -117,7 +127,7 @@ export default {
   background-color: white;
 }
 
-#lookbutton {
+.button {
   background-color: white;
   color: dodgerblue;
   border: 2px

@@ -1,27 +1,61 @@
 <template>
   <div id="div1">
-    <span id="span1">提交情况</span>
-    <br>
-    <el-button class="button" id="downloadbutton" @click="downloadClick">下载</el-button>
-    <el-input id="input1" v-model="input1" rows="9" type="textarea" placeholder="回答的内容" resize="none" readonly></el-input>
-
     <div>
-      <span id="span2">评论</span>
-      <el-input id="input2" v-model="input2" rows="2" type="textarea" placeholder="评论内容" resize="none" readonly></el-input>
+      <span class="text">提交情况</span>
     </div>
+
     <br>
 
     <div>
-      <el-input id="input3" v-model="input3" rows="2" type="textarea" placeholder="请输入评论" resize="none"></el-input>
-      <el-button @click="publishClick" class="button" id="publishbutton">发表评论</el-button>
+      <div>
+        <i class="el-icon-folder-opened"></i>
+        <el-button type="primary" plain size="mini" class="button" @click="downloadClick" icon="el-icon-download">下载</el-button>
+      </div>
+
+      <br>
+
+      <div>
+        <el-input v-model="input1" rows="9" type="textarea" placeholder="回答的内容" resize="none" readonly></el-input>
+      </div>
+
+      <br>
+
+      <div>
+        <span id="span" class="text">评论</span>
+        <el-input v-model="input2" rows="5" type="textarea" placeholder="评论内容" resize="none" readonly></el-input>
+      </div>
     </div>
+
     <br>
 
     <div>
-      <span id="span3">评分：</span>
-      <el-input id="input4" v-model="input4" rows="1" type="textarea" resize="none"></el-input>
-      <el-button @click="submitClick" class="button" id="submitbutton">提交评分</el-button>
+      <el-form :model="commentForm" :rules="rules" ref="commentForm" inline="true">
+        <el-form-item prop="comment">
+          <el-input v-model="commentForm.comment" type="textarea" placeholder="请输入评论" resize="none"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" plain size="mini" @click="publishClick('commentForm')" class="button">发表评论</el-button>
+        </el-form-item>
+      </el-form>
     </div>
+
+    <div>
+      <el-form :model="markForm" :rules="rules" ref="markForm" inline="true">
+        <el-form-item>
+          <span class="text">评分：</span>
+        </el-form-item>
+
+        <el-form-item prop="mark">
+          <el-input v-model.number="markForm.mark" type="number" placeholder="请输入分数" resize="none"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" plain size="mini" @click="submitClick('markForm')" class="button">提交评分</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+
   </div>
 </template>
 
@@ -29,10 +63,19 @@
 export default {
   name: "submittedhomeworkdetail",
   data() {
+
+
     return {
       input1: '',
       input2: '',
-      input3: ''
+      commentForm: {
+        comment: '',
+      },
+      markForm: {
+        mark: ''
+      },
+
+
     }
   },
   methods: {
@@ -42,11 +85,12 @@ export default {
     publishClick() {
 
     },
-    submitClick() {
+    submitClick(formName) {
 
     }
 
-  }
+  },
+
 }
 </script>
 
@@ -60,18 +104,11 @@ export default {
   background-color: dodgerblue;
 }
 
-#span1 {
+#span {
+  font-size: 15px;
+}
+
+.text {
   font-weight: bold;
 }
-
-#span2 {
-  font-weight: lighter;
-  font-size: 15px;
-}
-
-#span3 {
-  font-weight: lighter;
-  font-size: 15px;
-}
-
 </style>
