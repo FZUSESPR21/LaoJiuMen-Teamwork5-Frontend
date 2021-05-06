@@ -2,7 +2,7 @@
   <div>
     <div id="classname">
       班级：
-      <el-select v-model="value" placeholder="请选择" size="mini">
+      <el-select v-model="classvalue" placeholder="请选择" size="mini">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -15,27 +15,36 @@
     <div id="stulistbox">
       <div id="stulist">
         <div id="listhead">
-          <el-checkbox id="totaldelete"></el-checkbox>
+          <input type="checkbox" id="selectAll" :checked="selectArr.length === studentlist.length" @change='selectAll()'></input>
           <span id="accounthead">学号</span>
           <span id="namehead">姓名</span>
           <span id="emailhead">邮箱</span>
           <span id="oprationhead">操作</span>
         </div>
-        <div v-for="item in studentlist">
+        <div v-for="(item,index) in studentlist">
           <div id="listitem">
-            <el-checkbox id="itemcheckbox"></el-checkbox>
+            <input type="checkbox" id="itemcheckbox" :checked="selectArr.indexOf(item.studentId) > -1"  @change='selectOne(item.studentId)'></input>
             <div id="item">
               <span id="account">{{ item.account }}</span>
               <span id="studentname">{{ item.student_name }}</span>
               <span id="email">{{ item.email }}</span>
               <el-button type="text" id="itemeditbtn">编辑</el-button>
-              <el-button type="text" id="itemdelbtn">删除</el-button>
+              <el-button type="text" id="itemdelbtn" @click="deleteOne">删除</el-button>
             </div>
           </div>
         </div>
         <div id="listfoot">
-          <el-button size="mini" id="totaldeletebtn">删除</el-button>
-          <el-button size="mini" id="uploadbtn" icon="el-icon-upload2">上传Excel生成学生列表</el-button>
+          <el-button size="mini" id="deleteSelbtn" @click="deleteSel">删除</el-button>
+          <el-upload
+            id="uploadbtn"
+            action
+            accept=".xls,.xlsx"
+            :auto-upload="false"
+            :show-file-list="false"
+            :on-change="handlefile"
+          >
+            <el-button size="mini"  icon="el-icon-upload2">上传Excel生成学生列表</el-button>
+          </el-upload>
           <el-button size="mini" id="downloadbtn" icon="el-icon-download">下载上传须知</el-button>
           <el-button size="mini" type="primary" id="newstu" @click="createstudent">新增</el-button>
           <el-pagination
@@ -52,6 +61,7 @@
 </template>
 
 <script>
+import xlsx from 'xlsx'
 export default {
   name: "studentlist",
   data(){
@@ -69,39 +79,95 @@ export default {
         value: '选项4',
         label: '2020年W班'
       }],
-      value: '',
+      classvalue: '',
+      selectArr:[],
+      isCheckedAll:false,
       studentlist: [
         {
+          studentId:'1',
           account:'221801000',
           student_name:'小宋',
-          email:'1111111111@qq.com'
+          email:'1111111111@qq.com',
         },
         {
+          studentId:'2',
           account:'221801001',
           student_name:'小张',
-          email:'1111111112@qq.com'
+          email:'1111111112@qq.com',
         },
         {
+          studentId:'3',
           account:'221801002',
           student_name:'小李',
-          email:'1111111113@qq.com'
+          email:'1111111113@qq.com',
         },
         {
+          studentId:'4',
           account:'221801003',
           student_name:'小林',
-          email:'1111111114@qq.com'
+          email:'1111111114@qq.com',
         },
         {
+          studentId:'5',
           account:'221801004',
           student_name:'小王',
-          email:'1111111115@qq.com'
+          email:'1111111115@qq.com',
         }
       ]
     }
   },
   methods:{
-    createstudent:function (){
+    createstudent (){
       this.$router.push('/teacher/manage/createstudent')
+    },
+    deleteOne (index){
+
+    },
+    deleteSel (){
+
+    },
+    selectOne (studentId) {
+      let idIndex = this.selectArr.indexOf(studentId)
+      if (idIndex >= 0) {
+        this.selectArr.splice(idIndex, 1)
+      } else {
+        this.selectArr.push(studentId)
+      }
+    },
+    selectAll(){
+      this.isCheckedAll = !this.isCheckedAll
+      if (this.isCheckedAll) {
+        this.selectArr = []
+        const _that = this
+        this.studentlist.forEach((val,index) =>{
+          this.selectArr.push(val.studentId)
+        })
+      } else {
+        this.selectArr = []
+      }
+    },
+    async handlefile(ev){
+      let file = ev.raw
+      if (!file) return
+
+      let data = await new Promise(resolve => {
+        let reader = new FileReader()
+        reader.readAsBinaryString(file)
+        reader.onload = ev => {
+          resolve(ev.target.result)
+        }
+      })
+      let workbook = xlsx.read(data,{type:"binary"})
+      let worksheet = workbook.Sheets[workbook.SheetNames[0]]
+      data = xlsx.utils.sheet_to_json(worksheet)
+      let data1= JSON.parse(JSON.stringify(data).replace(/学号/g,"account"))
+      let data2= JSON.parse(JSON.stringify(data1).replace(/姓名/g,"student_name"))
+      let finaldata= JSON.parse(JSON.stringify(data2).replace(/邮箱/g,"email"))
+      for (let i = 0;i < finaldata.length;i++){
+        finaldata[i].studentId = (i+1).toString()
+      }
+      this.studentlist = finaldata
+
     }
   }
 }
@@ -128,7 +194,7 @@ export default {
 #listhead{
   margin-top: 20px;
 }
-#totaldelete{
+#selectAll{
   margin-right: 8%;
 }
 #accounthead{
@@ -146,7 +212,7 @@ export default {
 
 }
 #itemcheckbox{
-  margin-top: 6px;
+  margin-top: 10px;
 }
 #item{
   background-color: #fafafa;
@@ -178,9 +244,14 @@ export default {
   margin-top: 20px;
   margin-bottom: 100px;
 }
-#totaldeletebtn{
+#deleteSelbtn{
   color: red;
   border: 1px solid red;
+}
+#uploadbtn{
+  display: inline;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 #downloadbtn{
   color: red;
