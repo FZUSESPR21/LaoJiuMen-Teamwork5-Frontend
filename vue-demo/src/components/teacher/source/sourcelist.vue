@@ -3,24 +3,24 @@
     <div id="head">课程资源
       <p class="english">Source</p>
     </div>
+
+    <div class="sidebar">
+      <sourcebar></sourcebar>
+    </div>
+
     <div class="part">
-    <p>我是关于老师内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
-    <p>我是关于内容，22222222</p>
+      <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
+import sourcebar from "../source/sourcebar";
 export default {
-  name: "sourcelist"
+  name: "sourcelist",
+  components: {
+    sourcebar
+  }
 }
 </script>
 
@@ -37,7 +37,14 @@ export default {
 }
 
 .part{
-  margin-top: -15px;
-  background-color: rgb(228, 228, 228);
+  margin-top: 0;
+  background-color: rgb(255, 252, 252);
+  float:left;
+  width: 800px;
+}
+
+.sidebar{
+  margin-top: 0;
+  float: left;
 }
 </style>
