@@ -26,14 +26,14 @@
           show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column label="操作" v-if="showOper" align="center" width="200">
+        <el-table-column label="操作" v-if="showOper" align="center" width="225">
           <template slot-scope="scope">
             <el-button v-if="scope.row.name=='教学大纲'" type="text" size="mini" class="button" icon="el-icon-download">下载</el-button>
             <el-button v-else type="text" size="mini" class="button" icon="el-icon-edit">编辑</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" v-if="showOper" align="center" width="150">
+        <el-table-column label="操作" v-if="showOper" align="center" width="225">
           <template slot-scope="scope">
             <el-button type="text" size="mini" @click="delClick()" class="button" icon="el-icon-delete">删除</el-button>
           </template>
@@ -68,7 +68,7 @@ export default {
       showOper:true,
       tableCol: [
         {prop: "name", label: "名称", width: 250},
-        {prop: "num", label: "下载量", width: 200},
+        {prop: "num", label: "下载量", width: 250},
 
       ],
 

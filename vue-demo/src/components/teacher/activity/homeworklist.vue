@@ -1,5 +1,17 @@
 <template>
   <div>
+
+    <div id="divSelect">
+      <el-select size="mini" v-model="value" placeholder="请选择班级">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </div>
+
     <el-table id="table"
               :data="tableData"
               stripe
@@ -17,14 +29,12 @@
 
       <el-table-column label="操作" v-if="showOper" align="center" width="150">
         <template slot-scope="scope">
-<!--          <router-link to="/student/activity/homeworkdetail" tag="button" >查看</router-link>-->
           <el-button size="mini" @click="lookClick(scope.row)" class="button" icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
 
       <el-table-column label="操作" v-if="showOper" align="center" width="150">
         <template slot-scope="scope">
-          <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >查看</router-link>-->
           <el-button size="mini" @click="delClick(scope.row)" class="button" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>
@@ -37,6 +47,18 @@
     name: "homeworklist",
     data() {
       return {
+        options: [{
+          value: '班级1',
+          label: '2021级S班'
+        }, {
+          value: '班级2',
+          label: '2020级S班'
+        }, {
+          value: '班级3',
+          label: '2019级S班'
+        }],
+        value: '',
+
         showOper:true,
         tableCol: [
           {prop: "name", label: "作业名称", width: 100},
@@ -88,6 +110,10 @@
 </script>
 
 <style scoped>
+#divSelect {
+  float: right;
+}
+
 #table {
   font-weight: normal;
 }

@@ -38,8 +38,9 @@ export default {
 
 .part{
   margin-top: 0px;
-  background-color: rgb(228, 228, 228);
+  background-color: rgb(255, 255, 255);
   float:left;
+  width: 950px;
 }
 
 .sidebar{

@@ -40,7 +40,7 @@ export default {
   margin-top: 0;
   background-color: rgb(255, 252, 252);
   float:left;
-  width: 800px;
+  width: 950px;
 }
 
 .sidebar{

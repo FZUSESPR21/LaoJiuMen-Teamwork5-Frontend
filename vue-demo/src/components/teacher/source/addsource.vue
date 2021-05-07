@@ -7,7 +7,7 @@
 
     <div id="clazz">
       <span>班级：</span>
-      <el-select v-model="classValue" placeholder="请选择班级">
+      <el-select size="mini" v-model="classValue" placeholder="请选择班级">
         <el-option
           v-for="item in classOptions"
           :key="item.value"
@@ -44,12 +44,13 @@
           <br>
           <el-button size="mini" icon="el-icon-folder-opened" id="uploadbutton">上传文件</el-button>
           <p id="p">支持格式：.pdf，单个文件不超过20MB</p>
+          <i class="el-icon-folder-opened"></i>
         </el-form-item>
 
         <el-form-item>
-          <el-button class="button" type="primary" plain size="mini">发布</el-button>
+          <el-button id="cancel" type="primary" plain size="mini">取消</el-button>
           <el-button class="button" type="primary" plain size="mini">预发布</el-button>
-          <el-button id ="cancel" type="primary" plain size="mini">取消</el-button>
+          <el-button class="button" type="primary" plain size="mini">发布</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -117,10 +118,12 @@ export default {
 .button {
   color: white;
   background-color: dodgerblue;
+  float: right;
 }
 
 #cancel {
   color: dodgerblue;
   background-color: white;
+  float: right;
 }
 </style>
