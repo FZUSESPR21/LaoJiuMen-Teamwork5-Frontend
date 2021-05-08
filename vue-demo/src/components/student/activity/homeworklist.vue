@@ -15,9 +15,8 @@
         show-overflow-tooltip>
       </el-table-column>
 
-      <el-table-column label="操作" v-if="showOper" align="center" width="150">
+      <el-table-column label="操作" v-if="showOper" align="center" width="100">
         <template slot-scope="scope">
-<!--          <router-link to="/student/activity/homeworkdetail" tag="button" >查看</router-link>-->
           <el-button size="mini" @click="lookClick(scope.row)" class="button" icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
@@ -32,10 +31,10 @@
       return {
         showOper:true,
         tableCol: [
-          {prop: "name", label: "作业名称", width: 100},
+          {prop: "name", label: "作业名称", width: 150},
           {prop: "startDate", label: "开始时间", width: 200},
           {prop: "endDate", label: "结束时间", width: 200},
-          {prop: "state", label: "状态", width: 100},
+          {prop: "state", label: "状态", width: 150},
           {prop: "score", label: "得分", width: 100},
 
         ],

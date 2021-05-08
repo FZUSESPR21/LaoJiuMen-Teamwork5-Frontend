@@ -40,7 +40,7 @@
     margin-top: 0;
     background-color: rgb(228, 228, 228);
     float:left;
-
+    width: 900px;
   }
 
   .sidebar{

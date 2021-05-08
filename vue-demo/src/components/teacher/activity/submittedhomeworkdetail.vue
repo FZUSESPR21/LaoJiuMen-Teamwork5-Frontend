@@ -29,12 +29,12 @@
     <br>
 
     <div>
-      <el-form :model="commentForm" :rules="rules" ref="commentForm" inline="true">
+      <el-form :model="commentForm" :rules="rules" ref="commentForm">
         <el-form-item prop="comment">
           <el-input v-model="commentForm.comment" type="textarea" placeholder="请输入评论" resize="none"></el-input>
         </el-form-item>
 
-        <el-form-item>
+        <el-form-item id="publishButton">
           <el-button type="primary" plain size="mini" @click="publishClick('commentForm')" class="button">发表评论</el-button>
         </el-form-item>
       </el-form>
@@ -47,7 +47,7 @@
         </el-form-item>
 
         <el-form-item prop="mark">
-          <el-input v-model.number="markForm.mark" type="number" placeholder="请输入分数" resize="none"></el-input>
+          <el-input v-model.number="markForm.mark" type="number" size="mini" placeholder="请输入分数" resize="none"></el-input>
         </el-form-item>
 
         <el-form-item>
@@ -110,5 +110,9 @@ export default {
 
 .text {
   font-weight: bold;
+}
+
+#publishButton {
+  float: right;
 }
 </style>
