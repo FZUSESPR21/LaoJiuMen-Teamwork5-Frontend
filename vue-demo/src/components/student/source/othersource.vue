@@ -2,6 +2,7 @@
   <div>
     <el-table :data="tableData"
               style="width: 100%"
+              stripe
               :header-cell-style="headeRowClass">
       <el-table-column
         v-for="(item,i) in tableCol"
@@ -15,14 +16,14 @@
       <el-table-column label="操作" v-if="showOper" align="center" width="200">
         <template slot-scope="scope">
           <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >下载</router-link>-->
-          <el-button @click="lookClick" class="button">查看</el-button>
+          <el-button type="primary" plain size="mini" @click="lookClick" class="button" icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
 
       <el-table-column label="操作" v-if="showOper" align="center" width="200">
         <template slot-scope="scope">
           <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >下载</router-link>-->
-          <el-button @click="downloadClick" class="button">下载</el-button>
+          <el-button type="primary" plain size="mini" @click="downloadClick" class="button" icon="el-icon-download">下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -36,8 +37,8 @@ export default {
     return {
       showOper:true,
       tableCol: [
-        {prop: "name", label: "名称", width: 200},
-        {prop: "num", label: "下载量", width: 200},
+        {prop: "name", label: "名称", width: 250},
+        {prop: "num", label: "下载量", width: 250},
 
       ],
 

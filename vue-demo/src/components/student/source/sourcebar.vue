@@ -1,19 +1,15 @@
 <template>
   <el-row class="tac">
-    <el-col :span="12">
+    <el-col :span="25">
       <el-menu
         default-active="1"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose">
         <el-menu-item index="1">
-          <i class="el-icon-location"></i>
-<!--          <span slot="title">学习资源</span>-->
           <router-link to="/student/source/study" tag="button" class="button">学习资源</router-link>
         </el-menu-item>
         <el-menu-item index="2">
-          <i class="el-icon-menu"></i>
-<!--          <span slot="title">其他资源</span>-->
           <router-link to="/student/source/other" tag="button" class="button">其他资源</router-link>
         </el-menu-item>
       </el-menu>

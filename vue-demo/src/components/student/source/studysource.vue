@@ -2,6 +2,7 @@
   <div>
     <el-table :data="tableData"
               style="width: 100%"
+              stripe
               :header-cell-style="headeRowClass">
       <el-table-column
         v-for="(item,i) in tableCol"
@@ -12,10 +13,10 @@
         align="center"
       ></el-table-column>
 
-      <el-table-column label="操作" v-if="showOper" align="center" width="150">
+      <el-table-column label="操作" v-if="showOper" align="center" width="300">
         <template slot-scope="scope">
 <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >下载</router-link>-->
-          <el-button @click="downloadClick" id="downloadbutton">下载</el-button>
+          <el-button type="primary" plain size="mini" @click="downloadClick" id="downloadbutton" icon="el-icon-download">下载</el-button>
         </template>
       </el-table-column>
     </el-table>
