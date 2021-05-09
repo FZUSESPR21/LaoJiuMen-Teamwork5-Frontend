@@ -29,13 +29,13 @@
 
       <el-table-column label="操作" v-if="showOper" align="center" width="150">
         <template slot-scope="scope">
-          <el-button size="mini" @click="lookClick(scope.row)" class="button" icon="el-icon-view">查看</el-button>
+          <el-button size="mini" type="text" @click="lookClick(scope.row)" class="button" icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
 
       <el-table-column label="操作" v-if="showOper" align="center" width="150">
         <template slot-scope="scope">
-          <el-button size="mini" @click="delClick(scope.row)" class="button" icon="el-icon-delete">删除</el-button>
+          <el-button size="mini" type="text" @click="delClick(scope.row)" @click.native.prevent="deleteRow(scope.$index, tableData)" class="button" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -102,9 +102,13 @@
       headeRowClass({row, column, rowIndex, columnIndex}){
         //表头的背景颜色
         if(rowIndex==0){
-          return 'background:#DCDCDC; ';
+          return 'background:#DCDCDC; color: black';
         }
       },
+
+      deleteRow(index, rows) {
+        rows.splice(index, 1);
+      }
     },
   };
 </script>

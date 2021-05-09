@@ -134,6 +134,12 @@ export default {
 
   methods: {
     publishClick() {
+      this.$router.push({
+        path: '/teacher/activity/homeworklist',
+        query: {
+
+        }
+      })
     }
   }
 }
@@ -145,7 +151,7 @@ export default {
 }
 
 #span{
-  background-color: #eae6e6;
+
   font-size: 15px;
 }
 

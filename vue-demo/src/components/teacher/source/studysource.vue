@@ -10,7 +10,9 @@
           :value="item.value">
         </el-option>
       </el-select>
+    </div>
 
+    <div>
       <el-table id="table"
                 :data="tableData"
                 stripe
@@ -26,15 +28,15 @@
           show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column label="操作" v-if="showOper" align="center" width="225">
+        <el-table-column label="操作" v-if="showOper" align="center" width="200">
           <template slot-scope="scope">
-            <el-button size="mini" @click="downloadClick()" class="button" icon="el-icon-download">下载</el-button>
+            <el-button size="mini" type="text" @click="downloadClick()" class="button" icon="el-icon-download">下载</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" v-if="showOper" align="center" width="225">
+        <el-table-column label="操作" v-if="showOper" align="center" width="200">
           <template slot-scope="scope">
-            <el-button size="mini" @click="delClick()" class="button" icon="el-icon-delete">删除</el-button>
+            <el-button size="mini" type="text" @click="delClick()" class="button" icon="el-icon-delete">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -84,7 +86,9 @@ export default {
 
   methods: {
     downloadClick() {
-
+      const url="/user/downloadExcel"
+      const options = {snapshotTime:formatDate(new Date(row.snapshotTime), 'yyyy-MM-dd hh:mm')}
+      exportExcel(url,options)
     },
 
     delClick() {
@@ -102,12 +106,50 @@ export default {
     headeRowClass({row, column, rowIndex, columnIndex}){
       //表头的背景颜色
       if(rowIndex==0){
-        return 'background:#DCDCDC; ';
+        return 'background:#DCDCDC; color: black';
       }
     },
   }
 
 }
+
+export function exportExcel(url, options = {}) {
+  return new Promise((resolve, reject) => {
+    console.log(`${url} 请求数据，参数=>`, JSON.stringify(options))
+    axios.defaults.headers['content-type'] = 'application/json;charset=UTF-8'
+    axios({
+      method: 'post',
+      url: url, // 请求地址
+      data: options, // 参数
+      responseType: 'blob' // 表明返回服务器返回的数据类型
+    }).then(
+      response => {
+        resolve(response.data)
+        let blob = new Blob([response.data], {
+          type: 'application/pdf'
+        })
+        console.log(blob)
+        let fileName = Date.parse(new Date()) + '.pdf'
+        if (window.navigator.msSaveOrOpenBlob) {
+          // console.log(2)
+          navigator.msSaveBlob(blob, fileName)
+        } else {
+          // console.log(3)
+          var link = document.createElement('a')
+          link.href = window.URL.createObjectURL(blob)
+          link.download = fileName
+          link.click()
+          //释放内存
+          window.URL.revokeObjectURL(link.href)
+        }
+      },
+      err => {
+        reject(err)
+      }
+    )
+  })
+}
+
 </script>
 
 <style scoped>

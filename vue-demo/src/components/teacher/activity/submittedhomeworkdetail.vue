@@ -47,7 +47,7 @@
         </el-form-item>
 
         <el-form-item prop="mark">
-          <el-input v-model.number="markForm.mark" type="number" size="mini" placeholder="请输入分数" resize="none"></el-input>
+          <el-input v-model="markForm.mark" size="mini" placeholder="请输入分数" resize="none"></el-input>
         </el-form-item>
 
         <el-form-item>

@@ -3,7 +3,11 @@
     <div>
       <i class="el-icon-document"></i>
       <sapn id="tag">作业详情</sapn>
-      <el-table :data="tableData" style="width: 100%;" border>
+      <el-table :data="tableData"
+                style="width: 100%;"
+                :row-style="{height:'100px'}"
+                :show-header="status"
+                border>
         <el-table-column
           v-for="(item,i) in tableCol"
           :key="i"
@@ -46,16 +50,15 @@
 // Basic Use - Covers most scenarios
 import { VueEditor } from 'vue2-editor'
 
-
-
 export default {
   name: "homeworkdetail",
   data() {
     return {
+      status: false,
       showOper:true,
       tableCol: [
-        {prop: "key", label: "键", width: 200},
-        {prop: "value", label: "值", width: 600},
+        {prop: "key", label: "键", width: 249},
+        {prop: "value", label: "值", width: 650},
 
       ],
 
@@ -68,10 +71,10 @@ export default {
       ],
 
       tableCol2: [
-        {prop: "sno", label: "学号", width: 100},
-        {prop: "name", label: "姓名", width: 200},
-        {prop: "submitDate", label: "提交时间", width: 200},
-        {prop: "submission", label: "提交情况", width: 100},
+        {prop: "sno", label: "学号", width: 200},
+        {prop: "name", label: "姓名", width: 150},
+        {prop: "submitDate", label: "提交时间", width: 250},
+        {prop: "submission", label: "提交情况", width: 150},
 
       ],
 
@@ -107,7 +110,7 @@ export default {
     headeRowClass({row, column, rowIndex, columnIndex}){
       //表头的背景颜色
       if(rowIndex==0){
-        return 'background:#DCDCDC; ';
+        return 'background:#DCDCDC; color: black';
       }
     },
 
