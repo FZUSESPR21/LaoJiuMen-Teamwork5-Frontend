@@ -1,7 +1,11 @@
 <template>
   <div id="div1">
     <sapn id="tag">作业详情</sapn>
-    <el-table :data="tableData" style="width: 100%;" border>
+    <el-table :data="tableData"
+              style="width: 100%;"
+              :row-style="{height:'100px'}"
+              :show-header="status"
+              border>
       <el-table-column
         v-for="(item,i) in tableCol"
         :key="i"
@@ -15,8 +19,6 @@
       <br>
       <el-button type="primary" plain size="mini" @click="submit" id="button1">提交</el-button>
       <el-button type="primary" plain size="mini" @click="cancel" id="button2">取消</el-button>
-<!--      <router-link to="/student/activity/submittedhomeworkdetail" tag="button" >提交</router-link>
-      <router-link to="/student/activity/homeworklist" tag="button" >取消</router-link>-->
     </div>
   </div>
 </template>
@@ -25,16 +27,15 @@
 // Basic Use - Covers most scenarios
 import { VueEditor } from 'vue2-editor'
 
-
-
 export default {
   name: "homeworkdetail",
   data() {
     return {
+      status: false,
       showOper:true,
       tableCol: [
-        {prop: "key", label: "键", width: 200},
-        {prop: "value", label: "值", width: 600},
+        {prop: "key", label: "键", width: 249},
+        {prop: "value", label: "值", width: 650},
 
       ],
 
@@ -59,6 +60,7 @@ export default {
     submit() {
       this.$router.push('/student/activity/submittedhomeworkdetail')
     },
+
     cancel() {
       this.$router.push('/student/activity/homeworklist')
     },

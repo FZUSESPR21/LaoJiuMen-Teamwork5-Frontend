@@ -15,15 +15,13 @@
 
       <el-table-column label="操作" v-if="showOper" align="center" width="200">
         <template slot-scope="scope">
-          <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >下载</router-link>-->
-          <el-button type="primary" plain size="mini" @click="lookClick" class="button" icon="el-icon-view">查看</el-button>
+          <el-button size="mini" @click="lookClick" class="button" icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
 
       <el-table-column label="操作" v-if="showOper" align="center" width="200">
         <template slot-scope="scope">
-          <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >下载</router-link>-->
-          <el-button type="primary" plain size="mini" @click="downloadClick" class="button" icon="el-icon-download">下载</el-button>
+          <el-button size="mini" @click="downloadClick" class="button" icon="el-icon-download">下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -55,8 +53,16 @@ export default {
     headeRowClass({row, column, rowIndex, columnIndex}){
       //表头的背景颜色
       if(rowIndex==0){
-        return 'background:#DCDCDC; ';
+        return 'background:#DCDCDC; color: black';
       }
+    },
+
+    lookClick() {
+
+    },
+
+    downloadClick() {
+
     },
   },
 }

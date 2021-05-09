@@ -75,7 +75,7 @@
       headeRowClass({row, column, rowIndex, columnIndex}){
         //表头的背景颜色
         if(rowIndex==0){
-          return 'background:#DCDCDC; ';
+          return 'background:#DCDCDC; color: black';
         }
       },
 

@@ -13,13 +13,13 @@
         align="center">
       </el-table-column>
 
-      <el-table-column label="操作" v-if="showOper" align="center" width="150">
+      <el-table-column label="操作" v-if="showOper" align="center" width="200">
         <template slot-scope="scope">
-<!--          <router-link to="/student/activity/submittedhomeworkdetail" tag="button" >查看</router-link>-->
           <el-button size="mini" @click="lookClick" class="button" icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
+
   </div>
 </template>
 
@@ -52,7 +52,7 @@ export default {
     headeRowClass({row, column, rowIndex, columnIndex}){
       //表头的背景颜色
       if(rowIndex==0){
-        return 'background:#DCDCDC;';
+        return 'background:#DCDCDC; color: black';
       }
     },
   },
