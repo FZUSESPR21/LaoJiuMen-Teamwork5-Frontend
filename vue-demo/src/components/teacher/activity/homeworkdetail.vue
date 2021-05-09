@@ -38,7 +38,7 @@
 
         <el-table-column label="作业详情" v-if="showOper" align="center" width="150">
           <template slot-scope="scope">
-            <el-button size="mini" @click="lookClick(scope.row)" class="button" icon="el-icon-view">查看</el-button>
+            <el-button size="mini" type="text" @click="lookClick(scope.row)" class="button" icon="el-icon-view">查看</el-button>
           </template>
         </el-table-column>
       </el-table>

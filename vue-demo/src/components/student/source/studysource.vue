@@ -16,7 +16,7 @@
       <el-table-column label="操作" v-if="showOper" align="center" width="300">
         <template slot-scope="scope">
 <!--          <router-link to="/student/activity/homeworkdetail" tag="button" >下载</router-link>-->
-          <el-button type="primary" plain size="mini" @click="downloadClick" id="downloadbutton" icon="el-icon-download">下载</el-button>
+          <el-button type="text" size="mini" @click="downloadClick" id="downloadbutton" icon="el-icon-download">下载</el-button>
         </template>
       </el-table-column>
     </el-table>

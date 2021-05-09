@@ -15,7 +15,7 @@
 
       <el-table-column label="操作" v-if="showOper" align="center" width="200">
         <template slot-scope="scope">
-          <el-button size="mini" @click="lookClick" class="button" icon="el-icon-view">查看</el-button>
+          <el-button size="mini" type="text" @click="lookClick" class="button" icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
