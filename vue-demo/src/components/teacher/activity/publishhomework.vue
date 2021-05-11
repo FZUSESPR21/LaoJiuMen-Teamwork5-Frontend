@@ -41,7 +41,7 @@
               v-model="date1"
               type="datetime"
               placeholder="选择截止时间"
-              value-format="yyyy年MM月dd日 HH:mm:ss">
+              value-format="yyyy-MM-dd HH:mm:ss">
           </el-date-picker>
         </el-form-item>
 
@@ -54,15 +54,15 @@
             v-model="date2"
             type="datetime"
             placeholder="选择发布时间"
-            value-format="yyyy年MM月dd日 HH:mm:ss">
+            value-format="yyyy-MM-dd HH:mm:ss">
           </el-date-picker>
         </el-form-item>
 
-        <el-form-item>
+<!--        <el-form-item>
           <i class="el-icon-star-on"></i>
           <span class="text">评分方式</span>
           <el-input v-model="publishForm.scoringmethod" rows="1" type="textarea" placeholder="请输入评分方式" resize="none"></el-input>
-        </el-form-item>
+        </el-form-item>-->
 
         <el-form-item>
           <i class="el-icon-star-on"></i>
@@ -134,12 +134,33 @@ export default {
 
   methods: {
     publishClick() {
-      this.$router.push({
-        path: '/teacher/activity/homeworklist',
-        query: {
-
-        }
+      let info = {
+        id:"",
+        clazzId: 1,
+        title: this.publishForm.title,
+        content: this.publishForm.content,
+        startAt: this.date1,
+        endAt: this.date2
+      }
+      this.$axios({
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/homework/teacher/add',
+      }).then((response) => {          //这里使用了ES6的语法
+        console.log(JSON.stringify(response))       //请求成功返回的数据
+        alert(JSON.stringify(response))
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
       })
+      // this.$router.push({
+      //   path: '/teacher/activity/homeworklist',
+      //   query: {
+      //
+      //   }
+      // })
     }
   }
 }

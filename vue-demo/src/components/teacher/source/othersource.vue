@@ -1,8 +1,11 @@
 <template>
   <div id="divMain">
-    <div>
+    <div id="divSelect">
       <span>班级：</span>
-      <el-select size="mini" v-model="value" placeholder="请选择班级">
+      <el-select size="mini"
+                 v-model="value"
+                 placeholder="请选择班级"
+                 @change="selectChange">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -10,7 +13,9 @@
           :value="item.value">
         </el-option>
       </el-select>
+    </div>
 
+    <div>
       <el-table id="table"
                 :data="tableData"
                 stripe
@@ -26,16 +31,16 @@
           show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column label="操作" v-if="showOper" align="center" width="225">
+        <el-table-column label="操作" v-if="showOper" align="center" width="200">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.name=='教学大纲'" type="text" size="mini" class="button" icon="el-icon-download">下载</el-button>
-            <el-button v-else type="text" size="mini" class="button" icon="el-icon-edit">编辑</el-button>
+            <el-button v-if="scope.row.resourceName=='教学大纲'" type="text" size="mini" @click="downloadClick" class="button" icon="el-icon-download">下载</el-button>
+            <el-button v-else type="text" size="mini" @click="editClick" class="button" icon="el-icon-edit">编辑</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" v-if="showOper" align="center" width="225">
+        <el-table-column label="操作" v-if="showOper" align="center" width="200">
           <template slot-scope="scope">
-            <el-button type="text" size="mini" @click="delClick()" class="button" icon="el-icon-delete">删除</el-button>
+            <el-button type="text" size="mini" @click="deleteClick(scope.$index, scope.row)" class="button" icon="el-icon-delete">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -54,43 +59,57 @@ export default {
   data() {
     return {
       options: [{
-        value: '班级1',
+        value: 1,
         label: '2021级S班'
       }, {
-        value: '班级2',
+        value: 2,
         label: '2020级S班'
       }, {
-        value: '班级3',
+        value: 3,
         label: '2019级S班'
       }],
-      value: '',
+      value: 1,
 
       showOper:true,
       tableCol: [
-        {prop: "name", label: "名称", width: 250},
-        {prop: "num", label: "下载量", width: 250},
+        {prop: "resourceName", label: "名称", width: 250},
+        {prop: "downloads", label: "下载量", width: 250},
 
       ],
 
       tableData: [
-        {name: "教学大纲", num: "99"},
-        {name: "教学计划", num: "88"},
+
 
       ],
+      id: ''
 
     }
   },
 
   methods: {
+    selectChange() {
+      this.queryView()
+    },
+
     downloadClick() {
 
     },
 
-    delClick() {
+    editClick() {
+      this.$router.push({
+        path: '/teacher/source/teachingplan',
+        query: {
 
+        }
+      })
     },
 
-    addClick(e) {
+    deleteClick(index,row) {
+      this.id = row.id
+      this.queryDelete()
+    },
+
+    addClick() {
       this.$router.push({
         path: '/teacher/source/add',
         query: {
@@ -101,15 +120,68 @@ export default {
     headeRowClass({row, column, rowIndex, columnIndex}){
       //表头的背景颜色
       if(rowIndex==0){
-        return 'background:#DCDCDC; ';
+        return 'background:#DCDCDC; color: black';
       }
     },
+
+    queryView() {
+      let info = {
+
+      }
+      this.$axios({
+        method: 'get',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/resource/other?clazzId=' + this.value ,
+      }).then((response) => {          //这里使用了ES6的语法
+        /*console.log(JSON.stringify(response))       //请求成功返回的数据
+        alert(JSON.stringify(response))
+        alert("成功")
+        console.log(response.data.data.list)*/
+        this.tableData = response.data.data.list
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    },
+
+    queryDelete() {
+      let info = {
+        id: this.id
+      }
+
+      this.$axios({
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/resource/delete',
+      }).then((response) => {          //这里使用了ES6的语法
+        /*console.log(JSON.stringify(response))       //请求成功返回的数据
+        alert(JSON.stringify(response))
+        alert("成功")
+        console.log(response.data.data.list)
+        this.tableData = response.data.data.list*/
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    }
+  },
+
+  created () {
+    this.queryView();
   }
 
 }
 </script>
 
 <style scoped>
+#divSelect {
+  float: right;
+}
+
 .button {
   background-color: white;
   color: dodgerblue;

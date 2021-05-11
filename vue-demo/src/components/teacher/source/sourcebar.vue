@@ -14,7 +14,7 @@
 
         <el-menu-item class="item" index="/teacher/source/other">
 <!--          <router-link to="/teacher/source/other" tag="button" class="button">学习资源</router-link>-->
-          <span>学习资源</span>
+          <span>其他资源</span>
         </el-menu-item>
       </el-menu>
     </el-col>

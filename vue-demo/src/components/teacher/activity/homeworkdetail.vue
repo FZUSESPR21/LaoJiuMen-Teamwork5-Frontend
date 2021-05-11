@@ -47,8 +47,6 @@
 </template>
 
 <script>
-// Basic Use - Covers most scenarios
-import { VueEditor } from 'vue2-editor'
 
 export default {
   name: "homeworkdetail",
@@ -65,8 +63,7 @@ export default {
       tableData: [
         {key: "标题：", value: this.$route.query.name},
         {key: "截止时间：", value: this.$route.query.endDate},
-        {key: "评分方式：", value: "打分制：10.0分"},
-        {key: "作业内容：", value: ""},
+        {key: "作业内容：", value: this.$route.query.content},
 
       ],
 
@@ -79,20 +76,13 @@ export default {
       ],
 
       tableData2: [
-        {sno: "221801101", name: "姓名1", submitDate: "2020-01-02", submission: "已提交"},
-        {sno: "221801102", name: "姓名2", submitDate: "2020-01-02", submission: "已提交"},
-        {sno: "221801103", name: "姓名3", submitDate: "--", submission: "未提交"},
-
 
       ],
 
-      content: null,
-      editorOption: {}
-
+      hwId: this.$route.query.id,
+      total: '',
+      stuId: [this.total]
     };
-  },
-  components: {//使用编辑器
-    VueEditor
   },
 
   methods: {
@@ -114,7 +104,64 @@ export default {
       }
     },
 
+    querySearch() {
+      let info = {
+
+      }
+
+      this.$axios({
+        method: 'get',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/all?id=' + this.hwId ,
+      }).then((response) => {          //这里使用了ES6的语法
+        /*console.log(JSON.stringify(response))       //请求成功返回的数据
+        alert(JSON.stringify(response))
+        alert("成功")*/
+
+        console.log(response.data.data.list)
+        this.tableData2 = response.data.data.list
+        this.total = response.data.data.total
+        console.log(this.total)
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    },
+
+    queryStuInfo() {
+      let info = {
+
+      }
+
+      this.$axios({
+        method: 'get',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/all?id=' + this.hwId ,
+      }).then((response) => {          //这里使用了ES6的语法
+        /*console.log(JSON.stringify(response))       //请求成功返回的数据
+        alert(JSON.stringify(response))
+        alert("成功")*/
+
+        console.log(response.data.data.list)
+        this.tableData2 = response.data.data.list
+        this.total = response.data.data.total
+        console.log(this.total)
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    }
+
+
   },
+
+  created() {
+    this.querySearch()
+  }
 
 }
 </script>

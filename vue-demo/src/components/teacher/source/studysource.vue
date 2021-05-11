@@ -2,7 +2,10 @@
   <div id="divMain">
     <div id="divSelect">
       <span>班级：</span>
-      <el-select size="mini" v-model="value" placeholder="请选择班级">
+      <el-select size="mini"
+                 v-model="value"
+                 placeholder="请选择班级"
+                 @change="selectChange">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -28,15 +31,15 @@
           show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column label="操作" v-if="showOper" align="center" width="200">
+        <el-table-column label="操作" align="center" width="200">
           <template slot-scope="scope">
             <el-button size="mini" type="text" @click="downloadClick()" class="button" icon="el-icon-download">下载</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" v-if="showOper" align="center" width="200">
+        <el-table-column label="操作" align="center" width="200">
           <template slot-scope="scope">
-            <el-button size="mini" type="text" @click="delClick()" class="button" icon="el-icon-delete">删除</el-button>
+            <el-button size="mini" type="text" @click="deleteClick(scope.$index,scope.row)" class="button" icon="el-icon-delete">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -50,52 +53,59 @@
 </template>
 
 <script>
+
 export default {
   name: "studysource",
   data() {
     return {
       options: [{
-        value: '班级1',
+        value: 1,
         label: '2021级S班'
       }, {
-        value: '班级2',
+        value: 2,
         label: '2020级S班'
       }, {
-        value: '班级3',
+        value: 3,
         label: '2019级S班'
       }],
-      value: '',
+      value: 1,
 
-      showOper:true,
       tableCol: [
-        {prop: "name", label: "名称", width: 250},
-        {prop: "num", label: "下载量", width: 250},
+        {prop: "resourceName", label: "名称", width: 250},
+        {prop: "downloads", label: "下载量", width: 250},
 
       ],
 
       tableData: [
-        {name: "资源1", num: "99"},
-        {name: "资源2", num: "88"},
-        {name: "资源3", num: "77"},
-        {name: "资源4", num: "66"},
-        {name: "资源5", num: "55"},
 
       ],
+
+      id: ''
     }
   },
 
   methods: {
+    selectChange() {
+      this.queryView()
+    },
+
     downloadClick() {
-      const url="/user/downloadExcel"
-      const options = {snapshotTime:formatDate(new Date(row.snapshotTime), 'yyyy-MM-dd hh:mm')}
-      exportExcel(url,options)
-    },
-
-    delClick() {
 
     },
 
-    addClick(e) {
+    deleteClick(index,row) {
+      this.id=row.id
+      this.queryDelete()
+      this.$router.push({
+        path: '/teacher/source/study',
+        query: {
+
+        }
+
+      })
+    },
+
+    addClick() {
       this.$router.push({
         path: '/teacher/source/add',
         query: {
@@ -109,46 +119,60 @@ export default {
         return 'background:#DCDCDC; color: black';
       }
     },
+
+    queryView() {
+      let info = {
+
+      }
+
+      this.$axios({
+        method: 'get',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/resource/all?clazzId=' + this.value ,
+      }).then((response) => {          //这里使用了ES6的语法
+        /*console.log(JSON.stringify(response))       //请求成功返回的数据
+        alert(JSON.stringify(response))
+        alert("成功")*/
+
+        console.log(response.data.data.list)
+        this.tableData = response.data.data.list
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    },
+
+    queryDelete() {
+      let info = {
+        id: this.id
+      }
+
+      this.$axios({
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/resource/delete',
+      }).then((response) => {          //这里使用了ES6的语法
+        /*console.log(JSON.stringify(response))       //请求成功返回的数据
+        alert(JSON.stringify(response))
+        alert("成功")
+        console.log(response.data.data.list)
+        this.tableData = response.data.data.list*/
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    }
+  },
+  created () {
+    this.queryView();
   }
 
 }
 
-export function exportExcel(url, options = {}) {
-  return new Promise((resolve, reject) => {
-    console.log(`${url} 请求数据，参数=>`, JSON.stringify(options))
-    axios.defaults.headers['content-type'] = 'application/json;charset=UTF-8'
-    axios({
-      method: 'post',
-      url: url, // 请求地址
-      data: options, // 参数
-      responseType: 'blob' // 表明返回服务器返回的数据类型
-    }).then(
-      response => {
-        resolve(response.data)
-        let blob = new Blob([response.data], {
-          type: 'application/pdf'
-        })
-        console.log(blob)
-        let fileName = Date.parse(new Date()) + '.pdf'
-        if (window.navigator.msSaveOrOpenBlob) {
-          // console.log(2)
-          navigator.msSaveBlob(blob, fileName)
-        } else {
-          // console.log(3)
-          var link = document.createElement('a')
-          link.href = window.URL.createObjectURL(blob)
-          link.download = fileName
-          link.click()
-          //释放内存
-          window.URL.revokeObjectURL(link.href)
-        }
-      },
-      err => {
-        reject(err)
-      }
-    )
-  })
-}
 
 </script>
 
