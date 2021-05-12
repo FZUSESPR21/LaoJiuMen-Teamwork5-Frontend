@@ -15,7 +15,7 @@
     </el-table>
 
     <div id="div2" align="center">
-      <vue-editor id="editor" v-model="content"></vue-editor>
+      <input class="file" name="file" type="file"  @change="select"/>
       <br>
       <el-button type="primary" plain size="mini" @click="submit" id="button1">提交</el-button>
       <el-button type="primary" plain size="mini" @click="cancel" id="button2">取消</el-button>
@@ -24,8 +24,6 @@
 </template>
 
 <script>
-// Basic Use - Covers most scenarios
-import { VueEditor } from 'vue2-editor'
 
 export default {
   name: "homeworkdetail",
@@ -46,14 +44,9 @@ export default {
 
       ],
 
-      content: null,
-      editorOption: {}
-
     };
   },
-  components: {//使用编辑器
-    VueEditor
-  },
+
 
   methods: {
     submit() {
@@ -63,6 +56,14 @@ export default {
     cancel() {
       this.$router.push('/student/activity/homeworklist')
     },
+
+    select (e) {
+
+      this.file = e.target.files[0]
+      // console.log(file)
+
+    },
+
 
   },
 

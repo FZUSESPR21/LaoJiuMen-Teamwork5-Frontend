@@ -31,14 +31,20 @@ export default {
   name: "submittedhomeworkdetail",
   data() {
     return {
-      input1: '',
-      input2: ''
+      input1: this.$route.query.content,
+      input2: this.$route.query.remark,
+
     }
   },
   methods: {
     downloadClick() {
 
-    }
+    },
+
+  },
+
+  created() {
+    this.queryView()
   }
 }
 </script>
