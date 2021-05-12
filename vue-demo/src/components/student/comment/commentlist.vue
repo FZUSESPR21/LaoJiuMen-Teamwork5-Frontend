@@ -35,6 +35,5 @@ export default {
 
 .part{
   margin-top: -4%;
-  background-color: rgb(228, 228, 228);
 }
 </style>

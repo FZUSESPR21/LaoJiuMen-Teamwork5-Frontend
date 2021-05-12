@@ -24,8 +24,7 @@ export default {
 </script>
 
 <style scoped>
-#content{
-  
+#content{ 
   margin-top: -10%;
   margin-left: 15%;
   margin-right: 15%;

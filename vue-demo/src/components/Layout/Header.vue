@@ -55,7 +55,7 @@ button{
   height:70%;
   width: 50px;
   float: right;
-    margin-top:0.8%;
+  margin-top:0.8%;
   margin-right: -22%;
   border: 1px;
   border-style:dotted;
