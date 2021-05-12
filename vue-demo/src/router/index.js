@@ -76,6 +76,19 @@ const owncommentlist = () =>
 const owncommentdetail = () =>
   import('../components/student/comment/owncommentdetail')
 
+const teacherHomeworkList = () =>
+  import('../components/teacher/activity/homeworklist')
+const teacherHomeworkDetail = () =>
+  import('../components/teacher/activity/homeworkdetail')
+const teacherSubmittedHomeworkDetail = () =>
+  import('../components/teacher/activity/submittedhomeworkdetail')
+const publishHomework = () =>
+  import('../components/teacher/activity/publishhomework')
+const teacherStudySource = () =>
+  import('../components/teacher/source/studysource')
+const teacherOtherSource = () =>
+  import('../components/teacher/source/othersource')
+
 
 //1.安装插件
 Vue.use(Router)
@@ -218,7 +231,21 @@ const routes = [
       },
       {
         path: '/teacher/source',
-        component: TeacherSource
+        component: TeacherSource,
+        children: [
+          {
+            path: '',
+            redirect: '/teacher/source/study'
+          },
+          {
+            path: '/teacher/source/study',
+            component: teacherStudySource
+          },
+          {
+            path: '/teacher/source/other',
+            component: teacherOtherSource
+          }
+        ]
       },
       {
         path: '/teacher/home',
@@ -226,7 +253,29 @@ const routes = [
       },
       {
         path: '/teacher/activity',
-        component: TeacherActivity
+        component: TeacherActivity,
+        children: [
+          {
+            path: '',
+            redirect: '/teacher/activity/homeworklist'
+          },
+          {
+            path: '/teacher/activity/homeworklist',
+            component: teacherHomeworkList
+          },
+          {
+            path: '/teacher/activity/homeworkdetail',
+            component: teacherHomeworkDetail
+          },
+          {
+            path: '/teacher/activity/submittedhomeworkdetail',
+            component: teacherSubmittedHomeworkDetail
+          },
+          {
+            path: '/teacher/activity/publish',
+            component: publishHomework
+          }
+        ]
       },
       {
         path: '/teacher/signin',
