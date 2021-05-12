@@ -42,8 +42,7 @@ export default {
       tableData: [
         {key: "标题：", value: this.$route.query.name},
         {key: "截止时间：", value: this.$route.query.endDate},
-        {key: "评分方式：", value: "打分制：10.0分"},
-        {key: "作业内容：", value: ""},
+        {key: "作业内容：", value: this.$route.query.content},
 
       ],
 
@@ -83,11 +82,11 @@ export default {
 
 #button1 {
   color: white;
-  background-color: dodgerblue;
+  background-color: #4ab2ee;
 }
 
 #button2 {
-  color: dodgerblue;
+  color: #4ab2ee;
   background-color: white;
 }
 </style>

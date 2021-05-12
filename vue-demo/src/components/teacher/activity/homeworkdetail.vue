@@ -68,10 +68,10 @@ export default {
       ],
 
       tableCol2: [
-        {prop: "sno", label: "学号", width: 200},
-        {prop: "name", label: "姓名", width: 150},
-        {prop: "submitDate", label: "提交时间", width: 250},
-        {prop: "submission", label: "提交情况", width: 150},
+        {prop: "account", label: "学号", width: 200},
+        {prop: "studentName", label: "姓名", width: 150},
+        {prop: "submittedAt", label: "提交时间", width: 250},
+        {prop: "score", label: "提交情况", width: 150},
 
       ],
 
@@ -82,16 +82,14 @@ export default {
       dataTemp:[],
 
       hwId: this.$route.query.id,
-      total: '',
-      stuId: [this.total],
-      stuInfo: [this.total]
+
     };
   },
 
   methods: {
     lookClick() {
       this.$router.push({
-        path: '/teacher/activity/submitdetail',
+        path: '/teacher/activity/submittedhomeworkdetail',
         query: {
           userId: this.userID,
           name: this.name,
@@ -107,7 +105,8 @@ export default {
       }
     },
 
-    querySearch() {
+
+    queryHrInfo() {
       let info = {
 
       }
@@ -118,46 +117,12 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/all?id=' + this.hwId ,
+        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/all_sub?id=6',
       }).then((response) => {          //这里使用了ES6的语法
-        /*console.log(JSON.stringify(response))       //请求成功返回的数据
-        alert(JSON.stringify(response))
-        alert("成功")*/
+        // console.log(JSON.stringify(response))       //请求成功返回的数据
 
-        console.log(response.data.data.list)
-        this.dataTemp = response.data.data.list
-        this.total = response.data.data.total
-
-        for (let i = 0;i < this.total;i++) {
-          this.stuId[i] = this.dataTemp[i].studentId
-        }
-        console.log(this.total)
-        console.log(this.stuId)
-      }).catch((error) => {
-        console.log(error)       //请求失败返回的数据
-      })
-
-
-    },
-
-    queryStuInfo() {
-      let info = {
-
-      }
-
-      this.$axios({
-        method: 'get',
-        headers: {
-          'Content-type': 'application/json;charset=UTF-8'
-        },
-        data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/student/homework_result/stu_info?id=1',
-      }).then((response) => {          //这里使用了ES6的语法
-        console.log(JSON.stringify(response))       //请求成功返回的数据
-        alert(JSON.stringify(response))
-        alert("成功")
-        this.stuInfo = response.data.data.list
-        console.log(this.stuInfo)
+        this.tableData2 = response.data.data.list
+        console.log(this.tableData2)
       }).catch((error) => {
         console.log(error)       //请求失败返回的数据
       })
@@ -167,11 +132,7 @@ export default {
   },
 
   created() {
-    this.querySearch()
-
-    this.queryStuInfo()
-
-
+    this.queryHrInfo()
   }
 
 }
@@ -190,7 +151,7 @@ export default {
 
 .button {
   background-color: white;
-  color: dodgerblue;
+  color: #4ab2ee;
   border: 2px
 }
 

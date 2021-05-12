@@ -14,7 +14,7 @@
 
     <div class="part">
       <router-view></router-view>
-      
+
     </div>
   </div>
 </template>
@@ -67,6 +67,7 @@
       margin-top: 0;
       float: left;
   }
+
 
 #activitybar{
   width: 100%;
@@ -135,6 +136,6 @@ button{
 }
 
 .part{
-  margin-top: -4%; 
+  margin-top: -4%;
 }
 </style>

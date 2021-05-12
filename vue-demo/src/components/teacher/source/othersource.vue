@@ -184,12 +184,12 @@ export default {
 
 .button {
   background-color: white;
-  color: dodgerblue;
+  color: #4ab2ee;
 }
 
 .addbutton {
   color: white;
-  background-color: dodgerblue;
+  background-color: #4ab2ee;
 }
 
 #divAdd{

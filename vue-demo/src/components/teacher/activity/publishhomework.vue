@@ -136,7 +136,7 @@ export default {
     publishClick() {
       let info = {
         id:"",
-        clazzId: 1,
+        clazzId: 2,
         title: this.publishForm.title,
         content: this.publishForm.content,
         startAt: this.date1,
@@ -148,7 +148,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/homework/teacher/add',
+        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework/add',
       }).then((response) => {          //这里使用了ES6的语法
         console.log(JSON.stringify(response))       //请求成功返回的数据
         alert(JSON.stringify(response))
@@ -182,7 +182,7 @@ export default {
 
 .button {
   color: white;
-  background-color: dodgerblue;
+  background-color: #4ab2ee;
 }
 
 .text {

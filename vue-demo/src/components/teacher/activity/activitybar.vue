@@ -13,7 +13,7 @@
           <span>作业列表</span>
         </el-menu-item>
 
-        <el-menu-item class="item" index="/teacher/activity/publishhomework">
+        <el-menu-item class="item" index="/teacher/activity/publish">
 <!--          <router-link to="/teacher/activity/publishhomework" tag="button" class="button">发布作业</router-link>-->
           <span>发布作业</span>
         </el-menu-item>
@@ -58,7 +58,7 @@
 }
 
 .item.is-active {
-  background-color: dodgerblue !important;
+  background-color: #4ab2ee !important;
   color: white;
 }
 </style>

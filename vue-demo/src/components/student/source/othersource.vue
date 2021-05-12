@@ -35,15 +35,12 @@ export default {
     return {
       showOper:true,
       tableCol: [
-        {prop: "name", label: "名称", width: 250},
-        {prop: "num", label: "下载量", width: 250},
+        {prop: "resourceName", label: "名称", width: 250},
+        {prop: "downloads", label: "下载量", width: 250},
 
       ],
 
       tableData: [
-        {name: "教学大纲", num: "99"},
-        {name: "教学计划", num: "88"},
-
 
       ],
 
@@ -64,14 +61,39 @@ export default {
     downloadClick() {
 
     },
+
+    queryView() {
+      let info = {
+
+      }
+      this.$axios({
+        method: 'get',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/resource/other?clazzId=2',
+      }).then((response) => {          //这里使用了ES6的语法
+        /*console.log(JSON.stringify(response))       //请求成功返回的数据
+        alert(JSON.stringify(response))
+        alert("成功")
+        console.log(response.data.data.list)*/
+        this.tableData = response.data.data.list
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    },
   },
+  created() {
+    this.queryView()
+  }
 }
 </script>
 
 <style scoped>
 .button {
   background-color: white;
-  color: dodgerblue;
+  color: #4ab2ee;
   border: 2px
 }
 </style>

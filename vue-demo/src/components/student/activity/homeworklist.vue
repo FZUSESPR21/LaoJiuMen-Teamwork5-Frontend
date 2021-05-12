@@ -15,9 +15,9 @@
         show-overflow-tooltip>
       </el-table-column>
 
-      <el-table-column label="操作" v-if="showOper" align="center" width="100">
+      <el-table-column label="操作" align="center" width="100">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="lookClick(scope.row)" class="button" icon="el-icon-view">查看</el-button>
+          <el-button size="mini" type="text" @click="lookClick(scope.$index,scope.row)" class="button" icon="el-icon-view">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -29,44 +29,37 @@
     name: "homeworklist",
     data() {
       return {
-        showOper:true,
         tableCol: [
-          {prop: "name", label: "作业名称", width: 150},
-          {prop: "startDate", label: "开始时间", width: 200},
-          {prop: "endDate", label: "结束时间", width: 200},
+          {prop: "title", label: "作业名称", width: 150},
+          {prop: "startAt", label: "开始时间", width: 200},
+          {prop: "endAt", label: "结束时间", width: 200},
           {prop: "state", label: "状态", width: 150},
           {prop: "score", label: "得分", width: 100},
 
         ],
 
         tableData: [
-          {name: "作业9", startDate: "2020-01-01", endDate: "2020-01-02", state: "已结束", score: "99"},
-          {name: "作业8", startDate: "2020-01-01", endDate: "2020-01-02", state: "已结束", score: "88"},
-          {name: "作业7", startDate: "2020-01-01", endDate: "2020-01-02", state: "已结束", score: "77"},
-          {name: "作业6", startDate: "2020-01-01", endDate: "2020-01-02", state: "已结束", score: "66"},
-          {name: "作业5", startDate: "2020-01-01", endDate: "2020-01-02", state: "已结束", score: "55"},
-          {name: "作业4", startDate: "2020-01-01", endDate: "2020-01-02", state: "已结束", score: "44"},
-          {name: "作业3", startDate: "2020-01-01", endDate: "2020-01-02", state: "已结束", score: "33"},
-          {name: "作业2", startDate: "2020-01-01", endDate: "2020-01-02", state: "已结束", score: "22"},
-          {name: "作业1", startDate: "2020-01-01", endDate: "2020-01-02", state: "已结束", score: "11"},
 
         ],
 
+        hwId: '',
         userID: 'LQ',
         name: '',
-        endDate: ''
+        endDate: '',
+        content: ''
       };
     },
     methods: {
-      lookClick(e) {
-        this.name = e.name
-        this.endDate = e.endDate
+      lookClick(index,row) {
+
         this.$router.push({
           path: '/student/activity/homeworkdetail',
           query: {
+            hwId: row.id,
             userId: this.userID,
-            name: this.name,
-            endDate: this.endDate
+            name: row.title,
+            endDate: row.endAt,
+            content: this.tableData[index].content
           }
         })
         // this.$router.push({name: '/student/activity/homeworkdetail', params: {userId: this.userID,name: this.name}})
@@ -79,7 +72,34 @@
         }
       },
 
+      querySearch() {
+        let info = {
+
+        }
+
+        this.$axios({
+          method: 'get',
+          headers: {
+            'Content-type': 'application/json;charset=UTF-8'
+          },
+          data: JSON.stringify(info),
+          url: 'http://localhost:8088/coursewebsite_war_exploded/student/homework/all?clazzId=1' ,
+        }).then((response) => {          //这里使用了ES6的语法
+          /*console.log(JSON.stringify(response))       //请求成功返回的数据
+          alert(JSON.stringify(response))
+          alert("成功")*/
+
+          console.log(response.data.data.list)
+          this.tableData = response.data.data.list
+        }).catch((error) => {
+          console.log(error)       //请求失败返回的数据
+        })
+      },
     },
+
+    created () {
+      this.querySearch();
+    }
   };
 </script>
 
@@ -90,7 +110,7 @@
 
 .button {
   background-color: white;
-  color: dodgerblue;
+  color: #4ab2ee;
 }
 
 </style>

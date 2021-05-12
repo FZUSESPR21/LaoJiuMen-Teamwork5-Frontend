@@ -83,6 +83,7 @@
     },
     methods: {
       selectChange() {
+        console.log(this.value)
         this.querySearch()
       },
 
@@ -178,7 +179,7 @@
 
 .button {
   background-color: white;
-  color: dodgerblue;
+  color: #4ab2ee;
 }
 
 </style>

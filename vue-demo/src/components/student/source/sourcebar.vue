@@ -50,7 +50,7 @@
 }
 
 .item.is-active {
-  background-color: dodgerblue !important;
+  background-color: #4ab2ee !important;
   color: white;
 }
 </style>
