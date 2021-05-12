@@ -25,8 +25,7 @@
         // 指定图表的配置项和数据
         var option = {
           //标题
-          title: {
-            
+          title: {           
             text: '学生成绩饼图',
             x: 'left' ,             //标题位置
             // textStyle: { //标题内容的样式
@@ -102,9 +101,9 @@
 
 <style scoped>
 #main{
-    height:500px;
-    width:90%;
-    margin-top:5%;
+  height:500px;
+  width:90%;
+  margin-top:5%;
 }
 </style>
 

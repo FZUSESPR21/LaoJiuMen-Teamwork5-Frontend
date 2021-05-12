@@ -24,7 +24,7 @@
 
 <script>
   import echarts from 'echarts'
-import taskechart from './taskechart.vue'
+  import taskechart from './taskechart.vue'
   export default {
   components: { taskechart },
     name: 'taskanalysis',
@@ -32,13 +32,11 @@ import taskechart from './taskechart.vue'
       return {}
     },
   }
-
 </script>
 
 <style scoped>
 .helpform{
-    margin-top: 5%;
+  margin-top: 5%;
 }
-
 </style>
 

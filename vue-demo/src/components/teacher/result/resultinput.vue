@@ -337,20 +337,20 @@ export default {
 
 <style>
 .normalpro{
-    margin-top:2%
+  margin-top:2%
 }
 .getrule{
-    margin-top:2%
+  margin-top:2%
 }
 .getscore{
-    margin-top:5%
+  margin-top:5%
 }
 .searchcondition{
-    margin-top:5%;
-    margin-bottom: 2%;
+  margin-top:5%;
+  margin-bottom: 2%;
 }
 .upload-demo{
-    margin-top:2%
+  margin-top:2%
 }
 </style>
 
@@ -373,6 +373,6 @@ export default {
   background-color: rgb(228, 228, 228);
 }
 .rinput{
-    margin-top:5%;
+  margin-top:5%;
 }
 </style>

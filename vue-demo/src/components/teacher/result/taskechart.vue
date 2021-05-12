@@ -102,9 +102,9 @@
 
 <style scoped>
 #main{
-    height:500px;
-    width:90%;
-    margin-top:5%;
+  height:500px;
+  width:90%;
+  margin-top:5%;
 }
 </style>
 

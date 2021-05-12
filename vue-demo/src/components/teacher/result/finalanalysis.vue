@@ -25,13 +25,11 @@
       return {}
     },
   }
-
 </script>
 
 <style scoped>
 .helpform{
   margin-top: 5%;
 }
-
 </style>
 

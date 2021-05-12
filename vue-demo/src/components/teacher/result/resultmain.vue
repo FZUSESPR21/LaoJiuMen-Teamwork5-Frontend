@@ -67,7 +67,7 @@ button{
     margin-left: 17%;
     margin-top:-18%;
     width:80%;
-    height: 800px;
+    height: 100%;
 }
 #noticedeliver{
   margin-top:0%;
@@ -77,7 +77,7 @@ button{
   font-size:21px;
   margin-top:0.2%;
   margin-bottom:2%;
-margin-left:7.5%;
+  margin-left:7.5%;
 }
 .tac{
   width:30%;

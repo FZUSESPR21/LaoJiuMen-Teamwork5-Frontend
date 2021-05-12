@@ -1,6 +1,5 @@
 <template>
   <div>
-
   <el-form :inline="true" :model="formInline" class="score-rule">
     <el-form-item label="班级">
     <el-select v-model="formInline.region" placeholder="请选择年份班级">
@@ -35,7 +34,6 @@
       prop="clazzz"
       label="考勤课堂10%"
       align="center">
-
     </el-table-column>
     <el-table-column
       prop="test"
