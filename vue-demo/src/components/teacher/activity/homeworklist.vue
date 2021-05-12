@@ -83,6 +83,7 @@
     },
     methods: {
       selectChange() {
+        console.log(this.value)
         this.querySearch()
       },
 

@@ -30,16 +30,12 @@ export default {
     return {
       showOper:true,
       tableCol: [
-        {prop: "name", label: "名称", width: 300},
-        {prop: "num", label: "下载量", width: 300},
+        {prop: "resourceName", label: "名称", width: 300},
+        {prop: "downloads", label: "下载量", width: 300},
 
       ],
 
       tableData: [
-        {name: "资源1", num: "99"},
-        {name: "资源2", num: "88"},
-        {name: "资源3", num: "77"},
-        {name: "资源4", num: "66"},
 
       ],
 
@@ -55,8 +51,32 @@ export default {
 
     downloadClick() {
 
-    }
+    },
+
+    queryView() {
+      let info = {
+
+      }
+
+      this.$axios({
+        method: 'get',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/student/resource/all?clazzId=1',
+      }).then((response) => {
+
+        console.log(response.data.data.list)
+        this.tableData = response.data.data.list
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    },
   },
+  created () {
+    this.queryView();
+  }
 }
 </script>
 

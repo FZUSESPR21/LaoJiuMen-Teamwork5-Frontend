@@ -37,9 +37,7 @@ export default {
       ],
 
       tableData: [
-        {name: "作业9", score: "99"},
-        {name: "作业8", score: "88"},
-        {name: "作业7", score: "77"},
+
       ],
 
     };

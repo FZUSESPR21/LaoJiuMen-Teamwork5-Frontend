@@ -24,10 +24,11 @@ export default {
 </script>
 
 <style scoped>
-#content{
+#content {
   width: 70%;
   position: relative;
-#content{ 
+}
+#content{
   margin-top: -10%;
   margin-left: 15%;
   margin-right: 15%;

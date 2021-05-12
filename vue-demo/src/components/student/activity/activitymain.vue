@@ -14,11 +14,11 @@
 
     <div class="part">
       <router-view></router-view>
-      <div id="noticenav">
-        <router-link to="/student/activity/noticelist" tag="button" >通知列表</router-link>     
-        <router-link to="/student/activity/noticedetail" tag="button" >通知详情页面</router-link>     
+<!--      <div id="noticenav">
+        <router-link to="/student/activity/noticelist" tag="button" >通知列表</router-link>
+        <router-link to="/student/activity/noticedetail" tag="button" >通知详情页面</router-link>
       </div>
-      <router-view id=content></router-view>
+      <router-view id=content></router-view>-->
     </div>
   </div>
 </template>
@@ -73,12 +73,6 @@
   }
 
 
-export default {
-  name: "activitymain"
-}
-</script>
-
-<style scoped>
 #activitybar{
   width: 100%;
   height: 500px;
@@ -146,6 +140,6 @@ button{
 }
 
 .part{
-  margin-top: -4%; 
+  margin-top: -4%;
 }
 </style>
