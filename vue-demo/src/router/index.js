@@ -88,6 +88,7 @@ const TeacherResultTaskAnalysis = () =>
 const TeacherResultFinalAnalysis = () =>
     import ('../components/teacher/result/finalanalysis')
 
+// 教师作业页面跳转路由
 const teacherHomeworkList = () =>
   import('../components/teacher/activity/homeworklist')
 const teacherHomeworkDetail = () =>
@@ -96,10 +97,14 @@ const teacherSubmittedHomeworkDetail = () =>
   import('../components/teacher/activity/submittedhomeworkdetail')
 const publishHomework = () =>
   import('../components/teacher/activity/publishhomework')
+
+// 教师资源页面跳转路由
 const teacherStudySource = () =>
   import('../components/teacher/source/studysource')
 const teacherOtherSource = () =>
   import('../components/teacher/source/othersource')
+const teacherAddSource = () =>
+  import('../components/teacher/source/addsource')
 
 
 //1.安装插件
@@ -253,7 +258,11 @@ const routes = [{
           {
             path: '/teacher/source/other',
             component: teacherOtherSource
-          }
+          },
+          {
+            path: '/teacher/source/add',
+            component: teacherAddSource
+          },
         ]
       },
       {

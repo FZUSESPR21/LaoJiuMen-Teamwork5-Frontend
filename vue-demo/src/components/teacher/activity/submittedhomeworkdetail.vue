@@ -101,7 +101,7 @@ export default {
 
 .button {
   color: white;
-  background-color: dodgerblue;
+  background-color: #4ab2ee;
 }
 
 #span {

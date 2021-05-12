@@ -93,7 +93,7 @@ export default {
 <style scoped>
 .button {
   background-color: white;
-  color: dodgerblue;
+  color: #4ab2ee;
   border: 2px
 }
 </style>

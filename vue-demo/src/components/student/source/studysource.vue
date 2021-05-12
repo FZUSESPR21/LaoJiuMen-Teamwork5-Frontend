@@ -83,7 +83,7 @@ export default {
 <style scoped>
 #downloadbutton {
   background-color: white;
-  color: dodgerblue;
+  color: #4ab2ee;
   border: 2px
 }
 </style>

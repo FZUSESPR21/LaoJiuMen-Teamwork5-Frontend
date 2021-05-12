@@ -82,11 +82,11 @@ export default {
 
 #button1 {
   color: white;
-  background-color: dodgerblue;
+  background-color: #4ab2ee;
 }
 
 #button2 {
-  color: dodgerblue;
+  color: #4ab2ee;
   background-color: white;
 }
 </style>
