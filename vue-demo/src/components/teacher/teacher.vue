@@ -27,7 +27,6 @@ export default {
 #content{
   width: 70%;
   position: relative;
-#content{ 
   margin-top: -10%;
   margin-left: 15%;
   margin-right: 15%;
