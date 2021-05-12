@@ -21,8 +21,12 @@ export default {
 
 <style scoped>
 #head{
+  background-color: white;
   font-size: 20px;
-  height: 100px;
+  height: 100%;
+  margin-top: 8%;
+  margin-left: 4%;
+  margin-bottom: 6%;
 }
 
 .english{
@@ -30,10 +34,9 @@ export default {
   margin-top: 0;
   font-size: 15px;
 }
-
 .part{
 
   background-color: rgb(228, 228, 228);
-  margin-top: -4%;
+  margin-top: -1%;
 }
 </style>

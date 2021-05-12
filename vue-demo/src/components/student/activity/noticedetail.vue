@@ -42,7 +42,7 @@ export default {
 .box-card {
   width: 100%;
   border-radius: 30px;
-  margin-top: -15%;
+  margin-top: 10%;
 }
 </style>
 

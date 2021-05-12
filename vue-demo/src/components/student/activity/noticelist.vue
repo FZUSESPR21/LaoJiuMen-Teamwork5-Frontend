@@ -1,5 +1,10 @@
 <template>
 <div> 
+  <div id="noticenav">
+    <router-link to="/student/activity/noticelist" tag="button" >通知列表</router-link>     
+    <router-link to="/student/activity/noticedetail" tag="button" >通知详情页面</router-link>     
+  </div>
+  <router-view id=content></router-view>
   <!--通知列表的展示-->
   <el-table class="noticetable"
     :data="tableData"
@@ -176,4 +181,6 @@
 .noticetable{
   margin-top:5%;
 }
+
+
 </style>

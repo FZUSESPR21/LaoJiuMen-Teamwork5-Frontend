@@ -1,6 +1,6 @@
 <template>
   <div>     
-    <div>
+    <div class="rinput">
       <el-upload
         class="upload-demo"
         action="https://jsonplaceholder.typicode.com/posts/"
@@ -371,5 +371,8 @@ export default {
 .part{
   margin-top: -4%;
   background-color: rgb(228, 228, 228);
+}
+.rinput{
+    margin-top:5%;
 }
 </style>

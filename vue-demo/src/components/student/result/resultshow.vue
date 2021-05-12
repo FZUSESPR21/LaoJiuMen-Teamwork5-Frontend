@@ -115,8 +115,12 @@ export default {
   background-color: white;
 }
 #head{
+  background-color: white;
   font-size: 20px;
-  height: 100px;
+  height: 100%;
+  margin-top: 8%;
+  margin-left: 4%;
+  margin-bottom: 6%;
 }
 
 .english{
@@ -133,21 +137,3 @@ export default {
 
 
 
-<style scoped>
-#head{
-  background-color: white;
-  font-size: 20px;
-  height: 100px;
-  margin-top: 8%;
-}
-
-.english{
-  color: rgb(179, 179, 179);
-  margin-top: 0;
-  font-size: 15px;
-}
-
-.part{
-
-}
-</style>
