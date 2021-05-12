@@ -96,8 +96,6 @@ export default {
 
       url: '',
       tId: 1,
-      /*cId: 1,
-      type: 1,*/
       file: '',
     }
   },

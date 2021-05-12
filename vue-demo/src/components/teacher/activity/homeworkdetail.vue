@@ -117,7 +117,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/all_sub?id=6',
+        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/all_sub?homeworkId=' + this.hwId,
       }).then((response) => {          //这里使用了ES6的语法
         // console.log(JSON.stringify(response))       //请求成功返回的数据
 

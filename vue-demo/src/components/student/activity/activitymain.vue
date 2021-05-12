@@ -7,7 +7,6 @@
     </div>
 
 
-
     <div class="sidebar">
       <activitybar></activitybar>
     </div>
@@ -40,8 +39,7 @@
     position: absolute;
     left: 30px;
     width: 200px;
-    padding: 5px;
-    margin-top: 20px;
+
   }
 
   #head2 {
@@ -52,20 +50,20 @@
     position: absolute;
     left: 30px;
     width: 200px;
-    padding: 5px;
-    margin-top: 20px;
+
   }
 
   .part {
-    margin-top: 0;
+    margin-top: -3%;
     background-color: rgb(228, 228, 228);
     float:left;
     width: 900px;
   }
 
   .sidebar {
-      margin-top: 0;
+      margin-top: -3%;
       float: left;
+
   }
 
 
@@ -135,7 +133,4 @@ button{
   font-size: 15px;
 }
 
-.part{
-  margin-top: -4%;
-}
 </style>

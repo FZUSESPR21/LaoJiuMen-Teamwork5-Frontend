@@ -43,9 +43,6 @@ export default {
 
   },
 
-  created() {
-    this.queryView()
-  }
 }
 </script>
 
