@@ -79,9 +79,12 @@ export default {
 
       ],
 
+      dataTemp:[],
+
       hwId: this.$route.query.id,
       total: '',
-      stuId: [this.total]
+      stuId: [this.total],
+      stuInfo: [this.total]
     };
   },
 
@@ -122,12 +125,19 @@ export default {
         alert("成功")*/
 
         console.log(response.data.data.list)
-        this.tableData2 = response.data.data.list
+        this.dataTemp = response.data.data.list
         this.total = response.data.data.total
+
+        for (let i = 0;i < this.total;i++) {
+          this.stuId[i] = this.dataTemp[i].studentId
+        }
         console.log(this.total)
+        console.log(this.stuId)
       }).catch((error) => {
         console.log(error)       //请求失败返回的数据
       })
+
+
     },
 
     queryStuInfo() {
@@ -141,16 +151,13 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/all?id=' + this.hwId ,
+        url: 'http://localhost:8088/coursewebsite_war_exploded/student/homework_result/stu_info?id=1',
       }).then((response) => {          //这里使用了ES6的语法
-        /*console.log(JSON.stringify(response))       //请求成功返回的数据
+        console.log(JSON.stringify(response))       //请求成功返回的数据
         alert(JSON.stringify(response))
-        alert("成功")*/
-
-        console.log(response.data.data.list)
-        this.tableData2 = response.data.data.list
-        this.total = response.data.data.total
-        console.log(this.total)
+        alert("成功")
+        this.stuInfo = response.data.data.list
+        console.log(this.stuInfo)
       }).catch((error) => {
         console.log(error)       //请求失败返回的数据
       })
@@ -161,6 +168,10 @@ export default {
 
   created() {
     this.querySearch()
+
+    this.queryStuInfo()
+
+
   }
 
 }

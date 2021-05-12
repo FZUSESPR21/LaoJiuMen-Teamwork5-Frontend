@@ -132,10 +132,7 @@ export default {
         },
         data: JSON.stringify(info),
         url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/resource/all?clazzId=' + this.value ,
-      }).then((response) => {          //这里使用了ES6的语法
-        /*console.log(JSON.stringify(response))       //请求成功返回的数据
-        alert(JSON.stringify(response))
-        alert("成功")*/
+      }).then((response) => {
 
         console.log(response.data.data.list)
         this.tableData = response.data.data.list
