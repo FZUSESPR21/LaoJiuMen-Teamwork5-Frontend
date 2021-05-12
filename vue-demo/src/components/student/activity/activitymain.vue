@@ -29,42 +29,43 @@
 </script>
 
 <style scoped>
-  #head {
-    font-size: 20px;
-    height: 100px;
+#head {
+  font-size: 20px;
+  height: 100px;
+  background-color: white;
+  margin-top: 8%;
+}
 
-  }
+#head1 {
+  position: absolute;
+  left: 30px;
+  width: 200px;
 
-  #head1 {
-    position: absolute;
-    left: 30px;
-    width: 200px;
+}
 
-  }
+#head2 {
+  color: rgb(179, 179, 179);
+  margin-top: 0;
+  font-size: 15px;
 
-  #head2 {
-    color: rgb(179, 179, 179);
-    margin-top: 0;
-    font-size: 15px;
+  position: absolute;
+  left: 30px;
+  width: 200px;
 
-    position: absolute;
-    left: 30px;
-    width: 200px;
+}
 
-  }
+.part {
+  margin-top: -3%;
+  background-color: rgb(228, 228, 228);
+  float:left;
+  width: 900px;
+}
 
-  .part {
-    margin-top: -3%;
-    background-color: rgb(228, 228, 228);
-    float:left;
-    width: 900px;
-  }
+.sidebar {
+  margin-top: -3%;
+  float: left;
 
-  .sidebar {
-      margin-top: -3%;
-      float: left;
-
-  }
+}
 
 
 #activitybar{
@@ -119,12 +120,6 @@ button{
 }
 .router-link-active-focus{
   border: none;
-}
-#head{
-  background-color: white;
-  font-size: 20px;
-  height: 100px;
-  margin-top: 8%;
 }
 
 .english{

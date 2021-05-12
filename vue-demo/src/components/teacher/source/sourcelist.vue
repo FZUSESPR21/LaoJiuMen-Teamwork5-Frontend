@@ -28,6 +28,7 @@ export default {
 
 <style scoped>
 #head{
+  margin-top: 8%;
   font-size: 20px;
   height: 100px;
 }
@@ -36,31 +37,28 @@ export default {
   position: absolute;
   left: 30px;
   width: 200px;
-  padding: 5px;
-  margin-top: 20px;
+
 }
 
 #head2 {
   color: rgb(179, 179, 179);
-  margin-top: 0;
   font-size: 15px;
 
   position: absolute;
   left: 30px;
   width: 200px;
-  padding: 5px;
-  margin-top: 20px;
+
 }
 
 .part{
-  margin-top: 0;
+  margin-top: -5.7%;
   background-color: rgb(255, 252, 252);
   float:left;
   width: 900px;
 }
 
 .sidebar{
-  margin-top: 0;
+  margin-top: -3%;
   float: left;
 }
 </style>

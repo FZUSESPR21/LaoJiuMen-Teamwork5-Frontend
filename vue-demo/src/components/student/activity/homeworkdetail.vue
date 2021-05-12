@@ -1,7 +1,8 @@
 <template>
   <div id="div1">
     <sapn id="tag">作业详情</sapn>
-    <el-table :data="tableData"
+    <el-table id="table"
+              :data="tableData"
               style="width: 100%;"
               :row-style="{height:'100px'}"
               :show-header="status"
@@ -14,9 +15,12 @@
       </el-table-column>
     </el-table>
 
+    <br>
+
     <div id="div2" align="center">
-      <el-input id="input2" v-model="content" rows="5" type="textarea" placeholder="请输入内容" resize="none"></el-input>
+      <el-input id="input" v-model="content" rows="5" type="textarea" placeholder="请输入内容" resize="none"></el-input>
       <input class="file" name="file" type="file"  @change="select"/>
+      <br>
       <br>
       <el-button type="primary" plain size="mini" @click="submit" id="button1">提交</el-button>
       <el-button type="primary" plain size="mini" @click="cancel" id="button2">取消</el-button>
@@ -96,6 +100,16 @@ export default {
 </script>
 
 <style scoped>
+#table {
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #b3b1b1;
+}
+
+#input {
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #b3b1b1;
+}
+
 #tag {
   font-weight:bold;
   color: #000000;
