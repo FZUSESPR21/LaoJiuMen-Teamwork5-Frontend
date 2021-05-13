@@ -22,7 +22,6 @@ export default {
   name: "student",
   components: {
     Teacherheader,
-    Studentheader,
     Header,
     Cloudimg,
     home
