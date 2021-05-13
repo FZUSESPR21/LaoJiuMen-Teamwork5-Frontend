@@ -48,7 +48,7 @@ const Teacher = () =>
 const TeacherLoginBox = () =>
   import ('../components/Login/LoginBox')
 const TeacherManage = () =>
-  import ('../components/teacher/manage/studentlist')
+  import ('../components/teacher/manage/studentmanage')
 const StudySource = () =>
   import('../components/student/source/studysource')
 const OtherSource = () =>
@@ -75,6 +75,12 @@ const owncommentlist = () =>
   import('../components/student/comment/owncommentlist')
 const owncommentdetail = () =>
   import('../components/student/comment/owncommentdetail')
+const studentlist = () =>
+  import('../components/teacher/manage/studentlist')
+const createstudent = () =>
+  import('../components/teacher/manage/createstudent')
+const createclass = () =>
+  import('../components/teacher/manage/createclass')
 
 
 //1.安装插件
@@ -242,7 +248,25 @@ const routes = [
       },
       {
         path: '/teacher/manage',
-        component: TeacherManage
+        component: TeacherManage,
+        children: [
+          {
+            path: '',
+            redirect: '/teacher/manage/studentlist'
+          },
+          {
+            path: '/teacher/manage/studentlist',
+            component: studentlist
+          },
+          {
+            path: '/teacher/manage/createstudent',
+            component: createstudent
+          },
+          {
+            path: '/teacher/manage/createclass',
+            component: createclass
+          }
+        ]
       }
     ]
   },

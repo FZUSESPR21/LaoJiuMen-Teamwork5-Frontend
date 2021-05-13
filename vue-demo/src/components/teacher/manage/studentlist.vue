@@ -1,16 +1,16 @@
 <template>
   <div>
-    <div id="classname">
+    <div id="clazzname">
       班级：
-      <el-select v-model="classvalue" placeholder="请选择" size="mini">
+      <el-select v-model="clazzvalue" placeholder="请选择" size="mini" @change="changeClazz">
         <el-option
           v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+          :key="item.id"
+          :label="item.clazzName"
+          :value="item.id">
         </el-option>
       </el-select>
-      <el-button type="primary" size="mini" @click="createclass">新建班级</el-button>
+      <el-button type="primary" size="mini" @click="createclass" id="newclazz">新建班级</el-button>
     </div>
     <div id="stulistbox">
       <div id="stulist">
@@ -23,21 +23,22 @@
         </div>
         <div v-for="(item,index) in studentlist">
           <div id="listitem">
-            <input type="checkbox" id="itemcheckbox" :checked="selectArr.indexOf(item.studentId) > -1"  @change='selectOne(item.studentId)'></input>
+            <input type="checkbox" id="itemcheckbox" :checked="selectArr.indexOf(item.id) > -1"  @change='selectOne(item.id)'></input>
             <div id="item">
               <span id="account">{{ item.account }}</span>
-              <span id="studentname">{{ item.student_name }}</span>
+              <span id="studentname">{{ item.studentName }}</span>
               <span id="email">{{ item.email }}</span>
-              <el-button type="text" id="itemeditbtn">编辑</el-button>
-              <el-button type="text" id="itemdelbtn" @click="deleteOne">删除</el-button>
+              <el-button type="text" id="itemeditbtn" @click="editstudent(item.id,item.account,item.studentName,item.email)">编辑</el-button>
+              <el-button type="text" id="itemdelbtn" @click="deleteOne(item.id)">删除</el-button>
             </div>
           </div>
         </div>
+        <p>{{selectArr}}</p>
         <div id="listfoot">
           <el-button size="mini" id="deleteSelbtn" @click="deleteSel">删除</el-button>
           <el-upload
             id="uploadbtn"
-            action
+            action=""
             accept=".xls,.xlsx"
             :auto-upload="false"
             :show-file-list="false"
@@ -45,7 +46,8 @@
           >
             <el-button size="mini"  icon="el-icon-upload2">上传Excel生成学生列表</el-button>
           </el-upload>
-          <el-button size="mini" id="downloadbtn" icon="el-icon-download">下载上传须知</el-button>
+          <el-button size="mini" id="downloadbtn" icon="el-icon-download" @click="download">下载上传须知</el-button>
+          <!--          <a href="#" @click="download">下载上传须知</a>-->
           <el-button size="mini" type="primary" id="newstu" @click="createstudent">新增</el-button>
           <el-pagination
             background
@@ -66,69 +68,176 @@ export default {
   name: "studentlist",
   data(){
     return{
-      options: [{
-        value: '选项1',
-        label: '2021年S班'
-      }, {
-        value: '选项2',
-        label: '2021年W班'
-      }, {
-        value: '选项3',
-        label: '2020年S班'
-      }, {
-        value: '选项4',
-        label: '2020年W班'
-      }],
-      classvalue: '',
+      options: [],
+      clazzvalue: '',
       selectArr:[],
       isCheckedAll:false,
       studentlist: [
-        {
-          studentId:'1',
-          account:'221801000',
-          student_name:'小宋',
-          email:'1111111111@qq.com',
-        },
-        {
-          studentId:'2',
-          account:'221801001',
-          student_name:'小张',
-          email:'1111111112@qq.com',
-        },
-        {
-          studentId:'3',
-          account:'221801002',
-          student_name:'小李',
-          email:'1111111113@qq.com',
-        },
-        {
-          studentId:'4',
-          account:'221801003',
-          student_name:'小林',
-          email:'1111111114@qq.com',
-        },
-        {
-          studentId:'5',
-          account:'221801004',
-          student_name:'小王',
-          email:'1111111115@qq.com',
-        }
+
       ]
     }
   },
+  created() {
+    this.options = JSON.parse(localStorage.getItem('clazzInfo'))
+    this.clazzvalue = this.options[0].id
+    if (!localStorage.getItem('clazzvalue'))
+      localStorage.setItem('clazzvalue',this.clazzvalue)
+    else this.clazzvalue = localStorage.getItem('clazzvalue')
+    this.querytest()
+  },
   methods:{
-    createstudent (){
-      this.$router.push('/teacher/manage/createstudent')
+    querytest() {
+      this.$axios({
+        method: 'get',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+
+        url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/all?clazzId='+this.clazzvalue,
+      }).then((response) => {          //这里使用了ES6的语法
+        //console.log(JSON.stringify(response))       //请求成功返回的数据
+        console.log(response.data.data.list)
+        this.studentlist = response.data.data.list
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
     },
+
+    createstudent(){//新增学生
+      this.$router.push({
+        path:'/teacher/manage/createstudent',
+        query:{
+          type:'0',
+        }
+      })
+    },
+
+    changeClazz(){
+      this.querytest()
+      localStorage.setItem('clazzvalue',this.clazzvalue)
+    },
+
     createclass(){
       this.$router.push('/teacher/manage/createclass')
     },
-    deleteOne (index){
 
+    editstudent(stu_id,stu_account,stu_name,stu_email){//编辑学生
+      this.$router.push({
+        path:'/teacher/manage/createstudent',
+        query:{
+          studentId:stu_id,
+          account:stu_account,
+          student_name:stu_name,
+          email:stu_email,
+          type:'1'
+        }
+      })
     },
+
+    download(){
+      // this.$axios({
+      //   method: 'post',
+      //   url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/down',
+      //   // data: {},
+      //   headers:{
+      //     'Content-type': 'application/x-www-form-urlencoded',
+      //     'Authorization': localStorage.getItem('token')
+      //   },
+      //   responseType: 'arraybuffer'
+      // }).then(function (res) {
+      //   var blob = new Blob([res.data], {type: 'application/vnd.ms-excel;charset=utf-8'}); //指定格式为vnd.ms-excel
+      //   var downloadElement = document.createElement('a');
+      //   var href = window.URL.createObjectURL(blob); //创建下载的链接
+      //   downloadElement.href = href;
+      //   downloadElement.download = 'xxx.xls'; //下载后文件名
+      //   document.body.appendChild(downloadElement);
+      //   downloadElement.click(); //点击下载
+      //   document.body.removeChild(downloadElement); //下载完成移除元素
+      //   window.URL.revokeObjectURL(href); //释放掉blob对象
+      // }).catch((error) => {
+      //   console.log(error)
+      // })
+
+      window.location.href = 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/down'
+    },
+
+
+
+    deleteOne (stuId){
+      let index
+      let delOneMessage = {
+        id: stuId
+      }
+      this.$axios({
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(delOneMessage),
+        url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/delete',
+      }).then((response) => {          //这里使用了ES6的语法
+        // console.log(JSON.stringify(response))       //请求成功返回的数据
+        // console.log(response.data.data)
+        if (response.data.code === '200' && response.data.data === 1){
+          for (let i = 0; i < this.studentlist.length;i++){
+            if (this.studentlist[i].id === stuId){
+              index = i
+              break
+            }
+          }
+          this.studentlist.splice(index, 1)
+          let selectId = this.selectArr.indexOf(stuId+"")
+          this.selectArr.splice(selectId,1)
+          alert('删除学生成功!');
+        }
+        else {
+          alert('删除学生失败!');
+        }
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    },
+
     deleteSel (){
+      let message = []
+      for(let i=0;i<this.selectArr.length;i++) {
+        let _t = {
+          id: this.selectArr[i]
+        }
+        message.push(_t)
+      }
+      if (this.selectArr.length == 0)
+        alert("没有要删除的选项")
+      else {
+        let index
+        this.$axios({
+          method: 'post',
+          headers: {
+            'Content-type': 'application/json;charset=UTF-8'
+          },
+          data: JSON.stringify(message),
+          url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/dlt_li',
+        }).then((response) => {          //这里使用了ES6的语法
+          if (response.data.code === '200') {
+            alert(response.data.data)
+            for (let i =0;i<this.selectArr.length;i++){
+              for (let j = 0; j < this.studentlist.length;j++){
+                if (this.studentlist[j].id === (this.selectArr[i])){
+                  index = j
+                  break
+                }
+              }
+              this.studentlist.splice(index,1)
+            }
+            this.selectArr = []
+          }
+        }).catch((error) => {
+          console.log(error)       //请求失败返回的数据
+        })
+      }
 
     },
+
     selectOne (studentId) {
       let idIndex = this.selectArr.indexOf(studentId)
       if (idIndex >= 0) {
@@ -143,7 +252,7 @@ export default {
         this.selectArr = []
         const _that = this
         this.studentlist.forEach((val,index) =>{
-          this.selectArr.push(val.studentId)
+          this.selectArr.push(val.id)
         })
       } else {
         this.selectArr = []
@@ -177,10 +286,13 @@ export default {
 </script>
 
 <style scoped>
-#classname{
+#clazzname{
   float: right;
   margin-top: -40px;
   margin-right: 45px;
+}
+#newclazz{
+  background-color: #4ab2ee;
 }
 #stulistbox{
   margin-top: 4px;
@@ -259,6 +371,9 @@ export default {
 #downloadbtn{
   color: red;
   border: 1px solid red;
+}
+#newstu{
+  background-color: #4ab2ee;
 }
 #pagination{
   float: right;

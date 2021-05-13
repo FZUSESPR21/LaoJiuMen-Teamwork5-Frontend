@@ -5,15 +5,15 @@
         <span id="headtitle">新建班级</span>
       </div>
       <div id="classmessage">
-        <el-form  :rules="rules" >
-          <el-form-item label="请输入班级名字：(推荐格式：年份+班级昵称)" prop="classname">
-            <el-input placeholder="单行输入" v-model="classname" required size="small" id="classname"></el-input>
+        <el-form  :rules="rules" :model="classmessage" ref="classmessage">
+          <el-form-item label="请输入班级名字：(推荐格式：年份+班级昵称)" prop="clazzName">
+            <el-input placeholder="单行输入" v-model="classmessage.clazzName" required size="small" id="classname"></el-input>
           </el-form-item>
         </el-form>
       </div>
       <div id="editfoot">
-        <el-button id="cancelbtn" size="small">取消</el-button>
-        <el-button type="primary" id="confirmbtn" size="small">确定</el-button>
+        <el-button id="cancelbtn" size="small" @click="goback">取消</el-button>
+        <el-button type="primary" id="confirmbtn" @click="submitForm('classmessage')" size="small">确定</el-button>
       </div>
     </div>
   </div>
@@ -24,12 +24,56 @@ export default {
   name: "newclass",
   data(){
     return{
-      classname:'',
+      classmessage:{
+        clazzName:'',
+        teacherId:localStorage.getItem('id')
+      },
+
       rules:{
-        classname:[
-          {required:true,message:'班级名字不能为空', trigger: 'blur'}
+        clazzName:[
+          {required:true,message:'班级名字不能为空', trigger: ['blur', 'change']}
         ]
       }
+    }
+  },
+  methods:{
+    goback() {
+      this.$router.go(-1)
+    },
+    submitForm(formName) {
+      let clazz = {
+        clazzName:this.classmessage.clazzName,
+        teacherId:this.classmessage.teacherId
+      }
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$axios({
+            method: 'post',
+            headers: {
+              'Content-type': 'application/json;charset=UTF-8'
+            },
+            data: JSON.stringify(clazz),
+            url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/cls/add',
+          }).then((response) => {          //这里使用了ES6的语法
+            // console.log(JSON.stringify(response))       //请求成功返回的数据
+            // console.log(response.data.data)
+            if (response.data.code === '200') {
+              alert('新增班级成功!');
+              localStorage.removeItem('clazzInfo')
+              localStorage.setItem('clazzInfo',response.data.data.clazzInfo)
+              this.$router.push('/teacher/manage/studentlist')
+            }
+            else {
+              alert('新增班级失败!');
+            }
+          }).catch((error) => {
+            console.log(error)       //请求失败返回的数据
+          })
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     }
   }
 }
@@ -37,7 +81,7 @@ export default {
 
 <style scoped>
 #editbox{
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 2px 6px 10px #d9d9f5;
   height: 260px;
   margin-top: 20px;
@@ -48,7 +92,7 @@ export default {
   width: 100%;
   height: 50px;
   background-color: #eeeeee;
-  border-radius: 10px 10px 0px 0px;
+  border-radius: 20px 20px 0px 0px;
 }
 #headtitle{
   font-size: 13px;
