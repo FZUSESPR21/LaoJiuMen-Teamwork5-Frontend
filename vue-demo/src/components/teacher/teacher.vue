@@ -48,7 +48,7 @@ export default {
 #content{
   width: 70%;
   position: relative;
-  margin-top: -100px;
+  margin-top: -10%;
   margin-left: 15%;
   margin-right: 15%;
 }

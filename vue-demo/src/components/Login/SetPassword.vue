@@ -96,7 +96,7 @@ export default {
               'Content-type': 'application/json;charset=UTF-8'
             },
             data: JSON.stringify(message),
-            url: 'http://localhost:8081/coursewebsite_war_exploded/chg_pwd',
+            url: 'http://1.15.149.222:8080/coursewebsite/chg_pwd',
           }).then((response) => {          //这里使用了ES6的语法
             // console.log(JSON.stringify(response))       //请求成功返回的数据
             // console.log(response.data.data)
@@ -128,7 +128,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(codeMessage),
-        url: 'http://localhost:8081/coursewebsite_war_exploded/captcha',
+        url: 'http://1.15.149.222:8080/coursewebsite/captcha',
       }).then((response) => {          //这里使用了ES6的语法
         alert(JSON.stringify(response.data.message));
       }).catch((error) => {
