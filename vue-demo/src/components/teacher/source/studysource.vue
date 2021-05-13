@@ -33,7 +33,7 @@
 
         <el-table-column label="操作" align="center" width="200">
           <template slot-scope="scope">
-            <el-button size="mini" type="text" @click="downloadClick()" class="button" icon="el-icon-download">下载</el-button>
+            <el-button size="mini" type="text" @click="downloadClick(scope.$index)" class="button" icon="el-icon-download">下载</el-button>
           </template>
         </el-table-column>
 
@@ -89,20 +89,17 @@ export default {
       this.queryView()
     },
 
-    downloadClick() {
+    downloadClick(index) {
+      this.id = this.tableData[index].id
+      this.querySearch()
 
     },
 
     deleteClick(index,row) {
       this.id=row.id
       this.queryDelete()
-      this.$router.push({
-        path: '/teacher/source/study',
-        query: {
-
-        }
-
-      })
+      this.$router.push('/teacher/source/study')
+      this.$router.go(0)
     },
 
     addClick() {
@@ -162,7 +159,12 @@ export default {
       }).catch((error) => {
         console.log(error)       //请求失败返回的数据
       })
-    }
+    },
+
+    querySearch() {
+      window.location.href = 'http://localhost:8088/coursewebsite_war_exploded/resource/download?id='+this.id;
+
+    },
   },
   created () {
     this.queryView();

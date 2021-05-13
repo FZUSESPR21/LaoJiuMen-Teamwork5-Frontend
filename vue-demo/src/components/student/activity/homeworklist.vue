@@ -15,6 +15,8 @@
         show-overflow-tooltip>
       </el-table-column>
 
+
+
       <el-table-column label="操作" align="center" width="100">
         <template slot-scope="scope">
           <el-button size="mini" type="text" @click="lookClick(scope.$index,scope.row)" class="button" icon="el-icon-view">查看</el-button>
@@ -33,7 +35,7 @@
           {prop: "title", label: "作业名称", width: 150},
           {prop: "startAt", label: "开始时间", width: 200},
           {prop: "endAt", label: "结束时间", width: 200},
-          {prop: "state", label: "状态", width: 150},
+          {prop: "status", label: "状态", width: 150},
           {prop: "score", label: "得分", width: 100},
 
         ],
@@ -42,12 +44,11 @@
 
         ],
 
+
         cId: 3,
         hwId: '',
-        sId: 4,
-        name: '',
-        endDate: '',
-        content: ''
+        sId: 24,
+
       };
     },
     methods: {
@@ -84,7 +85,7 @@
             'Content-type': 'application/json;charset=UTF-8'
           },
           data: JSON.stringify(info),
-          url: 'http://localhost:8088/coursewebsite_war_exploded/student/homework/all?clazzId=' + this.cId,
+          url: 'http://localhost:8088/coursewebsite_war_exploded/student/homework/all?clazzId=' + this.cId + '&studentId=' + this.sId,
         }).then((response) => {          //这里使用了ES6的语法
           /*console.log(JSON.stringify(response))       //请求成功返回的数据
           alert(JSON.stringify(response))
@@ -92,10 +93,13 @@
 
           console.log(response.data.data.list)
           this.tableData = response.data.data.list
+
         }).catch((error) => {
           console.log(error)       //请求失败返回的数据
         })
+
       },
+
     },
 
     created () {

@@ -34,7 +34,7 @@
         <el-table-column label="操作" align="center" width="200">
           <template slot-scope="scope">
             <el-button v-if="scope.row.type=='2'" type="text" size="mini" @click="editClick" class="button" icon="el-icon-edit">编辑</el-button>
-            <el-button v-else type="text" size="mini" @click="downloadClick(scope.row)" class="button" icon="el-icon-download">下载</el-button>
+            <el-button v-else type="text" size="mini" @click="downloadClick(scope.$index)" class="button" icon="el-icon-download">下载</el-button>
           </template>
         </el-table-column>
 
@@ -82,9 +82,6 @@ export default {
 
       ],
       rsId: '',
-      filePath: 1
-
-
 
     }
   },
@@ -94,9 +91,9 @@ export default {
       this.queryView()
     },
 
-    downloadClick(row) {
-      this.filePath = row.filePath
-      console.log(this.filePath)
+    downloadClick(index) {
+      this.id = this.tableData[index].id
+      this.querySearch()
 
     },
 
@@ -112,6 +109,8 @@ export default {
     deleteClick(index,row) {
       this.rsId = row.id
       this.queryDelete()
+      this.$router.push('/teacher/source/other')
+      this.$router.go(0)
     },
 
     addClick() {
@@ -149,6 +148,11 @@ export default {
       }).catch((error) => {
         console.log(error)       //请求失败返回的数据
       })
+    },
+
+    querySearch() {
+      window.location.href = 'http://localhost:8088/coursewebsite_war_exploded/resource/download?id='+this.id;
+
     },
 
     queryDelete() {

@@ -9,7 +9,9 @@
     <div>
       <div>
         <i class="el-icon-folder-opened"></i>
-        <el-button type="primary" plain size="mini" class="button" @click="downloadClick" icon="el-icon-download">下载</el-button>
+
+          <el-button type="primary" plain size="mini" class="button" @click="downloadClick" icon="el-icon-download">下载</el-button>
+
       </div>
 
       <br>
@@ -21,8 +23,8 @@
       <br>
 
       <div>
-        <span id="span" class="text">评论</span>
-        <el-input v-model="input2" rows="5" type="textarea" placeholder="评论内容" resize="none" readonly></el-input>
+        <span id="span" class="text">评语</span>
+
       </div>
     </div>
 
@@ -35,7 +37,7 @@
         </el-form-item>
 
         <el-form-item id="publishButton">
-          <el-button type="primary" plain size="mini" @click="publishClick('commentForm')" class="button">发表评论</el-button>
+          <el-button type="primary" plain size="mini" @click="publishClick" class="button">批改</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -49,10 +51,6 @@
         <el-form-item prop="mark">
           <el-input v-model="markForm.mark" size="mini" placeholder="请输入分数" resize="none"></el-input>
         </el-form-item>
-
-        <el-form-item>
-          <el-button type="primary" plain size="mini" @click="submitClick('markForm')" class="button">提交评分</el-button>
-        </el-form-item>
       </el-form>
     </div>
 
@@ -64,30 +62,84 @@ export default {
   name: "submittedhomeworkdetail",
   data() {
 
+    var validateMark = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('分数不能为空'));
+      } else {
+        if (value < 0 || value > 100) {
+          callback(new Error('分数为0-100'));
+        } else {
+          callback();
+        }
+      }
+    };
 
     return {
-      input1: '',
-      input2: '',
+      input1: this.$route.query.content,
+
       commentForm: {
-        comment: '',
+        comment: this.$route.query.remark,
       },
       markForm: {
         mark: ''
       },
 
+      rules: {
+        mark:  { validator: validateMark, trigger: 'blur' },
+      },
+
+      id: this.$route.query.id,
+      hwId: this.$route.query.hwId,
 
     }
   },
   methods: {
     downloadClick() {
 
+      this.querySearch()
     },
     publishClick() {
+      this.queryUpdate()
+      this.$router.push({
+        path: '/teacher/activity/homeworkdetail',
+        query: {
+          hwId: this.hwId,
+
+        }
+      })
+      this.$router.go(0)
+    },
+
+    querySearch() {
+      window.location.href = 'http://localhost:8088/coursewebsite_war_exploded/homework_result/download?id='+this.id;
 
     },
-    submitClick(formName) {
 
-    }
+    queryUpdate() {
+      let info = {
+        score: this.markForm.mark,
+        remark: this.commentForm.comment,
+        id: this.id
+      }
+
+      this.$axios({
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/update' ,
+      }).then((response) => {          //这里使用了ES6的语法
+        /*console.log(JSON.stringify(response))       //请求成功返回的数据
+        alert(JSON.stringify(response))
+        alert("成功")*/
+
+        console.log(response.data.data.list)
+        this.tableData = response.data.data.list
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    },
 
   },
 

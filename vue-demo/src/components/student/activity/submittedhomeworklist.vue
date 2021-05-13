@@ -39,7 +39,7 @@ export default {
 
       ],
 
-      sId: 1
+      sId: 24
 
     };
   },
@@ -50,10 +50,15 @@ export default {
         path: '/student/activity/submittedhomeworkdetail',
         query: {
           content: this.tableData[index].content,
-          remark: this.tableData[index].remark
+          remark: this.tableData[index].remark,
 
+          id: this.tableData[index].id,
+          filepath: this.tableData[index].filePath,
+
+          box: this.tableData[index]
         }
       })
+      console.log(this.tableData[index].filePath)
     },
 
     headeRowClass({row, column, rowIndex, columnIndex}){

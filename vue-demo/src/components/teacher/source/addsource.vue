@@ -50,7 +50,6 @@
 
         <el-form-item>
           <el-button id="cancel" type="primary" plain size="mini" @click="cancelClick">取消</el-button>
-          <el-button class="button" type="primary" plain size="mini">预发布</el-button>
           <el-button class="button" type="primary" plain size="mini" @click="publishClick">发布</el-button>
         </el-form-item>
       </el-form>
@@ -83,11 +82,8 @@ export default {
         label: '学习资源'
       }, {
         value: 1,
-        label: '教学大纲'
-      }, {
-        value: 2,
-        label: '教学计划'
-      }],
+        label: '其他资源'
+      },],
       typeValue: 0,
 
       publishForm: {
@@ -121,7 +117,7 @@ export default {
     },
 
 
-    publishClick(){//确定上传
+    publishClick() {//确定上传
       let param = new FormData() // 创建form对象
       param.append('file', this.file, this.file.name) // 通过append向form对象添加数据
       param.append('teacherId', this.tId)
@@ -132,9 +128,12 @@ export default {
         withCredentials: true
       })
       // url为后台接口
-      instance.post('http://localhost:8088/coursewebsite_war_exploded/upload', param)
+      instance.post('http://localhost:8088/coursewebsite_war_exploded/teacher/resource/upload', param)
         .then(this.succ) // 成功返回信息 调用函数  函数需自己定义，此处后面省略
         .catch(this.serverError) // 服务器错误 调用对应函数  函数需自己定义，此处后面省略
+      this.$router.push('/teacher/source/study')
+      this.$router.go(0)
+
     }
   }
 }
