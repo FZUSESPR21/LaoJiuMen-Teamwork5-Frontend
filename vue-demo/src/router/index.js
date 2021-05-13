@@ -115,6 +115,9 @@ const teacherAddSource = () =>
 const teacherNoticeList = () =>
     import ('../components/teacher/activity/noticelist')
 
+const noticeDeliver = () =>
+    import ('../components/teacher/activity/noticedeliver')
+
 //1.安装插件
 Vue.use(Router)
 
@@ -300,7 +303,12 @@ const routes = [{
                     },
                     {
                         path: '/teacher/activity/noticelist',
-                        component: teacherNoticeList
+                        component: teacherNoticeList,
+
+                    },
+                    {
+                        path: '/teacher/activity/noticedeliver',
+                        component: noticeDeliver
                     }
                 ]
             },
@@ -314,14 +322,6 @@ const routes = [{
                 children: [{
                         path: 'resultlist',
                         component: TeacherResultList,
-                        /*children: {
-                            path: 'resultinput',
-                            component: () =>
-                                import ('@/components/teacher/result/resultinput'),
-                            name: 'resultinput',
-                            meta: { title: '成绩录入' },
-                            hidden: true,
-                        }*/
                     },
                     {
                         path: 'resultinput',
@@ -336,43 +336,6 @@ const routes = [{
                         component: TeacherResultTaskAnalysis
                     }
                 ]
-            },
-            {
-                path: '/teacher/comment',
-                component: TeacherComment
-            },
-            {
-                path: '/teacher/manage',
-                component: TeacherManage
-            }
-        ]
-
-    }, {
-        path: '/teacher',
-        component: Teacher,
-        children: [{
-                path: '',
-                redirect: '/teacher/home'
-            },
-            {
-                path: '/teacher/source',
-                component: TeacherSource
-            },
-            {
-                path: '/teacher/home',
-                component: TeacherHome
-            },
-            {
-                path: '/teacher/activity',
-                component: TeacherActivity
-            },
-            {
-                path: '/teacher/signin',
-                component: TeacherSignin
-            },
-            {
-                path: '/teacher/result',
-                component: TeacherResult
             },
             {
                 path: '/teacher/comment',
@@ -398,10 +361,18 @@ const routes = [{
                         component: createclass
                     }
                 ]
-            }
+            },
+
+
         ]
     },
+
+
 ]
+
+
+
+
 
 //2.创建Router对象,export default导出
 export default new Router({

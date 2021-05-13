@@ -33,15 +33,17 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="80">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="updateClick(scope.$index, scope.row)" @click.native.prevent="uopdateRow(scope.$index, scope.row)" class="button" icon="el-icon-delete">修改</el-button>
+          <el-button size="mini" type="text" @click="lookClick(scope.$index,scope.row)" class="button" icon="el-icon-view">修改</el-button>
         </template>
       </el-table-column>
-    <el-table-column label="操作" align="center" width="80">
+      <el-table-column label="操作" align="center" width="150">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="deleteClick(scope.$index, scope.row)" @click.native.prevent="deleteRow(scope.$index, scope.row)" class="button" icon="el-icon-delete">删除</el-button>
+          <el-button size="mini" type="text" @click="deleteClick(scope.$index, scope.row)" class="button" icon="el-icon-delete">删除</el-button>
         </template>
-    </el-table-column>
+      </el-table-column>
     </el-table>
+    <el-button type="primary" @click="deliverClick()">发布通知</el-button>
+
 </div>
 </template>
 
@@ -73,25 +75,29 @@ export default {
     };
   },
     methods: {
+      deliverClick(){
+        this.$router.push({
+          path:'/teacher/activity/noticedeliver'
+        }
+        )
+        
+      },
       deleteClick(index,row) {
         this.id = row.id
         this.queryDelete()
-      },
-      deleteRow(index, row) {
-        this.id = row.id
-        this.queryDelete()
+        this.$router.push('/teacher/activity/noticelist')
+        this.$router.go(0)
       },
       lookClick(index,row) {
 
         this.$router.push({
-          path: '/student/activity/noticedetail',
+          path: '/teacher/activity/noticedetail',
           query: {
             nId: row.id,
             nname: row.notificationName,
             content: this.tableData[index].content
           }
         })
-        // this.$router.push({name: '/student/activity/homeworkdetail', params: {userId: this.userID,name: this.name}})
       },
 
       headeRowClass({row, column, rowIndex, columnIndex}){
@@ -125,7 +131,29 @@ export default {
         })
       },
     },
+    queryDelete() {
+        let info = {
+          id: this.id
+        }
 
+        this.$axios({
+          method: 'post',
+          headers: {
+            'Content-type': 'application/json;charset=UTF-8'
+          },
+          data: JSON.stringify(info),
+          url: 'http://1.15.149.222:8080/coursewebsite/teacher/notice/delete',
+        }).then((response) => {          //这里使用了ES6的语法
+          /*console.log(JSON.stringify(response))       //请求成功返回的数据
+          alert(JSON.stringify(response))
+          alert("成功")
+          console.log(response.data.data.list)
+          this.tableData = response.data.data.list*/
+        }).catch((error) => {
+          console.log(error)       //请求失败返回的数据
+        })
+      },
+    
     created () {
       this.querySearch();
     }

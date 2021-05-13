@@ -21,7 +21,7 @@
 <script>
 
 export default {
-  name: "homeworkdetail",
+  name: "noticedetail",
   data() {
     return {
       status: false,

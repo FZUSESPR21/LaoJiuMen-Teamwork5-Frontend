@@ -8,18 +8,21 @@
         <el-card class="box-card1">
           <div slot="header" class="clearfix">
             <span>期末笔试成绩：</span>
+            {{writtenScore}}
           </div>
           <div></div>
         </el-card>
         <el-card class="box-card2">
           <div slot="header" class="clearfix">
             <span>作业成绩：</span>
+            
           </div>
           <div></div>
         </el-card>
         <el-card class="box-card3">
           <div slot="header" class="clearfix">
             <span>期末总成绩：</span>
+            {{totalScore}}
           </div>
           <div v-for="o in 4" :key="o" class="text item">
             {{'列表内容 ' + o }}
@@ -33,7 +36,8 @@
         </el-card>
         <el-card class="box-card5">
           <div slot="header" class="clearfix">
-            <span>考勤、课堂成绩：</span>
+            <span>平时成绩：</span>
+            {{usualScore}}
           </div>
           <div></div>
         </el-card>
@@ -50,6 +54,13 @@
 export default {
   name: "resultshow",
   
+  data(){
+    return{
+      totalScore:'',
+      writtenScore:'',
+      usualScore:''
+    }
+  },
   methods:{
     showresult(){
       let info={}
@@ -59,13 +70,18 @@ export default {
             'Content-type': 'application/json;charset=UTF-8'
           },
           data: JSON.stringify(info),
-          //url: 'http://1.15.149.222:8080/coursewebsite/notice/all?stuId=1' ,
+
+          url: 'http://1.15.149.222:8080/coursewebsite/student/score/search/?sid=1',
 
       }).then((response) => {
+        /*
                   console.log(response)       //请求成功返回的数据
           alert(JSON.stringify(response))
-        console.log(response.data.data.list)
-
+          */
+        console.log(response.data.data)
+        this.usualScore=response.data.data.usualScore
+        this.totalScore=response.data.data.totalScore
+        this.writtenScore=response.data.data.writtenScore
         
       }).catch((error) => {
           console.log(error)       //请求失败返回的数据

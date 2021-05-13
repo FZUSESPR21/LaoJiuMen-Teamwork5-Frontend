@@ -77,7 +77,7 @@
             'Content-type': 'application/json;charset=UTF-8'
           },
           data: JSON.stringify(info),
-          url: 'http://1.15.149.222:8080/coursewebsite/notice/all?clazzId=1' ,
+          url: 'http://1.15.149.222:8080/coursewebsite/notice/all?clazzId='+localStorage.getItem('clazzId') ,
         }).then((response) => {          //这里使用了ES6的语法
           /*console.log(JSON.stringify(response))       //请求成功返回的数据
           alert(JSON.stringify(response))
@@ -89,11 +89,12 @@
           console.log(error)       //请求失败返回的数据
         })
       },
-    },
-
     created () {
       this.querySearch();
     }
+    },
+
+
   };
 </script>
 

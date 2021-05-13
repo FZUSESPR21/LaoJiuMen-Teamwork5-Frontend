@@ -8,18 +8,26 @@
         <div id="noticehead"><p>通知内容</p></div>
           <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="班级">
-              <el-select v-model="form.region" placeholder="请选择年份班级">
-                <el-option label="2021年S班" value="year"></el-option>
-                <el-option label="2020年S班" value="yearr"></el-option>
+              <el-select v-model="form.clazzId" placeholder="请选择年份班级">
+                <el-option
+                  v-for="item in options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
               </el-select>
             </el-form-item>
+
             <el-form-item label="标题">
               <el-input v-model="form.name" placeholder="请输入通知标题"></el-input>
             </el-form-item>
 
+
+
             <el-form-item label="内容">
-              <el-input type="textarea" v-model="form.desc" placeholder="请输入通知内容"></el-input>
+              <el-input type="textarea" v-model="form.content" rows="4" placeholder="请输入通知内容" resize="none"></el-input>
             </el-form-item>
+
             <el-form-item>
               <el-button @click="onSubmit">发布通知</el-button>
             </el-form-item>
@@ -31,30 +39,69 @@
 
 <script>
   export default {
-    name: "notivedeliver",
+    name: "noticedeliver",
     data() {
       return {
+        value1:'',
+        options: [{
+          value: 1,
+          label: '2021级S班'
+        }, {
+          value: 2,
+          label: '2020级S班'
+        }, {
+          value: 3,
+          label: '2019级S班'
+        }],
+        value: 3,
+
+        
         form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+          name: '',
+          clazzId: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          content: ''
       }
     }
   },
   methods: {
     onSubmit() {
       console.log('submit!');
+      let info = {
+        notificationName: this.form.name,
+        content: this.form.content,
+        clazzId:this.form.clazzId,
+        issuer: localStorage.getItem('teacherName'),
+      }
+      this.$axios({
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://1.15.149.222:8080/coursewebsite/teacher/notice/add',
+      }).then((response) => {          //这里使用了ES6的语法
+        console.log(JSON.stringify(response.data.data))       //请求成功返回的数据
+        alert(JSON.stringify(response.data.data))
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+        this.tipBox = true
+      })
+
+//      this.$router.push('/teacher/activity/noticelist')
+  //    this.$router.go(0)
     }
-  }
+  },
+ 
 }
 </script>
 
 <style scoped>
+
 #head{
   background-color: white;
   font-size: 20px;

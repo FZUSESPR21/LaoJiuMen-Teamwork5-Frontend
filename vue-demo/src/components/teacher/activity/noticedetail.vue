@@ -1,66 +1,66 @@
 <template>
-<el-card class="bcard">
-  <div slot="header" class="clearfix">
-    <span>《软件工程》远程教学说明</span>
+  <div id="div1">
+    <el-table id="table"
+              :data="tableData"
+              style="width: 100%;"
+              :row-style="{height:'100px'}"
+              :show-header="status"
+              border>
+      <el-table-column
+        v-for="(item,i) in tableCol"
+        :key="i"
+        :prop="item.prop"
+        :width="item.width">
+      </el-table-column>
+    </el-table>
+
+
   </div>
-  <div v-for="o in 4" :key="o" class="text item">
-    {{'通知内容 ' + o }}
-  </div>
-</el-card>
 </template>
 
 <script>
+
 export default {
-  name: "noticedetail"
+  name: "noticedetail",
+  data() {
+    return {
+      status: false,
+
+      tableCol: [
+        {prop: "key", label: "键", width: 249},
+        {prop: "value", label: "值", width: 650},
+
+      ],
+
+      tableData: [
+        {key: "标题：", value: this.$route.query.nname},
+        {key: "通知内容：", value: this.$route.query.content},
+
+      ],
+
+      sId: this.$route.query.stuId,
+      content: '',
+      file: ''
+
+    };
+  },
+
+
+  methods: {
+
+  },
+
 }
 </script>
 
-
-<style>
-.text {
-  font-size: 14px;
-  width:100%;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both
-}
-.clearfix{
-  font-size: 30px;
-  text-align: center;
-}
-
-.bcard {
-  width: 100%;
-  border-radius: 30px;
-}
-</style>
-
 <style scoped>
-#head{
+#table {
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #b3b1b1;
+}
+
+#div1 {
   background-color: white;
-  font-size: 20px;
-  height: 100px;
-  margin-top: 8%;
-}
-
-.english{
-  color: rgb(179, 179, 179);
-  margin-top: 0;
-  font-size: 15px;
-}
-
-.part{
-  margin-top: -4%;
-  background-color: rgb(228, 228, 228);
 }
 </style>
+
