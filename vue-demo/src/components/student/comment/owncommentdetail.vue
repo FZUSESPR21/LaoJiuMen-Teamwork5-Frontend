@@ -1,21 +1,36 @@
 <template>
   <div>
     <div class="part">
+      <li>
+        <div class="comment-item">
+          <div class="comment-title">
+            {{item.title}}
+          </div>
+          <div class="comment-contains">
+            {{item.content}}
+          </div>
+          <div class="comment-info">
+            <span class="comment-name">{{item.account}}</span>
+            <span>发布于</span>
+            <span class="comment-time">{{item.releasedAt}}</span>
+          </div>
+        </div>
+      </li>
       <!--      讨论列表-->
       <ul id="app">
-        <li>
+        <li v-for="item in ownCommentList">
           <div class="comment-item">
             <div class="comment-title">
-              蚂蚁金服设计
+              {{item.title}}
             </div>
-            <div class="comment-contains" @click="ToDetail">
-              段落示意：加减法冷风机阿里
+            <div class="comment-contains">
+              {{item.content}}
             </div>
             <div class="comment-info">
-              <span class="comment-name">林东</span>
+              <span class="comment-name">{{item.account}}</span>
               <span>发布于</span>
-              <span class="comment-time">2002.08.19</span>
-              <el-button class="deleteBtn">删除</el-button>
+              <span class="comment-time">{{item.releaseAt}}</span>
+              <el-button class="deleteBtn" @click="deleteComment(item.id)">删除</el-button>
             </div>
           </div>
         </li>
@@ -29,10 +44,10 @@
       <div class="comment-left">
         评论：
       </div>
-      <textarea  placeholder="输入评论" class="comment-text">
+      <textarea  placeholder="输入评论" class="comment-text" ref="commentValue">
 
       </textarea>
-      <el-button type="submit" class="submitBtn">
+      <el-button type="submit" class="submitBtn" @click="addComment">
         发表评论
       </el-button>
     </div>
@@ -41,7 +56,79 @@
 
 <script>
 export default {
-  name: "owncommentdetail"
+  name: "owncommentdetail",
+  data(){
+    return{
+      ownCommentList:[],
+      detailId:'',
+      item:{}
+    }
+  },
+  created() {
+    this.detailId=this.$route.query.detailId
+    this.item=this.$route.query.topic
+    this.getCommentInfo();
+  },
+  methods:{
+    getCommentInfo:function (){
+      this.$axios({
+        method: 'get',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        url: 'http://localhost:8088/coursewebsite_war_exploded/comment/all?topicId='+this.detailId,
+      }).then((response) => {          //这里使用了ES6的语法
+        console.log(JSON.stringify(response))       //请求成功返回的数据
+        // console.log(response.data.data.list)
+        this.ownCommentList = response.data.data.list
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    },
+    deleteComment:function (e){
+      let info = {
+        id: e
+      }
+      this.$axios({
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://localhost:8088/coursewebsite_war_exploded/comment/delete',
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+      this.getCommentInfo();
+      this.$router.go(0)
+    },
+    addComment:function (){
+      this.comment=this.$refs.commentValue.value
+      if(this.comment=='')
+        alert("请输入评论！")
+      else {
+        this.$axios({
+          method: 'post',
+          headers: {
+            'Content-type': 'application/json;charset=UTF-8'
+          },
+          url: 'http://localhost:8088/coursewebsite_war_exploded/comment/add',
+          data: {
+            account: "221801102",
+            topicId: this.detailId,
+            content: this.comment
+          }
+        }).then((response) =>{
+          console.log(response.data)
+        }).catch((error) => {
+          console.log(error)       //请求失败返回的数据
+        })
+        this.$refs.commentValue.value=''
+        this.getCommentInfo()
+        this.$router.go(0)
+      }
+    }
+  }
 }
 </script>
 

@@ -11,7 +11,7 @@
           </select>
           <input type="text" placeholder="搜索" id="search"></input>
           <el-button class="searchBtn" @click="ToOwnlist">仅看自己</el-button>
-          <el-button class="searchBtn">发表新话题</el-button>
+          <el-button class="searchBtn" @click="insertTopic">发表新话题</el-button>
         </form>
 
       </div>
@@ -20,30 +20,30 @@
         <div class="title" >
           标题：
         </div>
-        <input type="text"  placeholder="输入标题" class="titleText">
+        <input type="text"  placeholder="输入标题" class="titleText" ref="titleValue">
 
         </input>
         <div class="contain">
           内容：
         </div>
-        <input type="text"  placeholder="输入内容" class="containText">
+        <input type="text"  placeholder="输入内容" class="containText" ref="containValue">
 
-       </input>
+        </input>
       </div>
 <!--      讨论列表-->
       <ul id="app">
-        <li>
+        <li v-for="item in commentList">
           <div class="comment-item">
             <div class="comment-title">
-              蚂蚁金服设计
+              {{item.title}}
             </div>
-            <div class="comment-contains" @click="ToDetail">
-              段落示意：加减法冷风机阿里
+            <div class="comment-contains" @click="ToDetail(item)">
+              {{item.content}}
             </div>
             <div class="comment-info">
-              <span class="comment-name">林东</span>
+              <span class="comment-name">{{item.account}}</span>
               <span>发布于</span>
-              <span class="comment-time">2002.08.19</span>
+              <span class="comment-time">{{item.releasedAt}}</span>
             </div>
           </div>
         </li>
@@ -58,11 +58,13 @@ export default {
   name: "commentlist",
   data(){
     return{
-
+      commentList:[],
+      newTitle:'',
+      newContain:''
     }
   },
   created() {
-
+    this.getCommentInfo();
   },
   methods:{
     ToOwnlist:function (){
@@ -70,10 +72,63 @@ export default {
         path: '/student/comment/owncommentlist',
       })
     },
-    ToDetail:function (){
+    ToDetail:function (e){
       this.$router.push({
         path: '/student/comment/commentdetail',
+        query:{
+          detailID:e.id,
+          topic:{
+            title:e.title,
+            account:e.account,
+            content:e.content,
+            released_at:e.released_at
+          }
+        }
       })
+    },
+    getCommentInfo:function (){
+      this.$axios({
+        method: 'get',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        url: 'http://localhost:8088/coursewebsite_war_exploded/topic/all',
+      }).then((response) => {          //这里使用了ES6的语法
+        console.log(JSON.stringify(response))       //请求成功返回的数据
+        // console.log(response.data.data.list)
+        this.commentList = response.data.data.list
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    },
+    insertTopic:function (){
+      this.newContain=this.$refs.containValue.value
+      this.newTitle=this.$refs.titleValue.value
+      console.log(this.newTitle)
+      if(this.newContain==''||this.newTitle=='')
+        alert("请输入话题！")
+      else {
+        this.$axios({
+          method: 'post',
+          headers: {
+            'Content-type': 'application/json;charset=UTF-8'
+          },
+          url: 'http://localhost:8088/coursewebsite_war_exploded/topic/add',
+          data: {
+            account: "221801102",
+            title: this.newTitle,
+            content: this.newContain
+          }
+        }).then((response) =>{
+          console.log(response.data)
+        }).catch((error) => {
+          console.log(error)       //请求失败返回的数据
+        })
+        this.$refs.containValue.value=''
+        this.$refs.titleValue.value=''
+        this.getCommentInfo()
+        this.$router.go(0)
+      }
     }
   }
 }
