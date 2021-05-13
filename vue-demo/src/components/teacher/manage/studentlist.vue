@@ -7,7 +7,7 @@
           v-for="item in options"
           :key="item.id"
           :label="item.clazzName"
-          :value="item.id">
+          :value="item.id+''">
         </el-option>
       </el-select>
       <el-button type="primary" size="mini" @click="createclass" id="newclazz">新建班级</el-button>
