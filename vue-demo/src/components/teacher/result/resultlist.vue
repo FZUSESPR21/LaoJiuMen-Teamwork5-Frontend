@@ -87,22 +87,6 @@ export default {
         homework:'7',
         final:'80(56)',
         add:'81'
-      }, {
-        num: '2218',
-        name: '王小虎',
-        clazzz: '10',
-        test:'8',
-        homework:'7',
-        final:'80(56)',
-        add:'81'
-      }, {
-        num: '2218',
-        name: '王小虎',
-        clazzz: '10',
-        test:'8',
-        homework:'7',
-        final:'80(56)',
-        add:'81'
       }]
     }
   },

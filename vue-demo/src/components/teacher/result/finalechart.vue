@@ -61,6 +61,47 @@
 
         
           // 饼图数据
+            //动态获取饼状图的数据
+            /*
+            async initData() {
+            var url="";
+            this.axios.post(url,{}).then(res=>{
+                console.log(res.data);
+                var getData = [];
+                //先进行赋值
+                console.log(res.data.length)
+                //for循环赋值
+                for(let i=0; i<res.data.length; i++) {
+                    var obj = new Object();
+                    obj.name = res.data[i].typeName;
+                    obj.value = res.data[i].num;
+                    getData[i] = obj;
+                }
+                //然后再给饼状图赋值
+                this.chartPie.setOption({
+                    legend: {
+                    data: res.data.typeName,
+                    },
+                    series:[{
+                        data: getData,
+                    }]
+                });
+            })
+            
+            
+            },
+            drawCharts() {
+                this.drawPieChart();
+            },
+
+            //页面一加载就调用方法
+            mounted () {
+                //先调用这个方法赋值
+                this.initData();
+                //再调用饼状图方法
+                this.drawCharts();
+            }
+            */
           series: {
             // name: 'bug分布',
             type: 'pie',             //echarts图的类型   pie代表饼图

@@ -1,5 +1,6 @@
 <template>
   <div>     
+      <!--上传学生成绩excel-->
     <div class="rinput">
       <el-upload
         class="upload-demo"
@@ -17,6 +18,7 @@
       <el-button size="small" type="primary" @click="downTemplate">下载文件</el-button>
     </div>
 
+<!--平时成绩占比选择-->
     <div class="normalpro">
       <p>请选择平时成绩占比</p>
       <el-radio v-model="radio" label="1">20%</el-radio>
@@ -47,7 +49,6 @@
           </template>
         </el-table-column>
       </el-table-column>
-
       <el-table-column label="小测得分规则/次">
         <el-table-column prop="scoreA" label="A100">
           <template slot-scope="scope">
@@ -108,7 +109,7 @@
     <el-divider></el-divider>
     <el-button @click="submitData">提交 </el-button>
 
-
+<!--录入单个学生成绩-->
     <div class="getscore">
       <el-table :data="tableData" border stripe style="width: 100%;">
         <el-table-column prop="number" label="学号">
@@ -203,6 +204,8 @@
       <el-button @click="submitData">提交 </el-button>
       <el-button @click="calculateData">计算 </el-button>
     </div>
+
+    <!--搜索单个学生的成绩-->
     <div>
       <div class="searchcondition">
         学号：
@@ -246,7 +249,7 @@ export default {
       radio: '1',
       input1: '',
       tableData: [],
-      fileList: [{name: 'student.xls', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+      fileList: [{name: 'student.jpg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],//已上传的文件
         homeworkData: [
         {
           homeName: '第一次作业',
@@ -328,6 +331,9 @@ export default {
         link.click()
         document.body.removeChild(link)
         window.URL.revokeObjectURL(url)
+      },
+      searchData(){
+        
       }
     }
   }
@@ -350,7 +356,7 @@ export default {
   margin-bottom: 2%;
 }
 .upload-demo{
-  margin-top:2%
+    margin-top:2%
 }
 </style>
 

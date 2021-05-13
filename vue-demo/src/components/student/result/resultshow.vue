@@ -48,7 +48,33 @@
 
 <script>
 export default {
-  name: "resultshow"
+  name: "resultshow",
+  
+  methods:{
+    showresult(){
+      let info={}
+      this.$axios({
+        methods:'get',
+        headers: {
+            'Content-type': 'application/json;charset=UTF-8'
+          },
+          data: JSON.stringify(info),
+          //url: 'http://1.15.149.222:8080/coursewebsite/notice/all?stuId=1' ,
+
+      }).then((response) => {
+                  console.log(response)       //请求成功返回的数据
+          alert(JSON.stringify(response))
+        console.log(response.data.data.list)
+
+        
+      }).catch((error) => {
+          console.log(error)       //请求失败返回的数据
+        })
+    },
+  },
+  created () {
+      this.showresult();
+  }
 }
 </script>
 

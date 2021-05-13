@@ -1,135 +1,155 @@
 <template>
   <div>
-<el-form :inline="true" :model="formInline" class="demo-form-inline">
-  <el-form-item label="班级">
-    <el-select v-model="formInline.region" placeholder="请选择年份班级">
-      <el-option label="2021年S班" value="year"></el-option>
-      <el-option label="2020年S班" value="yearr"></el-option>
-    </el-select>
-  </el-form-item>
-  <el-form-item class="resultbutton">
-  </el-form-item>
-</el-form>
-<el-table
-    :data="tableData"
-    stripe
-    style="width: 100%"
-    >
-    <el-table-column
-      prop="name"
-      label="通知名称"
-      align="center"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="time"
-      label="发布时间"
-      align="center"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="publisher"
-      label="发布人"
-      align="center">
+    <div>
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="班级">
+          <el-select v-model="formInline.region" placeholder="请选择年份班级">
+            <el-option label="2021年S班" value="year"></el-option>
+            <el-option label="2020年S班" value="yearr"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item class="resultbutton"></el-form-item>
+      </el-form>
+    </div>
+    <el-table id="table"
+              :data="tableData"
+              stripe
+              style="width: 100%"
+              :header-cell-style="headeRowClass">
+      <el-table-column
+        v-for="(item,i) in tableCol"
+        :key="i"
+        :prop="item.prop"
+        :label="item.label"
+        :width="item.width"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
 
-    </el-table-column>
-    <el-table-column
-      prop="content"
-      label="发布内容"
-      align="center">
-    </el-table-column>
-    <el-table-column
-      prop="operate"
-      label="操作"
-      align="center">
-      <template slot-scope="scope">
-        <el-button type="text"
-        @click="checkDetail(scope.row.phone)">
-        查看
-        </el-button>
-
-      </template>
-    </el-table-column>
-    <el-table-column
-      prop="operate"
-      label="操作"
-      align="center">
-      <template slot-scope="scope">
-        <el-button type="text"
-        @click="updateDetail(scope.row.phone)">
-        修改
-        </el-button>
-
-      </template>
-    </el-table-column>
-    <el-table-column
-      prop="operate"
-      label="操作"
-      align="center">
-      <template slot-scope="scope">
-        <el-button type="text"
-        @click="deleteDetail(scope.row.phone)">
-        删除
-        </el-button>
-
-      </template>
-    </el-table-column>
-  </el-table>
+      <el-table-column label="操作" align="center" width="80">
+        <template slot-scope="scope">
+          <el-button size="mini" type="text" @click="lookClick(scope.$index,scope.row)" class="button" icon="el-icon-view">查看</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" width="80">
+        <template slot-scope="scope">
+          <el-button size="mini" type="text" @click="updateClick(scope.$index, scope.row)" @click.native.prevent="uopdateRow(scope.$index, scope.row)" class="button" icon="el-icon-delete">修改</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" align="center" width="80">
+          <template slot-scope="scope">
+            <el-button size="mini" type="text" @click="deleteClick(scope.$index, scope.row)" @click.native.prevent="deleteRow(scope.$index, scope.row)" class="button" icon="el-icon-delete">删除</el-button>
+          </template>
+      </el-table-column>
+    </el-table>
 </div>
 </template>
-
-
-
 
 <script>
 export default {
   name: "noticelist",
   data() {
-        return {
-          formInline: {
-            user: '',
-            region: ''
-          },
-          tableData: [{
-            num: '2218',
-            name: '王小虎',
-            clazzz: '10',
-            test:'8',
-            homework:'7',
-            final:'80(56)',
-            add:'81'
-          }, {
-            num: '2218',
-            name: '王小虎',
-            clazzz: '10',
-            test:'8',
-            homework:'7',
-            final:'80(56)',
-            add:'81'
-          }, {
-            num: '2218',
-            name: '王小虎',
-            clazzz: '10',
-            test:'8',
-            homework:'7',
-            final:'80(56)',
-            add:'81'
-          }, {
-            num: '2218',
-            name: '王小虎',
-            clazzz: '10',
-            test:'8',
-            homework:'7',
-            final:'80(56)',
-            add:'81'
-          }]
+    return {
+      formInline: {
+      user: '',
+      region: ''
+      },
+      tableCol: [
+        {prop: "id", label: "id", width: 80},
+        {prop: "notificationName", label: "通知名称", width: 100},
+        {prop: "content", label: "通知内容", width: 150},
+        {prop: "issuer", label: "发布人", width: 80},
+        {prop: "releasedAt", label: "发布时间", width: 200},
+
+      ],
+
+      tableData: [],
+
+      nId: '1',
+      nname: '',
+      content: ''
+    };
+  },
+  methods: {
+    deleteClick(index,row) {
+      this.id = row.id
+      this.queryDelete()
+    },
+    deleteRow(index, row) {
+      this.id = row.id
+      this.queryDelete()
+    },
+    lookClick(index,row) {
+
+      this.$router.push({
+        path: '/student/activity/noticedetail',
+        query: {
+          nId: row.id,
+          nname: row.notificationName,
+          content: this.tableData[index].content
+        }
+      })
+      // this.$router.push({name: '/student/activity/homeworkdetail', params: {userId: this.userID,name: this.name}})
+    },
+
+    headeRowClass({row, column, rowIndex, columnIndex}){
+      //表头的背景颜色
+      if(rowIndex==0){
+        return 'background:#DCDCDC; color: black';
+      }
+    },
+
+    querySearch() {
+      let info = {}
+
+      this.$axios({
+        method: 'get',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://1.15.149.222:8080/coursewebsite/notice/all?clazzId=1' ,
+      }).then((response) => {          //这里使用了ES6的语法
+        /*console.log(JSON.stringify(response))       //请求成功返回的数据
+        alert(JSON.stringify(response))
+        alert("成功")*/
+
+        console.log(response.data.data.list)
+        this.tableData = response.data.data.list
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+    },
+  
+    queryDelete() {
+        let info = {
+          id: this.id
         }
 
+        this.$axios({
+          method: 'post',
+          headers: {
+            'Content-type': 'application/json;charset=UTF-8'
+          },
+          data: JSON.stringify(info),
+          url: 'http://1.15.149.222:8080/coursewebsite/notice/all?clazzId=1',
+        }).then((response) => {          //这里使用了ES6的语法
+          /*console.log(JSON.stringify(response))       //请求成功返回的数据
+          alert(JSON.stringify(response))
+          alert("成功")
+          console.log(response.data.data.list)
+          this.tableData = response.data.data.list*/
+        }).catch((error) => {
+          console.log(error)       //请求失败返回的数据
+        })
       },
-      methods: {
-        
-      }
+    
+    created () {
+      this.querySearch();
+    }
   }
+}
+
 
 
 </script>

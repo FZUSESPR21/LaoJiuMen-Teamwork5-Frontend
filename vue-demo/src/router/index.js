@@ -90,22 +90,24 @@ const TeacherResultFinalAnalysis = () =>
 
 // 教师作业页面跳转路由
 const teacherHomeworkList = () =>
-  import('../components/teacher/activity/homeworklist')
+    import ('../components/teacher/activity/homeworklist')
 const teacherHomeworkDetail = () =>
-  import('../components/teacher/activity/homeworkdetail')
+    import ('../components/teacher/activity/homeworkdetail')
 const teacherSubmittedHomeworkDetail = () =>
-  import('../components/teacher/activity/submittedhomeworkdetail')
+    import ('../components/teacher/activity/submittedhomeworkdetail')
 const publishHomework = () =>
-  import('../components/teacher/activity/publishhomework')
+    import ('../components/teacher/activity/publishhomework')
 
 // 教师资源页面跳转路由
 const teacherStudySource = () =>
-  import('../components/teacher/source/studysource')
+    import ('../components/teacher/source/studysource')
 const teacherOtherSource = () =>
-  import('../components/teacher/source/othersource')
+    import ('../components/teacher/source/othersource')
 const teacherAddSource = () =>
-  import('../components/teacher/source/addsource')
+    import ('../components/teacher/source/addsource')
 
+const teacherNoticeList = () =>
+    import ('../components/teacher/activity/noticelist')
 
 //1.安装插件
 Vue.use(Router)
@@ -235,109 +237,110 @@ const routes = [{
 
 
 
-  {
-    path: '/teacher',
-    component: Teacher,
-    children: [
-      {
-        path: '',
-        redirect: '/teacher/home'
-      },
-      {
-        path: '/teacher/source',
-        component: TeacherSource,
-        children: [
-          {
-            path: '',
-            redirect: '/teacher/source/study'
-          },
-          {
-            path: '/teacher/source/study',
-            component: teacherStudySource
-          },
-          {
-            path: '/teacher/source/other',
-            component: teacherOtherSource
-          },
-          {
-            path: '/teacher/source/add',
-            component: teacherAddSource
-          },
-        ]
-      },
-      {
-        path: '/teacher/home',
-        component: TeacherHome
-      },
-      {
-        path: '/teacher/activity',
-        component: TeacherActivity,
-        children: [
-          {
-            path: '',
-            redirect: '/teacher/activity/homeworklist'
-          },
-          {
-            path: '/teacher/activity/homeworklist',
-            component: teacherHomeworkList
-          },
-          {
-            path: '/teacher/activity/homeworkdetail',
-            component: teacherHomeworkDetail
-          },
-          {
-            path: '/teacher/activity/submittedhomeworkdetail',
-            component: teacherSubmittedHomeworkDetail
-          },
-          {
-            path: '/teacher/activity/publish',
-            component: publishHomework
-          }
-        ]
-      },
-      {
-        path: '/teacher/signin',
-        component: TeacherSignin
-      },
-      {
-        path: '/teacher/result',
-        component: TeacherResult,
+    {
+        path: '/teacher',
+        component: Teacher,
         children: [{
-        path: 'resultlist',
-        component: TeacherResultList,
-        /*children: {
-            path: 'resultinput',
-            component: () =>
-                import ('@/components/teacher/result/resultinput'),
-            name: 'resultinput',
-            meta: { title: '成绩录入' },
-            hidden: true,
-        }*/
-        },
-        {
-        path: 'resultinput',
-        component: TeacherResultInput
-        },
-        {
-        path: 'finalanalysis',
-        component: TeacherResultFinalAnalysis
-        },
-        {
-        path: 'taskanalysis',
-        component: TeacherResultTaskAnalysis
-        }
+                path: '',
+                redirect: '/teacher/home'
+            },
+            {
+                path: '/teacher/source',
+                component: TeacherSource,
+                children: [{
+                        path: '',
+                        redirect: '/teacher/source/study'
+                    },
+                    {
+                        path: '/teacher/source/study',
+                        component: teacherStudySource
+                    },
+                    {
+                        path: '/teacher/source/other',
+                        component: teacherOtherSource
+                    },
+                    {
+                        path: '/teacher/source/add',
+                        component: teacherAddSource
+                    },
+                ]
+            },
+            {
+                path: '/teacher/home',
+                component: TeacherHome
+            },
+            {
+                path: '/teacher/activity',
+                component: TeacherActivity,
+                children: [{
+                        path: '',
+                        redirect: '/teacher/activity/homeworklist'
+                    },
+                    {
+                        path: '/teacher/activity/homeworklist',
+                        component: teacherHomeworkList
+                    },
+                    {
+                        path: '/teacher/activity/homeworkdetail',
+                        component: teacherHomeworkDetail
+                    },
+                    {
+                        path: '/teacher/activity/submittedhomeworkdetail',
+                        component: teacherSubmittedHomeworkDetail
+                    },
+                    {
+                        path: '/teacher/activity/publish',
+                        component: publishHomework
+                    },
+                    {
+                        path: '/teacher/activity/noticelist',
+                        component: teacherNoticeList
+                    }
+                ]
+            },
+            {
+                path: '/teacher/signin',
+                component: TeacherSignin
+            },
+            {
+                path: '/teacher/result',
+                component: TeacherResult,
+                children: [{
+                        path: 'resultlist',
+                        component: TeacherResultList,
+                        /*children: {
+                            path: 'resultinput',
+                            component: () =>
+                                import ('@/components/teacher/result/resultinput'),
+                            name: 'resultinput',
+                            meta: { title: '成绩录入' },
+                            hidden: true,
+                        }*/
+                    },
+                    {
+                        path: 'resultinput',
+                        component: TeacherResultInput
+                    },
+                    {
+                        path: 'finalanalysis',
+                        component: TeacherResultFinalAnalysis
+                    },
+                    {
+                        path: 'taskanalysis',
+                        component: TeacherResultTaskAnalysis
+                    }
+                ]
+            },
+            {
+                path: '/teacher/comment',
+                component: TeacherComment
+            },
+            {
+                path: '/teacher/manage',
+                component: TeacherManage
+            }
         ]
-      },
-      {
-        path: '/teacher/comment',
-        component: TeacherComment
-      },
-      {
-        path: '/teacher/manage',
-        component: TeacherManage
-      }
-    ]
-  },
+    },
 ]
 
 //2.创建Router对象,export default导出
