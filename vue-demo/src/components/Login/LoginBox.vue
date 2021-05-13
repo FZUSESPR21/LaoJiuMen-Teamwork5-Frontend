@@ -68,7 +68,7 @@ export default {
               'Content-type': 'application/json;charset=UTF-8'
             },
             data: JSON.stringify(userMessage),
-            url: 'http://localhost:8081/coursewebsite_war_exploded/login',
+            url: 'http://1.15.149.222:8080/coursewebsite/login',
           }).then((response) => {          //这里使用了ES6的语法
             // console.log(JSON.stringify(response))       //请求成功返回的数据
             // console.log(response.data.data)

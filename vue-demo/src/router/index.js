@@ -74,18 +74,13 @@ const commentdetail = () =>
 const owncommentlist = () =>
     import ('../components/student/comment/owncommentlist')
 const owncommentdetail = () =>
-    <<
-    << << < HEAD
-import ('../components/student/comment/owncommentdetail') ===
-=== =
-import ('../components/student/comment/owncommentdetail')
+    import ('../components/student/comment/owncommentdetail')
 const studentlist = () =>
     import ('../components/teacher/manage/studentlist')
 const createstudent = () =>
     import ('../components/teacher/manage/createstudent')
 const createclass = () =>
-    import ('../components/teacher/manage/createclass') >>>
-    >>> > origin / srr
+    import ('../components/teacher/manage/createclass')
 
 /*教师成绩页面跳转路由*/
 const TeacherResultMain = () =>
@@ -125,133 +120,133 @@ Vue.use(Router)
 
 
 const routes = [{
-    path: '',
-    redirect: '/login'
-},
-{
-    path: '/login',
-    component: Login,
-    children: [{
-            path: '',
-            redirect: '/login/login'
-        },
-        {
-            path: '/login/login',
-            component: LoginBox
-        },
-        {
-            path: '/login/setPassword',
-            component: SetPassword
-        }
-    ]
-},
-{
-    path: '/student',
-    component: Student,
-    children: [{
-            path: '',
-            redirect: '/student/home'
-        },
-        {
-            path: '/student/source',
-            component: Source,
-            children: [{
-                    path: '',
-                    redirect: '/student/source/study'
-                },
-                {
-                    path: '/student/source/study',
-                    component: StudySource
-                },
-                {
-                    path: '/student/source/other',
-                    component: OtherSource
-                }
-            ]
-        },
-        {
-            path: '/student/home',
-            component: Home
-        },
-        {
-            path: '/student/activity',
-            component: Activity,
-            children: [{
-                    path: '',
-                    redirect: '/student/activity/homeworklist'
-                },
-                {
-                    path: '/student/activity/homeworklist',
-                    component: HomeworkList
-                },
-                {
-                    path: '/student/activity/noticelist',
-                    component: NoticeList
-                },
-                {
-                    path: '/student/activity/noticedetail',
-                    component: NoticeDetail
-                },
-                {
-                    path: '/student/activity/quiz',
-                    component: Quiz
-                },
-                {
-                    path: '/student/activity/homeworkdetail',
-                    component: HomeworkDetail
-                },
-                {
-                    path: '/student/activity/submittedhomeworklist',
-                    component: SubmittedHomeworkList
-                },
-                {
-                    path: '/student/activity/submittedhomeworkdetail',
-                    component: SubmittedHomeworkDetail
-                }
-            ]
-        },
-        {
-            path: '/student/signin',
-            component: Signin
-        },
-        {
-            path: '/student/result',
-            component: Result
-        },
-        {
-            path: '/student/comment',
-            component: Comment,
-            children: [{
-                    path: '',
-                    redirect: '/student/comment/commentlist'
-                },
-                {
-                    path: '/student/comment/commentlist',
-                    component: commentlist
-                },
-                {
-                    path: '/student/comment/commentdetail',
-                    component: commentdetail
-                },
-                {
-                    path: '/student/comment/owncommentlist',
-                    component: owncommentlist
-                },
-                {
-                    path: '/student/comment/owncommentdetail',
-                    component: owncommentdetail
-                }
-            ]
-        }
-    ]
-},
+        path: '',
+        redirect: '/login'
+    },
+    {
+        path: '/login',
+        component: Login,
+        children: [{
+                path: '',
+                redirect: '/login/login'
+            },
+            {
+                path: '/login/login',
+                component: LoginBox
+            },
+            {
+                path: '/login/setPassword',
+                component: SetPassword
+            }
+        ]
+    },
+    {
+        path: '/student',
+        component: Student,
+        children: [{
+                path: '',
+                redirect: '/student/home'
+            },
+            {
+                path: '/student/source',
+                component: Source,
+                children: [{
+                        path: '',
+                        redirect: '/student/source/study'
+                    },
+                    {
+                        path: '/student/source/study',
+                        component: StudySource
+                    },
+                    {
+                        path: '/student/source/other',
+                        component: OtherSource
+                    }
+                ]
+            },
+            {
+                path: '/student/home',
+                component: Home
+            },
+            {
+                path: '/student/activity',
+                component: Activity,
+                children: [{
+                        path: '',
+                        redirect: '/student/activity/homeworklist'
+                    },
+                    {
+                        path: '/student/activity/homeworklist',
+                        component: HomeworkList
+                    },
+                    {
+                        path: '/student/activity/noticelist',
+                        component: NoticeList
+                    },
+                    {
+                        path: '/student/activity/noticedetail',
+                        component: NoticeDetail
+                    },
+                    {
+                        path: '/student/activity/quiz',
+                        component: Quiz
+                    },
+                    {
+                        path: '/student/activity/homeworkdetail',
+                        component: HomeworkDetail
+                    },
+                    {
+                        path: '/student/activity/submittedhomeworklist',
+                        component: SubmittedHomeworkList
+                    },
+                    {
+                        path: '/student/activity/submittedhomeworkdetail',
+                        component: SubmittedHomeworkDetail
+                    }
+                ]
+            },
+            {
+                path: '/student/signin',
+                component: Signin
+            },
+            {
+                path: '/student/result',
+                component: Result
+            },
+            {
+                path: '/student/comment',
+                component: Comment,
+                children: [{
+                        path: '',
+                        redirect: '/student/comment/commentlist'
+                    },
+                    {
+                        path: '/student/comment/commentlist',
+                        component: commentlist
+                    },
+                    {
+                        path: '/student/comment/commentdetail',
+                        component: commentdetail
+                    },
+                    {
+                        path: '/student/comment/owncommentlist',
+                        component: owncommentlist
+                    },
+                    {
+                        path: '/student/comment/owncommentdetail',
+                        component: owncommentdetail
+                    }
+                ]
+            }
+        ]
+    },
 
 
 
-{
-    path: '/teacher',
-    component: Teacher,
-    children: [{
+    {
+        path: '/teacher',
+        component: Teacher,
+        children: [{
                 path: '',
                 redirect: '/teacher/home'
             },
@@ -350,67 +345,62 @@ const routes = [{
                 path: '/teacher/manage',
                 component: TeacherManage
             }
-        ] <<
-        << << < HEAD
-}, ===
-=== =
-}
-]
-}, {
-    path: '/teacher',
-    component: Teacher,
-    children: [{
-            path: '',
-            redirect: '/teacher/home'
-        },
-        {
-            path: '/teacher/source',
-            component: TeacherSource
-        },
-        {
-            path: '/teacher/home',
-            component: TeacherHome
-        },
-        {
-            path: '/teacher/activity',
-            component: TeacherActivity
-        },
-        {
-            path: '/teacher/signin',
-            component: TeacherSignin
-        },
-        {
-            path: '/teacher/result',
-            component: TeacherResult
-        },
-        {
-            path: '/teacher/comment',
-            component: TeacherComment
-        },
-        {
-            path: '/teacher/manage',
-            component: TeacherManage,
-            children: [{
-                    path: '',
-                    redirect: '/teacher/manage/studentlist'
-                },
-                {
-                    path: '/teacher/manage/studentlist',
-                    component: studentlist
-                },
-                {
-                    path: '/teacher/manage/createstudent',
-                    component: createstudent
-                },
-                {
-                    path: '/teacher/manage/createclass',
-                    component: createclass
-                }
-            ]
-        }
-    ]
-}, >>>
->>> > origin / srr
+        ]
+
+    }, {
+        path: '/teacher',
+        component: Teacher,
+        children: [{
+                path: '',
+                redirect: '/teacher/home'
+            },
+            {
+                path: '/teacher/source',
+                component: TeacherSource
+            },
+            {
+                path: '/teacher/home',
+                component: TeacherHome
+            },
+            {
+                path: '/teacher/activity',
+                component: TeacherActivity
+            },
+            {
+                path: '/teacher/signin',
+                component: TeacherSignin
+            },
+            {
+                path: '/teacher/result',
+                component: TeacherResult
+            },
+            {
+                path: '/teacher/comment',
+                component: TeacherComment
+            },
+            {
+                path: '/teacher/manage',
+                component: TeacherManage,
+                children: [{
+                        path: '',
+                        redirect: '/teacher/manage/studentlist'
+                    },
+                    {
+                        path: '/teacher/manage/studentlist',
+                        component: studentlist
+                    },
+                    {
+                        path: '/teacher/manage/createstudent',
+                        component: createstudent
+                    },
+                    {
+                        path: '/teacher/manage/createclass',
+                        component: createclass
+                    }
+                ]
+            }
+        ]
+    },
 ]
 
 //2.创建Router对象,export default导出

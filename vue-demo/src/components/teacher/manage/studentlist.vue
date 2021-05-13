@@ -21,7 +21,7 @@
           <span id="emailhead">邮箱</span>
           <span id="oprationhead">操作</span>
         </div>
-        <div v-for="(item,index) in studentlist">
+        <div v-for="item in studentlist">
           <div id="listitem">
             <input type="checkbox" id="itemcheckbox" :checked="selectArr.indexOf(item.id) > -1"  @change='selectOne(item.id)'></input>
             <div id="item">
@@ -63,7 +63,6 @@
 </template>
 
 <script>
-import xlsx from 'xlsx'
 export default {
   name: "studentlist",
   data(){
@@ -258,29 +257,7 @@ export default {
         this.selectArr = []
       }
     },
-    async handlefile(ev){
-      let file = ev.raw
-      if (!file) return
-
-      let data = await new Promise(resolve => {
-        let reader = new FileReader()
-        reader.readAsBinaryString(file)
-        reader.onload = ev => {
-          resolve(ev.target.result)
-        }
-      })
-      let workbook = xlsx.read(data,{type:"binary"})
-      let worksheet = workbook.Sheets[workbook.SheetNames[0]]
-      data = xlsx.utils.sheet_to_json(worksheet)
-      let data1= JSON.parse(JSON.stringify(data).replace(/学号/g,"account"))
-      let data2= JSON.parse(JSON.stringify(data1).replace(/姓名/g,"student_name"))
-      let finaldata= JSON.parse(JSON.stringify(data2).replace(/邮箱/g,"email"))
-      for (let i = 0;i < finaldata.length;i++){
-        finaldata[i].studentId = (i+1).toString()
-      }
-      this.studentlist = finaldata
-
-    }
+    
   }
 }
 </script>
