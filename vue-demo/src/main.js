@@ -13,6 +13,23 @@ Vue.prototype.$axios = axios
 
 
 
+axios.interceptors.request.use((request) => {
+    if (localStorage.getItem('token')) {
+        request.headers.common = {
+            'Authorization': localStorage.getItem('token') ? localStorage.getItem('token') : router.push({ path: '/login' }),
+        };
+    }
+    return request;
+});
+
+axios.interceptors.response.use((response) => {
+    if (response.data.data.code === '401' && response.data.message === 'Unauthorized!') {
+        router.push('/login')
+    } else {
+        return response;
+    }
+});
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

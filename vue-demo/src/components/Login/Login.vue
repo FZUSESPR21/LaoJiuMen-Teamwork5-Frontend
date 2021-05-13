@@ -6,11 +6,7 @@
     </div>
     <div id="content">
       <div id="loginbox">
-        <router-link to="/login/login">登录</router-link>
-        <router-link to="/login/setPassword">设置新密码</router-link>
         <router-view></router-view>
-        <button @click="login">确定</button>
-        <button @click="teacherlogin">教师登录</button>
       </div>
     </div>
   </div>
@@ -19,14 +15,6 @@
 <script>
 export default {
   name: "Login",
-  methods: {
-    login:function (){
-      this.$router.push('/student')
-    },
-    teacherlogin:function (){
-      this.$router.push('/teacher')
-    }
-  }
 }
 </script>
 
@@ -44,14 +32,16 @@ export default {
   top: 60px;
   bottom: 0;
   position: absolute;
-  background-color: #27217c;
+  background-image: url("../../assets/loginback.png") ;
+  background-size: 100% 100%;
 }
 #loginbox{
-  width: 30%;
-  height:60%;
+  width: 450px;
+  height:500px;
   float: right;
   margin-right: 15%;
   margin-top: 10%;
   background-color: white;
+  box-shadow: 0px 0px 3px gray inset,3px 8px 7px #3b3a3a;
 }
 </style>
