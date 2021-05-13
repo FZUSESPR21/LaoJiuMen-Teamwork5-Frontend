@@ -50,6 +50,7 @@ export default {
       ],
 
       sId: this.$route.query.stuId,
+      hwId: this.$route.query.hwId,
       content: '',
       file: ''
 
@@ -59,9 +60,11 @@ export default {
 
   methods: {
     submit() {
+
       let param = new FormData() // 创建form对象
       param.append('file', this.file, this.file.name) // 通过append向form对象添加数据
-      param.append('studentId', this.sId)
+      param.append('homeworkId',this.hwId)
+      param.append('studentId',this.sId)
       param.append('content',this.content)
 
       // withCredentials: true 使得后台可以接收表单数据  跨域请求
@@ -73,13 +76,10 @@ export default {
         .then(this.succ) // 成功返回信息 调用函数  函数需自己定义，此处后面省略
         .catch(this.serverError) // 服务器错误 调用对应函数  函数需自己定义，此处后面省略
 
-      this.$router.push({
-        path: '/student/activity/submittedhomeworkdetail',
-        query: {
-          content: this.content,
-          remark: ''
-        }
-      })
+
+
+      this.$router.push('/student/activity/submittedhomeworklist')
+      this.$router.go(0)
     },
 
     cancel() {

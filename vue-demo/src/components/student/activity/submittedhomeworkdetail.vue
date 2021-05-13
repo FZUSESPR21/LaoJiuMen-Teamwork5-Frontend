@@ -34,10 +34,17 @@ export default {
       input1: this.$route.query.content,
       input2: this.$route.query.remark,
 
+      id: this.$route.query.id
     }
   },
   methods: {
     downloadClick() {
+      this.querySearch()
+      console.log(this.id)
+
+    },
+    querySearch() {
+      window.location.href = 'http://localhost:8088/coursewebsite_war_exploded/homework_result/download?id='+this.id;
 
     },
 

@@ -10,6 +10,12 @@
       <sapn class="text">作业内容</sapn>
     </div>
 
+    <el-dialog
+      title="提示"
+      :visible.sync=tipBox>
+      <span>作业标题重复，请修改</span>
+    </el-dialog>
+
     <div id="divSelect">
       <span class="text">班级：</span>
       <el-select size="mini" v-model="value" placeholder="请选择班级">
@@ -26,10 +32,23 @@
 
     <div>
       <el-form :model="publishForm" :rules="rules" ref="publishForm">
-        <el-form-item>
+        <el-form-item prop="title">
           <i class="el-icon-star-on"></i>
           <span class="text">标题</span>
           <el-input v-model="publishForm.title" placeholder="请输入作业标题" resize="none"></el-input>
+        </el-form-item>
+
+        <el-form-item>
+          <i class="el-icon-star-on"></i>
+          <span class="text">发布时间</span>
+          <br>
+          <el-date-picker
+            v-model="date2"
+            type="datetime"
+            placeholder="选择发布时间"
+            value-format="yyyy-MM-dd HH:mm:ss"
+          >
+          </el-date-picker>
         </el-form-item>
 
         <el-form-item>
@@ -44,19 +63,8 @@
           </el-date-picker>
         </el-form-item>
 
-        <el-form-item>
-          <i class="el-icon-star-on"></i>
-          <span class="text">发布时间</span>
-          <br>
-          <el-date-picker
-            v-model="date2"
-            type="datetime"
-            placeholder="选择发布时间"
-            value-format="yyyy-MM-dd HH:mm:ss">
-          </el-date-picker>
-        </el-form-item>
 
-        <el-form-item>
+        <el-form-item :rules="{ required: true, message: '内容不能为空'}">
           <i class="el-icon-star-on"></i>
           <span class="text">内容</span>
           <el-input v-model="publishForm.content" rows="4" type="textarea" placeholder="请输入作业内容" resize="none"></el-input>
@@ -75,6 +83,19 @@
 export default {
   name: "publishhomework",
   data() {
+    var validateTitle = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('标题不能为空'));
+      } else {
+        if (value === '已经存在的作业标题') {
+          callback(new Error('作业标题不能重复，请重新输入'));
+        } else {
+          callback();
+        }
+      }
+    };
+
+
     return {
       options: [{
         value: 1,
@@ -118,6 +139,12 @@ export default {
       date1: '',
       date2: '',
 
+      rules: {
+        title:  { validator: validateTitle, trigger: 'blur' },
+        content: { required: true, message: '内容不能为空'},
+      },
+
+      tipBox: false,
     }
   },
 
@@ -128,8 +155,8 @@ export default {
         clazzId: this.value,
         title: this.publishForm.title,
         content: this.publishForm.content,
-        startAt: this.date1,
-        endAt: this.date2
+        startAt: this.date2,
+        endAt: this.date1
       }
       this.$axios({
         method: 'post',
@@ -143,7 +170,11 @@ export default {
         alert(JSON.stringify(response))
       }).catch((error) => {
         console.log(error)       //请求失败返回的数据
+        this.tipBox = true
       })
+
+      this.$router.push('/teacher/activity/homeworklist')
+      this.$router.go(0)
     }
   }
 }

@@ -13,15 +13,15 @@
         align="center"
       ></el-table-column>
 
-      <el-table-column label="操作" v-if="showOper" align="center" width="200">
+<!--      <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
           <el-button size="mini" type="text" @click="lookClick" class="button" icon="el-icon-view">查看</el-button>
         </template>
-      </el-table-column>
+      </el-table-column>-->
 
-      <el-table-column label="操作" v-if="showOper" align="center" width="200">
+      <el-table-column label="操作" align="center" width="300">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="downloadClick" class="button" icon="el-icon-download">下载</el-button>
+          <el-button size="mini" type="text" @click="downloadClick(scope.$index)" class="button" icon="el-icon-download">下载</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -33,10 +33,9 @@ export default {
   name: "studysource",
   data() {
     return {
-      showOper:true,
       tableCol: [
-        {prop: "resourceName", label: "名称", width: 250},
-        {prop: "downloads", label: "下载量", width: 250},
+        {prop: "resourceName", label: "名称", width: 300},
+        {prop: "downloads", label: "下载量", width: 300},
 
       ],
 
@@ -44,6 +43,8 @@ export default {
 
       ],
 
+      cId: 1,
+      id: ''
     };
   },
   methods: {
@@ -58,8 +59,10 @@ export default {
 
     },
 
-    downloadClick() {
+    downloadClick(index) {
 
+      this.id = this.tableData[index].id
+      this.querySearch()
     },
 
     queryView() {
@@ -72,7 +75,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/resource/other?clazzId=2',
+        url: 'http://localhost:8088/coursewebsite_war_exploded/resource/other?clazzId=' + this.cId,
       }).then((response) => {          //这里使用了ES6的语法
         /*console.log(JSON.stringify(response))       //请求成功返回的数据
         alert(JSON.stringify(response))
@@ -82,6 +85,11 @@ export default {
       }).catch((error) => {
         console.log(error)       //请求失败返回的数据
       })
+    },
+
+    querySearch() {
+      window.location.href = 'http://localhost:8088/coursewebsite_war_exploded/resource/download?id='+this.id;
+
     },
   },
   created() {

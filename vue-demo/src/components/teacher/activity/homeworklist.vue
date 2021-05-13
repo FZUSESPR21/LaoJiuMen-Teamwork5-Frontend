@@ -30,6 +30,7 @@
         show-overflow-tooltip>
       </el-table-column>
 
+
       <el-table-column label="操作" align="center" width="150">
         <template slot-scope="scope">
           <el-button size="mini" type="text" @click="lookClick(scope.$index,scope.row)" class="button" icon="el-icon-view">查看</el-button>
@@ -38,7 +39,7 @@
 
       <el-table-column label="操作" align="center" width="150">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="deleteClick(scope.$index, scope.row)" @click.native.prevent="deleteRow(scope.$index, scope.row)" class="button" icon="el-icon-delete">删除</el-button>
+          <el-button size="mini" type="text" @click="deleteClick(scope.$index, scope.row)" class="button" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -66,8 +67,7 @@
           {prop: "title", label: "作业名称", width: 100},
           {prop: "startAt", label: "开始时间", width: 200},
           {prop: "endAt", label: "结束时间", width: 200},
-          {prop: "state", label: "状态", width: 100},
-
+          {prop: "status", label: "状态", width: 100},
 
         ],
 
@@ -75,26 +75,19 @@
 
         ],
 
-        id: '',
-        name: '',
-        endDate: '',
-        content: ''
+        tId: 1
       };
     },
     methods: {
       selectChange() {
-        console.log(this.value)
         this.querySearch()
       },
 
       lookClick(index,row) {
-        console.log(row.title)
-        console.log(row.endAt)
-        console.log(this.tableData[index].content)
         this.$router.push({
           path: '/teacher/activity/homeworkdetail',
           query: {
-            id: row.id,
+            hwId: row.id,
             name: row.title,
             endDate: row.endAt,
             content: this.tableData[index].content
@@ -105,6 +98,8 @@
       deleteClick(index,row) {
         this.id = row.id
         this.queryDelete()
+        this.$router.push('/teacher/activity/homeworklist')
+        this.$router.go(0)
       },
 
       headeRowClass({row, column, rowIndex, columnIndex}){
@@ -114,10 +109,6 @@
         }
       },
 
-      deleteRow(index, row) {
-        this.id = row.id
-        this.queryDelete()
-      },
 
       querySearch() {
         let info = {

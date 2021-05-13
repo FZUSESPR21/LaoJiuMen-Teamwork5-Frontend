@@ -37,7 +37,7 @@
           align="center">
         </el-table-column>
 
-        <el-table-column label="作业详情" v-if="showOper" align="center" width="150">
+        <el-table-column label="作业详情" align="center" width="150">
           <template slot-scope="scope">
             <el-button size="mini" type="text" @click="lookClick(scope.row)" class="button" icon="el-icon-view">查看</el-button>
           </template>
@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       status: false,
-      showOper:true,
+
       tableCol: [
         {prop: "key", label: "键", width: 249},
         {prop: "value", label: "值", width: 650},
@@ -82,19 +82,23 @@ export default {
 
       dataTemp:[],
 
-      hwId: this.$route.query.id,
+
+      hwId: this.$route.query.hwId,
 
     };
   },
 
   methods: {
-    lookClick() {
+    lookClick(row) {
+      console.log(this.hwcontent)
       this.$router.push({
         path: '/teacher/activity/submittedhomeworkdetail',
         query: {
-          userId: this.userID,
-          name: this.name,
-          endDate: this.endDate
+          remark: row.remark,
+          content: row.content,
+          id: row.id,
+          hwId: this.hwId,
+
         }
       })
     },
@@ -107,7 +111,7 @@ export default {
     },
 
 
-    queryHrInfo() {
+    queryResult() {
       let info = {
 
       }
@@ -133,7 +137,7 @@ export default {
   },
 
   created() {
-    this.queryHrInfo()
+    this.queryResult()
   }
 
 }
