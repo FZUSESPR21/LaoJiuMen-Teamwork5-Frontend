@@ -153,7 +153,8 @@ export default {
       this.file = e.target.files[0]
       // console.log(file)
       let param = new FormData() // 创建form对象
-      param.append('file_excel', this.file, this.file.name) // 通过append向form对象添加数据
+      param.append('file', this.file, this.file.name) // 通过append向form对象添加数据
+      param.append('clazzId', this.clazzvalue)
       // withCredentials: true 使得后台可以接收表单数据  跨域请求
       const instance = this.$axios.create({
         withCredentials: true
