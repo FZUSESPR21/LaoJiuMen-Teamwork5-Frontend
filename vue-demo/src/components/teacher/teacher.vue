@@ -1,36 +1,59 @@
 <template>
   <div>
     <Teacherheader></Teacherheader>
-    <cloudimg></cloudimg>
-    <div id="content">
+    <cloudimg v-show="state"></cloudimg>
+    <div id="content" v-show="state">
       <router-view></router-view>
+    </div>
+    <div id="home" v-show="!state">
+      <home></home>
     </div>
   </div>
 </template>
 
 <script>
 import Cloudimg from '../Layout/cloudimg.vue';
-import Header from "../Layout/TeacherHeader";
+import Header from "../Layout/StudentHeader";
+import Studentheader from "../Layout/StudentHeader";
+import home from "../student/home";
 import Teacherheader from "../Layout/TeacherHeader";
 
 export default {
-  name: "teacher",
+  name: "student",
   components: {
     Teacherheader,
+    Studentheader,
     Header,
-    Cloudimg
+    Cloudimg,
+    home
+  },
+  data(){
+    return{
+      state:true,
+    }
+  },
+  watch:{
+    $route:{
+      handler(val,oldval){
+        if (this.$route.path==='/teacher/home')
+          this.state = false
+        else this.state = true
+      },
+      immediate:true
+    }
   }
 }
 </script>
 
 <style scoped>
-#content {
+#content{
   width: 70%;
   position: relative;
-
-  margin-top: -10%;
+  margin-top: -100px;
   margin-left: 15%;
   margin-right: 15%;
 }
+#home{
 
+}
 </style>

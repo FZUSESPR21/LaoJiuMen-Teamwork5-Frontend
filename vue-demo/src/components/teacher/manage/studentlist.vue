@@ -257,20 +257,12 @@ export default {
         this.selectArr = []
       }
     },
-    
+
   }
 }
 </script>
 
 <style scoped>
-#head{
-  background-color: white;
-  font-size: 20px;
-  height: 100%;
-  margin-top: 8%;
-  margin-left: 4%;
-  margin-bottom: 6%;
-}
 #clazzname{
   float: right;
   margin-top: -40px;

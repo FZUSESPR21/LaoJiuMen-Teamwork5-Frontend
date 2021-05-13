@@ -343,64 +343,28 @@ const routes = [{
             },
             {
                 path: '/teacher/manage',
-                component: TeacherManage
+                component: TeacherManage,
+                children: [{
+                  path: '',
+                  redirect: '/teacher/manage/studentlist'
+                },
+                {
+                  path: '/teacher/manage/studentlist',
+                  component: studentlist
+                },
+                {
+                  path: '/teacher/manage/createstudent',
+                  component: createstudent
+                },
+                {
+                  path: '/teacher/manage/createclass',
+                  component: createclass
+                }
+              ]
             }
         ]
 
-    }, {
-        path: '/teacher',
-        component: Teacher,
-        children: [{
-                path: '',
-                redirect: '/teacher/home'
-            },
-            {
-                path: '/teacher/source',
-                component: TeacherSource
-            },
-            {
-                path: '/teacher/home',
-                component: TeacherHome
-            },
-            {
-                path: '/teacher/activity',
-                component: TeacherActivity
-            },
-            {
-                path: '/teacher/signin',
-                component: TeacherSignin
-            },
-            {
-                path: '/teacher/result',
-                component: TeacherResult
-            },
-            {
-                path: '/teacher/comment',
-                component: TeacherComment
-            },
-            {
-                path: '/teacher/manage',
-                component: TeacherManage,
-                children: [{
-                        path: '',
-                        redirect: '/teacher/manage/studentlist'
-                    },
-                    {
-                        path: '/teacher/manage/studentlist',
-                        component: studentlist
-                    },
-                    {
-                        path: '/teacher/manage/createstudent',
-                        component: createstudent
-                    },
-                    {
-                        path: '/teacher/manage/createclass',
-                        component: createclass
-                    }
-                ]
-            }
-        ]
-    },
+    }
 ]
 
 //2.创建Router对象,export default导出
