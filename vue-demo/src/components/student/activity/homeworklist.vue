@@ -42,8 +42,9 @@
 
         ],
 
+        cId: 3,
         hwId: '',
-        userID: 'LQ',
+        sId: 4,
         name: '',
         endDate: '',
         content: ''
@@ -56,7 +57,7 @@
           path: '/student/activity/homeworkdetail',
           query: {
             hwId: row.id,
-            userId: this.userID,
+            stuId: this.sId,
             name: row.title,
             endDate: row.endAt,
             content: this.tableData[index].content
@@ -83,7 +84,7 @@
             'Content-type': 'application/json;charset=UTF-8'
           },
           data: JSON.stringify(info),
-          url: 'http://localhost:8088/coursewebsite_war_exploded/student/homework/all?clazzId=1' ,
+          url: 'http://localhost:8088/coursewebsite_war_exploded/student/homework/all?clazzId=' + this.cId,
         }).then((response) => {          //这里使用了ES6的语法
           /*console.log(JSON.stringify(response))       //请求成功返回的数据
           alert(JSON.stringify(response))

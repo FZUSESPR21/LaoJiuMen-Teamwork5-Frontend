@@ -31,21 +31,26 @@ export default {
   name: "submittedhomeworkdetail",
   data() {
     return {
-      input1: '',
-      input2: ''
+      input1: this.$route.query.content,
+      input2: this.$route.query.remark,
+
     }
   },
   methods: {
     downloadClick() {
 
-    }
-  }
+    },
+
+  },
+
 }
 </script>
 
 <style scoped>
 #div1 {
   background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #b3b1b1;
 }
 
 #button {

@@ -9,6 +9,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.use(ELementUI);
 Vue.config.productionTip = false
+Vue.prototype.$axios = axios
+
+
 
 /* eslint-disable no-new */
 new Vue({

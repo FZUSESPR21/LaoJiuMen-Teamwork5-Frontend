@@ -1,9 +1,10 @@
 <template>
   <div id="div1">
-    <div>
+    <div >
       <i class="el-icon-document"></i>
       <sapn id="tag">作业详情</sapn>
-      <el-table :data="tableData"
+      <el-table id="table1"
+                :data="tableData"
                 style="width: 100%;"
                 :row-style="{height:'100px'}"
                 :show-header="status"
@@ -117,7 +118,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/all_sub?id=6',
+        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/all_sub?homeworkId=' + this.hwId,
       }).then((response) => {          //这里使用了ES6的语法
         // console.log(JSON.stringify(response))       //请求成功返回的数据
 
@@ -139,6 +140,16 @@ export default {
 </script>
 
 <style scoped>
+#table {
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #b3b1b1;
+}
+
+#table1 {
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #b3b1b1;
+}
+
 #tag {
   font-weight:bold;
   color: #000000;
@@ -146,6 +157,7 @@ export default {
 }
 
 #div1 {
+  margin-top: 3%;
   background-color: white;
 }
 

@@ -97,6 +97,9 @@ export default {
 <style scoped>
 #div1 {
   background-color: white;
+  margin-top: 3%;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #b3b1b1;
 }
 
 .button {

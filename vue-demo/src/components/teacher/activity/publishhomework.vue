@@ -35,7 +35,6 @@
         <el-form-item>
           <i class="el-icon-star-on"></i>
           <span class="text">截止时间</span>
-<!--          <el-input v-model="date1" placeholder="请输入截止时间" resize="none"></el-input>-->
           <br>
           <el-date-picker
               v-model="date1"
@@ -48,7 +47,6 @@
         <el-form-item>
           <i class="el-icon-star-on"></i>
           <span class="text">发布时间</span>
-<!--          <el-input v-model="date2" placeholder="请输入发布时间" resize="none"></el-input>-->
           <br>
           <el-date-picker
             v-model="date2"
@@ -57,12 +55,6 @@
             value-format="yyyy-MM-dd HH:mm:ss">
           </el-date-picker>
         </el-form-item>
-
-<!--        <el-form-item>
-          <i class="el-icon-star-on"></i>
-          <span class="text">评分方式</span>
-          <el-input v-model="publishForm.scoringmethod" rows="1" type="textarea" placeholder="请输入评分方式" resize="none"></el-input>
-        </el-form-item>-->
 
         <el-form-item>
           <i class="el-icon-star-on"></i>
@@ -85,22 +77,19 @@ export default {
   data() {
     return {
       options: [{
-        value: '班级1',
+        value: 1,
         label: '2021级S班'
       }, {
-        value: '班级2',
+        value: 2,
         label: '2020级S班'
       }, {
-        value: '班级3',
+        value: 3,
         label: '2019级S班'
       }],
-      value: '',
+      value: 3,
 
       publishForm: {
         title: '',
-        deadline: '',
-        releasetime: '',
-        scoringmethod: '',
         content: ''
       },
 
@@ -136,7 +125,7 @@ export default {
     publishClick() {
       let info = {
         id:"",
-        clazzId: 2,
+        clazzId: this.value,
         title: this.publishForm.title,
         content: this.publishForm.content,
         startAt: this.date1,
@@ -155,12 +144,6 @@ export default {
       }).catch((error) => {
         console.log(error)       //请求失败返回的数据
       })
-      // this.$router.push({
-      //   path: '/teacher/activity/homeworklist',
-      //   query: {
-      //
-      //   }
-      // })
     }
   }
 }
@@ -169,10 +152,13 @@ export default {
 <style scoped>
 #div1 {
   background-color: white;
+  margin-top: 3%;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px #b3b1b1;
 }
 
 #span{
-
+  background-color: gray;
   font-size: 15px;
 }
 

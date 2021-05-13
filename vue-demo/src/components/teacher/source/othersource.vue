@@ -31,14 +31,14 @@
           show-overflow-tooltip>
         </el-table-column>
 
-        <el-table-column label="操作" v-if="showOper" align="center" width="200">
+        <el-table-column label="操作" align="center" width="200">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.resourceName=='教学大纲'" type="text" size="mini" @click="downloadClick" class="button" icon="el-icon-download">下载</el-button>
-            <el-button v-else type="text" size="mini" @click="editClick" class="button" icon="el-icon-edit">编辑</el-button>
+            <el-button v-if="scope.row.type=='2'" type="text" size="mini" @click="editClick" class="button" icon="el-icon-edit">编辑</el-button>
+            <el-button v-else type="text" size="mini" @click="downloadClick(scope.row)" class="button" icon="el-icon-download">下载</el-button>
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" v-if="showOper" align="center" width="200">
+        <el-table-column label="操作" align="center" width="200">
           <template slot-scope="scope">
             <el-button type="text" size="mini" @click="deleteClick(scope.$index, scope.row)" class="button" icon="el-icon-delete">删除</el-button>
           </template>
@@ -70,7 +70,7 @@ export default {
       }],
       value: 1,
 
-      showOper:true,
+
       tableCol: [
         {prop: "resourceName", label: "名称", width: 250},
         {prop: "downloads", label: "下载量", width: 250},
@@ -81,7 +81,10 @@ export default {
 
 
       ],
-      id: ''
+      rsId: '',
+      filePath: 1
+
+
 
     }
   },
@@ -91,7 +94,9 @@ export default {
       this.queryView()
     },
 
-    downloadClick() {
+    downloadClick(row) {
+      this.filePath = row.filePath
+      console.log(this.filePath)
 
     },
 
@@ -105,7 +110,7 @@ export default {
     },
 
     deleteClick(index,row) {
-      this.id = row.id
+      this.rsId = row.id
       this.queryDelete()
     },
 
@@ -148,7 +153,7 @@ export default {
 
     queryDelete() {
       let info = {
-        id: this.id
+        id: this.rsId
       }
 
       this.$axios({

@@ -77,31 +77,27 @@ export default {
   position: absolute;
   left: 30px;
   width: 200px;
-  padding: 5px;
-  margin-top: 20px;
+
 }
 
 #head2 {
   color: rgb(179, 179, 179);
-  margin-top: 0;
   font-size: 15px;
 
   position: absolute;
   left: 30px;
   width: 200px;
-  padding: 5px;
-  margin-top: 20px;
 }
 
 .part{
-  margin-top: 0px;
+  margin-top: -5.6%;
   background-color: rgb(255, 255, 255);
   float:left;
   width: 900px;
 }
 
 .sidebar{
-  margin-top: 0;
+  margin-top: -4.5%;
   float: left;
 }
 </style>

@@ -38,7 +38,7 @@
 
       <el-table-column label="操作" align="center" width="150">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" @click="delClick(scope.row)" @click.native.prevent="deleteRow(scope.$index, scope.row)" class="button" icon="el-icon-delete">删除</el-button>
+          <el-button size="mini" type="text" @click="deleteClick(scope.$index, scope.row)" @click.native.prevent="deleteRow(scope.$index, scope.row)" class="button" icon="el-icon-delete">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -100,6 +100,11 @@
             content: this.tableData[index].content
           }
         })
+      },
+
+      deleteClick(index,row) {
+        this.id = row.id
+        this.queryDelete()
       },
 
       headeRowClass({row, column, rowIndex, columnIndex}){

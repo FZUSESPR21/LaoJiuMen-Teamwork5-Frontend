@@ -27,40 +27,38 @@
 </script>
 
 <style scoped>
-  #head{
-    font-size: 20px;
-    height: 100px;
-  }
+#head{
+  font-size: 20px;
+  height: 100px;
+  background-color: white;
+  margin-top: 8%;
+}
 
-  #head1 {
-    position: absolute;
-    left: 30px;
-    width: 200px;
-    padding: 5px;
-    margin-top: 20px;
-  }
+#head1 {
+  position: absolute;
+  left: 30px;
+  width: 200px;
 
-  #head2 {
-    color: rgb(179, 179, 179);
-    margin-top: 0;
-    font-size: 15px;
+}
 
-    position: absolute;
-    left: 30px;
-    width: 200px;
-    padding: 5px;
-    margin-top: 20px;
-  }
+#head2 {
+  color: rgb(179, 179, 179);
+  font-size: 15px;
 
-  .part{
-    margin-top: 0;
-    background-color: rgb(228, 228, 228);
-    float:left;
-    width: 900px;
-  }
+  position: absolute;
+  left: 30px;
+  width: 200px;
+}
 
-  .sidebar{
-    margin-top: 0;
-    float: left;
-  }
+.part{
+  margin-top: -3%;
+  background-color: rgb(228, 228, 228);
+  float:left;
+  width: 900px;
+}
+
+.sidebar{
+  margin-top: -3%;
+  float: left;
+}
 </style>
