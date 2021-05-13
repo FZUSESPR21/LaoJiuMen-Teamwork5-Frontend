@@ -22,7 +22,6 @@
       <el-button type="primary" v-if="this.operatortype=='0'" id="newconfirmbtn" size="small" @click="newsubmitForm('stumessage')">新增</el-button>
       <el-button type="primary" v-if="this.operatortype=='1'" id="editconfirmbtn" size="small" @click="editsubmitForm('stumessage')">确定</el-button>
     </div>
-    {{this.stumessage.clazzId}}
   </div>
 </template>
 
@@ -93,7 +92,7 @@ export default {
               'Content-type': 'application/json;charset=UTF-8'
             },
             data: JSON.stringify(newMessage),
-            url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/add',
+            url: 'http://1.15.149.222:8080/coursewebsite/teacher/stu_mgt/add',
           }).then((response) => {          //这里使用了ES6的语法
             // console.log(JSON.stringify(response))       //请求成功返回的数据
             // console.log(response.data.data)
@@ -129,7 +128,7 @@ export default {
               'Content-type': 'application/json;charset=UTF-8'
             },
             data: JSON.stringify(editMessage),
-            url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/update',
+            url: 'http://1.15.149.222:8080/coursewebsite/teacher/stu_mgt/update',
           }).then((response) => {          //这里使用了ES6的语法
             // console.log(JSON.stringify(response))       //请求成功返回的数据
             // console.log(response.data.data)

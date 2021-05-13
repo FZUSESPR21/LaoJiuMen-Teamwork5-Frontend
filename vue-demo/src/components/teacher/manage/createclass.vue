@@ -53,15 +53,15 @@ export default {
               'Content-type': 'application/json;charset=UTF-8'
             },
             data: JSON.stringify(clazz),
-            url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/cls/add',
+            url: 'http://1.15.149.222:8080/coursewebsite/teacher/cls/add',
           }).then((response) => {          //这里使用了ES6的语法
             // console.log(JSON.stringify(response))       //请求成功返回的数据
             // console.log(response.data.data)
             if (response.data.code === '200') {
               alert('新增班级成功!');
-              localStorage.removeItem('clazzInfo')
-              localStorage.setItem('clazzInfo',response.data.data.clazzInfo)
+              localStorage.setItem('clazzInfo',JSON.stringify(response.data.data))
               this.$router.push('/teacher/manage/studentlist')
+              this.$router.go(0)
             }
             else {
               alert('新增班级失败!');

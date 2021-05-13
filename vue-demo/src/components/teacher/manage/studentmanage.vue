@@ -21,7 +21,7 @@ export default {
   font-size: 20px;
   height: 75px;
   margin-left: 50px;
-  margin-top: 25px;
+  margin-top: 104px;
 }
 
 .english{

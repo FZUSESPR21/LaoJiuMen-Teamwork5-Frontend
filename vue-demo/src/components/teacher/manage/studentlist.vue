@@ -7,7 +7,7 @@
           v-for="item in options"
           :key="item.id"
           :label="item.clazzName"
-          :value="item.id">
+          :value="item.id+''">
         </el-option>
       </el-select>
       <el-button type="primary" size="mini" @click="createclass" id="newclazz">新建班级</el-button>
@@ -33,21 +33,11 @@
             </div>
           </div>
         </div>
-        <p>{{selectArr}}</p>
         <div id="listfoot">
           <el-button size="mini" id="deleteSelbtn" @click="deleteSel">删除</el-button>
-          <el-upload
-            id="uploadbtn"
-            action=""
-            accept=".xls,.xlsx"
-            :auto-upload="false"
-            :show-file-list="false"
-            :on-change="handlefile"
-          >
-            <el-button size="mini"  icon="el-icon-upload2">上传Excel生成学生列表</el-button>
-          </el-upload>
+          <input class="file" name="file_excel" type="file"  @change="select"/>
+          <el-button size="mini" id="uploadbtn" icon="el-icon-upload2">上传Excel生成学生列表</el-button>
           <el-button size="mini" id="downloadbtn" icon="el-icon-download" @click="download">下载上传须知</el-button>
-          <!--          <a href="#" @click="download">下载上传须知</a>-->
           <el-button size="mini" type="primary" id="newstu" @click="createstudent">新增</el-button>
           <el-pagination
             background
@@ -65,26 +55,24 @@
 <script>
 export default {
   name: "studentlist",
-  data(){
-    return{
+  data() {
+    return {
       options: [],
       clazzvalue: '',
-      selectArr:[],
-      isCheckedAll:false,
-      studentlist: [
-
-      ]
+      selectArr: [],
+      isCheckedAll: false,
+      studentlist: []
     }
   },
   created() {
     this.options = JSON.parse(localStorage.getItem('clazzInfo'))
-    this.clazzvalue = this.options[0].id
+    this.clazzvalue = this.options[0].id+''
     if (!localStorage.getItem('clazzvalue'))
-      localStorage.setItem('clazzvalue',this.clazzvalue)
+      localStorage.setItem('clazzvalue', this.clazzvalue)
     else this.clazzvalue = localStorage.getItem('clazzvalue')
     this.querytest()
   },
-  methods:{
+  methods: {
     querytest() {
       this.$axios({
         method: 'get',
@@ -92,7 +80,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
 
-        url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/all?clazzId='+this.clazzvalue,
+        url: 'http://1.15.149.222:8080/coursewebsite/teacher/stu_mgt/all?clazzId=' + this.clazzvalue,
       }).then((response) => {          //这里使用了ES6的语法
         //console.log(JSON.stringify(response))       //请求成功返回的数据
         console.log(response.data.data.list)
@@ -102,38 +90,38 @@ export default {
       })
     },
 
-    createstudent(){//新增学生
+    createstudent() {//新增学生
       this.$router.push({
-        path:'/teacher/manage/createstudent',
-        query:{
-          type:'0',
+        path: '/teacher/manage/createstudent',
+        query: {
+          type: '0',
         }
       })
     },
 
-    changeClazz(){
+    changeClazz() {
       this.querytest()
-      localStorage.setItem('clazzvalue',this.clazzvalue)
+      localStorage.setItem('clazzvalue', this.clazzvalue)
     },
 
-    createclass(){
+    createclass() {
       this.$router.push('/teacher/manage/createclass')
     },
 
-    editstudent(stu_id,stu_account,stu_name,stu_email){//编辑学生
+    editstudent(stu_id, stu_account, stu_name, stu_email) {//编辑学生
       this.$router.push({
-        path:'/teacher/manage/createstudent',
-        query:{
-          studentId:stu_id,
-          account:stu_account,
-          student_name:stu_name,
-          email:stu_email,
-          type:'1'
+        path: '/teacher/manage/createstudent',
+        query: {
+          studentId: stu_id,
+          account: stu_account,
+          student_name: stu_name,
+          email: stu_email,
+          type: '1'
         }
       })
     },
 
-    download(){
+    download() {
       // this.$axios({
       //   method: 'post',
       //   url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/down',
@@ -157,12 +145,30 @@ export default {
       //   console.log(error)
       // })
 
-      window.location.href = 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/down'
+      window.location.href = 'http://1.15.149.222:8080/coursewebsite/teacher/stu_mgt/down'
     },
 
+    select(e) {
 
-
-    deleteOne (stuId){
+      this.file = e.target.files[0]
+      // console.log(file)
+      let param = new FormData() // 创建form对象
+      param.append('file', this.file, this.file.name) // 通过append向form对象添加数据
+      param.append('clazzId', this.clazzvalue)
+      // withCredentials: true 使得后台可以接收表单数据  跨域请求
+      const instance = this.$axios.create({
+        withCredentials: true
+      })
+      // url为后台接口
+      instance.post('http://1.15.149.222:8080/coursewebsite/teacher/stu_mgt/excel', param)
+        .then((response) => {
+          console.log(response.data)
+          this.$router.push('/teacher/manage/studentlist')
+          this.$router.go(0)
+        }) // 成功返回信息 调用函数  函数需自己定义，此处后面省略
+        .catch(this.serverError) // 服务器错误 调用对应函数  函数需自己定义，此处后面省略
+    },
+    deleteOne(stuId) {
       let index
       let delOneMessage = {
         id: stuId
@@ -173,23 +179,15 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(delOneMessage),
-        url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/delete',
+        url: 'http://1.15.149.222:8080/coursewebsite/teacher/stu_mgt/delete',
       }).then((response) => {          //这里使用了ES6的语法
         // console.log(JSON.stringify(response))       //请求成功返回的数据
         // console.log(response.data.data)
-        if (response.data.code === '200' && response.data.data === 1){
-          for (let i = 0; i < this.studentlist.length;i++){
-            if (this.studentlist[i].id === stuId){
-              index = i
-              break
-            }
-          }
-          this.studentlist.splice(index, 1)
-          let selectId = this.selectArr.indexOf(stuId+"")
-          this.selectArr.splice(selectId,1)
+        if (response.data.code === '200' && response.data.data === 1) {
+          this.$router.push('/teacher/manage/studentlist')
+          this.$router.go(0)
           alert('删除学生成功!');
-        }
-        else {
+        } else {
           alert('删除学生失败!');
         }
       }).catch((error) => {
@@ -197,9 +195,9 @@ export default {
       })
     },
 
-    deleteSel (){
+    deleteSel() {
       let message = []
-      for(let i=0;i<this.selectArr.length;i++) {
+      for (let i = 0; i < this.selectArr.length; i++) {
         let _t = {
           id: this.selectArr[i]
         }
@@ -215,29 +213,19 @@ export default {
             'Content-type': 'application/json;charset=UTF-8'
           },
           data: JSON.stringify(message),
-          url: 'http://localhost:8081/coursewebsite_war_exploded/teacher/stu_mgt/dlt_li',
+          url: 'http://1.15.149.222:8080/coursewebsite/teacher/stu_mgt/dlt_li',
         }).then((response) => {          //这里使用了ES6的语法
           if (response.data.code === '200') {
             alert(response.data.data)
-            for (let i =0;i<this.selectArr.length;i++){
-              for (let j = 0; j < this.studentlist.length;j++){
-                if (this.studentlist[j].id === (this.selectArr[i])){
-                  index = j
-                  break
-                }
-              }
-              this.studentlist.splice(index,1)
-            }
-            this.selectArr = []
+            this.$router.push('/teacher/manage/studentlist')
+            this.$router.go(0)
           }
         }).catch((error) => {
           console.log(error)       //请求失败返回的数据
         })
       }
-
     },
-
-    selectOne (studentId) {
+    selectOne(studentId) {
       let idIndex = this.selectArr.indexOf(studentId)
       if (idIndex >= 0) {
         this.selectArr.splice(idIndex, 1)
@@ -245,32 +233,23 @@ export default {
         this.selectArr.push(studentId)
       }
     },
-    selectAll(){
+    selectAll() {
       this.isCheckedAll = !this.isCheckedAll
       if (this.isCheckedAll) {
         this.selectArr = []
         const _that = this
-        this.studentlist.forEach((val,index) =>{
+        this.studentlist.forEach((val, index) => {
           this.selectArr.push(val.id)
         })
       } else {
         this.selectArr = []
       }
-    },
-    
+    }
   }
 }
 </script>
 
 <style scoped>
-#head{
-  background-color: white;
-  font-size: 20px;
-  height: 100%;
-  margin-top: 8%;
-  margin-left: 4%;
-  margin-bottom: 6%;
-}
 #clazzname{
   float: right;
   margin-top: -40px;
@@ -280,7 +259,7 @@ export default {
   background-color: #4ab2ee;
 }
 #stulistbox{
-  margin-top: 4px;
+  margin-top: 10px;
   margin-left: 7px;
   margin-right: 5px;
   border: 1px solid #c2c1c1;
@@ -350,7 +329,7 @@ export default {
 }
 #uploadbtn{
   display: inline;
-  margin-left: 10px;
+  margin-left: -178px;
   margin-right: 10px;
 }
 #downloadbtn{
@@ -362,5 +341,20 @@ export default {
 }
 #pagination{
   float: right;
+}
+.file {
+  position: relative;
+  display: inline-block;
+  width: 175px;
+  height: 28px;
+  margin-left: 15px;
+  opacity: 0;
+}
+.file input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
 }
 </style>
