@@ -22,7 +22,6 @@
       <router-link to="/login/setPassword" id="forget">忘记密码？</router-link>
     </div>
 
-    <button @click="teacherlogin" id="teacherlogin">教师登录</button>
   </div>
 </template>
 

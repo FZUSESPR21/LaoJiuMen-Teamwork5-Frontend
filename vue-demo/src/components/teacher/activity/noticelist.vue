@@ -85,8 +85,6 @@ export default {
       deleteClick(index,row) {
         this.id = row.id
         this.queryDelete()
-        this.$router.push('/teacher/activity/noticelist')
-        this.$router.go(0)
       },
       lookClick(index,row) {
 
@@ -130,7 +128,7 @@ export default {
           console.log(error)       //请求失败返回的数据
         })
       },
-    },
+    
     queryDelete() {
         let info = {
           id: this.id
@@ -142,7 +140,7 @@ export default {
             'Content-type': 'application/json;charset=UTF-8'
           },
           data: JSON.stringify(info),
-          url: 'http://1.15.149.222:8080/coursewebsite/teacher/notice/delete',
+          url: 'http://1.15.149.222:8080/coursewebsite/teacher/notice/remove',
         }).then((response) => {          //这里使用了ES6的语法
           /*console.log(JSON.stringify(response))       //请求成功返回的数据
           alert(JSON.stringify(response))
@@ -152,9 +150,13 @@ export default {
         }).catch((error) => {
           console.log(error)       //请求失败返回的数据
         })
+    }
       },
+
     
     created () {
+            this.options = JSON.parse(localStorage.getItem('clazzInfo'))
+      this.value = this.options[0].id
       this.querySearch();
     }
   };
