@@ -19,7 +19,6 @@
         </template>
       </el-table-column>
     </el-table>
-
   </div>
 </template>
 
@@ -39,10 +38,15 @@ export default {
 
       ],
 
-      sId: 24
+      sId: localStorage.id
 
     };
   },
+
+  created() {
+    this.querySearch()
+  },
+
   methods: {
     lookClick(index,row) {
       console.log(this.tableData[index].content)
@@ -55,7 +59,9 @@ export default {
           id: this.tableData[index].id,
           filepath: this.tableData[index].filePath,
 
-          box: this.tableData[index]
+          title: this.tableData[index].title,
+          homeworkContent: this.tableData[index].homeworkContent,
+
         }
       })
       console.log(this.tableData[index].filePath)
@@ -79,7 +85,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-          url: 'http://localhost:8088/coursewebsite_war_exploded/student/homework_result/all?studentId=' + this.sId ,
+          url: 'http://1.15.149.222:8080/coursewebsite/student/homework_result/all?studentId=' + this.sId ,
       }).then((response) => {          //这里使用了ES6的语法
         /*console.log(JSON.stringify(response))       //请求成功返回的数据
         alert(JSON.stringify(response))
@@ -92,9 +98,7 @@ export default {
       })
     },
   },
-  created() {
-    this.querySearch()
-  }
+
 }
 </script>
 

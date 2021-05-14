@@ -8,6 +8,7 @@
 
     <div>
       <i class="el-icon-folder-opened"></i>
+      <span v-model="filename">{{filename}}</span>
       <el-button type="primary" plain size="mini" id="button" @click="downloadClick">下载</el-button>
     </div>
 
@@ -34,17 +35,21 @@ export default {
       input1: this.$route.query.content,
       input2: this.$route.query.remark,
 
-      id: this.$route.query.id
+      filename: this.$route.query.filepath.split("\\")[this.$route.query.filepath.split("\\").length-1],
+      id: this.$route.query.id,
+
+      title: this.$route.query.title,
+      homeworkContent: this.$route.query.homeworkContent,
     }
   },
+
   methods: {
     downloadClick() {
-      this.querySearch()
-      console.log(this.id)
-
+      this.queryDownload()
     },
-    querySearch() {
-      window.location.href = 'http://localhost:8088/coursewebsite_war_exploded/homework_result/download?id='+this.id;
+
+    queryDownload() {
+      window.location.href = 'http://1.15.149.222:8080/coursewebsite/homework_result/download?id='+this.id;
 
     },
 

@@ -8,9 +8,10 @@
                  @change="selectChange">
         <el-option
           v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+          :key="item.id"
+          :label="item.clazzName"
+          :value="item.id"
+        >
         </el-option>
       </el-select>
     </div>
@@ -51,17 +52,8 @@
     name: "homeworklist",
     data() {
       return {
-        options: [{
-          value: 1,
-          label: '2021级S班'
-        }, {
-          value: 2,
-          label: '2020级S班'
-        }, {
-          value: 3,
-          label: '2019级S班'
-        }],
-        value: 1,
+        options: [],
+        value: '',
 
         tableCol: [
           {prop: "title", label: "作业名称", width: 100},
@@ -75,7 +67,7 @@
 
         ],
 
-        tId: 1
+        tId: localStorage.id
       };
     },
     methods: {
@@ -98,8 +90,8 @@
       deleteClick(index,row) {
         this.id = row.id
         this.queryDelete()
-        this.$router.push('/teacher/activity/homeworklist')
-        this.$router.go(0)
+        /*this.$router.push('/teacher/activity/homeworklist')
+        this.$router.go(0)*/
       },
 
       headeRowClass({row, column, rowIndex, columnIndex}){
@@ -121,7 +113,7 @@
             'Content-type': 'application/json;charset=UTF-8'
           },
           data: JSON.stringify(info),
-          url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework/all?clazzId=' + this.value ,
+          url: 'http://1.15.149.222:8080/coursewebsite/teacher/homework/all?clazzId=' + this.value ,
         }).then((response) => {          //这里使用了ES6的语法
           /*console.log(JSON.stringify(response))       //请求成功返回的数据
           alert(JSON.stringify(response))
@@ -145,13 +137,10 @@
             'Content-type': 'application/json;charset=UTF-8'
           },
           data: JSON.stringify(info),
-          url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework/delete',
+          url: 'http://1.15.149.222:8080/coursewebsite/teacher/homework/delete',
         }).then((response) => {          //这里使用了ES6的语法
-          /*console.log(JSON.stringify(response))       //请求成功返回的数据
-          alert(JSON.stringify(response))
-          alert("成功")
-          console.log(response.data.data.list)
-          this.tableData = response.data.data.list*/
+
+          alert('删除成功')
         }).catch((error) => {
           console.log(error)       //请求失败返回的数据
         })
@@ -159,6 +148,8 @@
     },
 
     created () {
+      this.options = JSON.parse(localStorage.getItem('clazzInfo'))
+      this.value = this.options[0].id
       this.querySearch();
     }
   };

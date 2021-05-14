@@ -10,9 +10,9 @@
       <el-select size="mini" v-model="clazzValue" placeholder="请选择班级">
         <el-option
           v-for="item in classOptions"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+          :key="item.id"
+          :label="item.clazzName"
+          :value="item.id">
         </el-option>
       </el-select>
     </div>
@@ -20,7 +20,7 @@
     <br>
 
     <div>
-      <el-form :model="publishForm" :rules="rules" ref="publishForm" label-position="top">
+      <el-form :model="publishForm" ref="publishForm" label-position="top">
         <el-form-item label="资源信息" class="label">
           <i class="el-icon-star-on">选择分组</i>
           <br>
@@ -45,7 +45,7 @@
 
           <input class="file" name="file" type="file"  @change="select"/>
 
-          <p id="p">支持格式：.pdf，单个文件不超过20MB</p>
+<!--          <p id="p">支持格式：.pdf，单个文件不超过20MB</p>-->
         </el-form-item>
 
         <el-form-item>
@@ -65,17 +65,8 @@ export default {
   data() {
     return {
 
-      classOptions: [{
-        value: 1,
-        label: '2021级S班'
-      }, {
-        value: 2,
-        label: '2020级S班'
-      }, {
-        value: 3,
-        label: '2019级S班'
-      }],
-      clazzValue: 1,
+      classOptions: [],
+      clazzValue: '',
 
       typeOptions: [{
         value: 0,
@@ -96,16 +87,15 @@ export default {
     }
   },
 
+  created() {
+    this.classOptions = JSON.parse(localStorage.getItem('clazzInfo'))
+    this.clazzValue = this.classOptions[0].id
+  },
+
   methods: {
     select (e) {
-      console.log(this.tId)
-      console.log(this.clazzValue)
-      console.log(this.typeValue)
       this.file = e.target.files[0]
-      // console.log(file)
-
     },
-
 
     cancelClick() {
       this.$router.push({
@@ -128,11 +118,10 @@ export default {
         withCredentials: true
       })
       // url为后台接口
-      instance.post('http://localhost:8088/coursewebsite_war_exploded/teacher/resource/upload', param)
+      instance.post('http://1.15.149.222:8080/coursewebsite/teacher/resource/upload', param)
         .then(this.succ) // 成功返回信息 调用函数  函数需自己定义，此处后面省略
         .catch(this.serverError) // 服务器错误 调用对应函数  函数需自己定义，此处后面省略
-      this.$router.push('/teacher/source/study')
-      this.$router.go(0)
+
 
     }
   }

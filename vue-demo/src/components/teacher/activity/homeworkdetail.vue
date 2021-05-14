@@ -80,9 +80,6 @@ export default {
 
       ],
 
-      dataTemp:[],
-
-
       hwId: this.$route.query.hwId,
 
     };
@@ -90,7 +87,6 @@ export default {
 
   methods: {
     lookClick(row) {
-      console.log(this.hwcontent)
       this.$router.push({
         path: '/teacher/activity/submittedhomeworkdetail',
         query: {
@@ -98,6 +94,7 @@ export default {
           content: row.content,
           id: row.id,
           hwId: this.hwId,
+          filepath: row.filePath
 
         }
       })
@@ -122,7 +119,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/all_sub?homeworkId=' + this.hwId,
+        url: 'http://1.15.149.222:8080/coursewebsite/teacher/homework_result/all_sub?homeworkId=' + this.hwId,
       }).then((response) => {          //这里使用了ES6的语法
         // console.log(JSON.stringify(response))       //请求成功返回的数据
 

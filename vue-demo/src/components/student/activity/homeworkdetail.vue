@@ -49,7 +49,7 @@ export default {
 
       ],
 
-      sId: this.$route.query.stuId,
+      sId: localStorage.id,
       hwId: this.$route.query.hwId,
       content: '',
       file: ''
@@ -62,7 +62,9 @@ export default {
     submit() {
 
       let param = new FormData() // 创建form对象
-      param.append('file', this.file, this.file.name) // 通过append向form对象添加数据
+      if(this.file !== '') {
+        param.append('file', this.file, this.file.name) // 通过append向form对象添加数据
+      }
       param.append('homeworkId',this.hwId)
       param.append('studentId',this.sId)
       param.append('content',this.content)
@@ -72,14 +74,11 @@ export default {
         withCredentials: true
       })
       // url为后台接口
-      instance.post('http://localhost:8088/coursewebsite_war_exploded/student/homework_result/submit', param)
+      instance.post('http://1.15.149.222:8080/coursewebsite/student/homework_result/submit', param)
         .then(this.succ) // 成功返回信息 调用函数  函数需自己定义，此处后面省略
         .catch(this.serverError) // 服务器错误 调用对应函数  函数需自己定义，此处后面省略
 
 
-
-      this.$router.push('/student/activity/submittedhomeworklist')
-      this.$router.go(0)
     },
 
     cancel() {
@@ -87,12 +86,8 @@ export default {
     },
 
     select (e) {
-
       this.file = e.target.files[0]
-      // console.log(file)
-
     },
-
 
   },
 

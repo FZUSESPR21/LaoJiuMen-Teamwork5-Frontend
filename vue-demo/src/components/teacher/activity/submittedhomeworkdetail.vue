@@ -9,8 +9,8 @@
     <div>
       <div>
         <i class="el-icon-folder-opened"></i>
-
-          <el-button type="primary" plain size="mini" class="button" @click="downloadClick" icon="el-icon-download">下载</el-button>
+        <span>{{filepath}}</span>
+        <el-button type="primary" plain size="mini" class="button" @click="downloadClick" icon="el-icon-download">下载</el-button>
 
       </div>
 
@@ -58,8 +58,10 @@
 </template>
 
 <script>
+import SetPassword from "../../Login/SetPassword";
 export default {
   name: "submittedhomeworkdetail",
+  components: {SetPassword},
   data() {
 
     var validateMark = (rule, value, callback) => {
@@ -90,13 +92,14 @@ export default {
 
       id: this.$route.query.id,
       hwId: this.$route.query.hwId,
+      filepath: this.$route.query.filepath
 
     }
   },
   methods: {
     downloadClick() {
 
-      this.querySearch()
+      this.queryDownload()
     },
     publishClick() {
       this.queryUpdate()
@@ -107,11 +110,11 @@ export default {
 
         }
       })
-      this.$router.go(0)
+
     },
 
-    querySearch() {
-      window.location.href = 'http://localhost:8088/coursewebsite_war_exploded/homework_result/download?id='+this.id;
+    queryDownload() {
+      window.location.href = 'http://1.15.149.222:8080/coursewebsite/homework_result/download?id='+this.id;
 
     },
 
@@ -128,7 +131,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework_result/update' ,
+        url: 'http://1.15.149.222:8080/coursewebsite/teacher/homework_result/update' ,
       }).then((response) => {          //这里使用了ES6的语法
         /*console.log(JSON.stringify(response))       //请求成功返回的数据
         alert(JSON.stringify(response))

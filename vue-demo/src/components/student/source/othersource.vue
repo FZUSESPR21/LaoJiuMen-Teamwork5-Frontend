@@ -43,8 +43,8 @@ export default {
 
       ],
 
-      cId: 1,
-      id: ''
+      cId: localStorage.clazzId,
+      id: ''//资源Id
     };
   },
   methods: {
@@ -55,12 +55,8 @@ export default {
       }
     },
 
-    lookClick() {
-
-    },
 
     downloadClick(index) {
-
       this.id = this.tableData[index].id
       this.querySearch()
     },
@@ -75,7 +71,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/resource/other?clazzId=' + this.cId,
+        url: 'http://1.15.149.222:8080/coursewebsite/resource/other?clazzId=' + this.cId,
       }).then((response) => {          //这里使用了ES6的语法
         /*console.log(JSON.stringify(response))       //请求成功返回的数据
         alert(JSON.stringify(response))
@@ -88,7 +84,7 @@ export default {
     },
 
     querySearch() {
-      window.location.href = 'http://localhost:8088/coursewebsite_war_exploded/resource/download?id='+this.id;
+      window.location.href = 'http://1.15.149.222:8080/coursewebsite/resource/download?id='+this.id;
 
     },
   },

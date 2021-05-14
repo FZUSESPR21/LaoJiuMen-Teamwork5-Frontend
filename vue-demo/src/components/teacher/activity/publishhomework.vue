@@ -21,9 +21,9 @@
       <el-select size="mini" v-model="value" placeholder="请选择班级">
         <el-option
           v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+          :key="item.id"
+          :label="item.clazzName"
+          :value="item.id">
         </el-option>
       </el-select>
     </div>
@@ -38,7 +38,7 @@
           <el-input v-model="publishForm.title" placeholder="请输入作业标题" resize="none"></el-input>
         </el-form-item>
 
-        <el-form-item>
+        <el-form-item prop="time1">
           <i class="el-icon-star-on"></i>
           <span class="text">发布时间</span>
           <br>
@@ -51,7 +51,7 @@
           </el-date-picker>
         </el-form-item>
 
-        <el-form-item>
+        <el-form-item prop="time2">
           <i class="el-icon-star-on"></i>
           <span class="text">截止时间</span>
           <br>
@@ -64,7 +64,7 @@
         </el-form-item>
 
 
-        <el-form-item :rules="{ required: true, message: '内容不能为空'}">
+        <el-form-item prop="content">
           <i class="el-icon-star-on"></i>
           <span class="text">内容</span>
           <el-input v-model="publishForm.content" rows="4" type="textarea" placeholder="请输入作业内容" resize="none"></el-input>
@@ -85,29 +85,39 @@ export default {
   data() {
     var validateTitle = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('标题不能为空'));
+        return callback(new Error('标题不能为空，请输入'));
       } else {
-        if (value === '已经存在的作业标题') {
-          callback(new Error('作业标题不能重复，请重新输入'));
-        } else {
           callback();
         }
+    };
+
+    var validateContent = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('内容不能为空，请输入'));
+      } else {
+        callback();
       }
     };
 
+    var validateTime1 = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('发布时间不能为空，请选择'));
+      } else {
+        callback();
+      }
+    };
+
+    var validateTime2 = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('截止时间不能为空，请选择'));
+      } else {
+        callback();
+      }
+    };
 
     return {
-      options: [{
-        value: 1,
-        label: '2021级S班'
-      }, {
-        value: 2,
-        label: '2020级S班'
-      }, {
-        value: 3,
-        label: '2019级S班'
-      }],
-      value: 3,
+      options: [],
+      value: '',
 
       publishForm: {
         title: '',
@@ -141,11 +151,18 @@ export default {
 
       rules: {
         title:  { validator: validateTitle, trigger: 'blur' },
-        content: { required: true, message: '内容不能为空'},
+        content: { validator: validateContent, trigger: 'blur' },
+        time1: { validator: validateTime1, trigger: 'blur' },
+        time2: { validator: validateTime2, trigger: 'blur' },
       },
 
       tipBox: false,
     }
+  },
+
+  created() {
+    this.options = JSON.parse(localStorage.getItem('clazzInfo'))
+    this.value = this.options[0].id
   },
 
   methods: {
@@ -164,17 +181,33 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/homework/add',
+        url: 'http://1.15.149.222:8080/coursewebsite/teacher/homework/add',
       }).then((response) => {          //这里使用了ES6的语法
+        /*alert('LQ')
+        console.log('LQ')
         console.log(JSON.stringify(response))       //请求成功返回的数据
         alert(JSON.stringify(response))
+        if (response.data.code==='200') {
+          this.$router.push('/teacher/activity/homeworklist')
+          this.$router.go(0)
+
+        }
+        console.log(response)
+        if (response.data.code==='500') {
+          console.log(JSON.stringify(response))       //请求成功返回的数据
+          alert(JSON.stringify(response))
+          alert("标题重复")
+
+        }*/
+        alert('发布作业成功')
+
       }).catch((error) => {
-        console.log(error)       //请求失败返回的数据
-        this.tipBox = true
+        console.log(error)
+        alert("标题重复,请重新输入")//请求失败返回的数据
+        // this.tipBox = true
       })
 
-      this.$router.push('/teacher/activity/homeworklist')
-      this.$router.go(0)
+
     }
   }
 }

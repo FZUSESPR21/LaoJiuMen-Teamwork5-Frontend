@@ -8,9 +8,9 @@
                  @change="selectChange">
         <el-option
           v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
+          :key="item.id"
+          :label="item.clazzName"
+          :value="item.id">
         </el-option>
       </el-select>
     </div>
@@ -58,17 +58,8 @@ export default {
   name: "studysource",
   data() {
     return {
-      options: [{
-        value: 1,
-        label: '2021级S班'
-      }, {
-        value: 2,
-        label: '2020级S班'
-      }, {
-        value: 3,
-        label: '2019级S班'
-      }],
-      value: 1,
+      options: [],
+      value: '',
 
       tableCol: [
         {prop: "resourceName", label: "名称", width: 250},
@@ -91,7 +82,7 @@ export default {
 
     downloadClick(index) {
       this.id = this.tableData[index].id
-      this.querySearch()
+      this.queryDownload()
 
     },
 
@@ -128,7 +119,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/resource/all?clazzId=' + this.value ,
+        url: 'http://1.15.149.222:8080/coursewebsite/teacher/resource/all?clazzId=' + this.value ,
       }).then((response) => {
 
         console.log(response.data.data.list)
@@ -149,7 +140,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/teacher/resource/delete',
+        url: 'http://1.15.149.222:8080/coursewebsite/teacher/resource/delete',
       }).then((response) => {          //这里使用了ES6的语法
         /*console.log(JSON.stringify(response))       //请求成功返回的数据
         alert(JSON.stringify(response))
@@ -161,12 +152,14 @@ export default {
       })
     },
 
-    querySearch() {
-      window.location.href = 'http://localhost:8088/coursewebsite_war_exploded/resource/download?id='+this.id;
+    queryDownload() {
+      window.location.href = 'http://1.15.149.222:8080/coursewebsite/resource/download?id='+this.id;
 
     },
   },
   created () {
+    this.options = JSON.parse(localStorage.getItem('clazzInfo'))
+    this.value = this.options[0].id
     this.queryView();
   }
 

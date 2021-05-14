@@ -15,8 +15,6 @@
         show-overflow-tooltip>
       </el-table-column>
 
-
-
       <el-table-column label="操作" align="center" width="100">
         <template slot-scope="scope">
           <el-button size="mini" type="text" @click="lookClick(scope.$index,scope.row)" class="button" icon="el-icon-view">查看</el-button>
@@ -44,10 +42,8 @@
 
         ],
 
-
-        cId: 3,
-        hwId: '',
-        sId: 24,
+        cId: localStorage.clazzId,
+        sId: localStorage.id,
 
       };
     },
@@ -64,7 +60,6 @@
             content: this.tableData[index].content
           }
         })
-        // this.$router.push({name: '/student/activity/homeworkdetail', params: {userId: this.userID,name: this.name}})
       },
 
       headeRowClass({row, column, rowIndex, columnIndex}){
@@ -85,7 +80,7 @@
             'Content-type': 'application/json;charset=UTF-8'
           },
           data: JSON.stringify(info),
-          url: 'http://localhost:8088/coursewebsite_war_exploded/student/homework/all?clazzId=' + this.cId + '&studentId=' + this.sId,
+          url: 'http://1.15.149.222:8080/coursewebsite/student/homework/all?clazzId=' + this.cId + '&studentId=' + this.sId,
         }).then((response) => {          //这里使用了ES6的语法
           /*console.log(JSON.stringify(response))       //请求成功返回的数据
           alert(JSON.stringify(response))
