@@ -1,20 +1,22 @@
 <template>
-  <div>     
+  <div>
       <!--上传学生成绩excel-->
     <div class="rinput">
-      <el-upload
-        class="upload-demo"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        multiple
-        :limit="3"
-        :on-exceed="handleExceed"
-        :file-list="fileList">
-        <el-button size="small" type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">只能上传excel文件</div>
-      </el-upload>
+<!--      <el-upload-->
+<!--        class="upload-demo"-->
+<!--        action="https://jsonplaceholder.typicode.com/posts/"-->
+<!--        :on-preview="handlePreview"-->
+<!--        :on-remove="handleRemove"-->  
+<!--        :before-remove="beforeRemove"-->
+<!--        multiple-->
+<!--        :limit="3"-->
+<!--        :on-exceed="handleExceed"-->
+<!--        :file-list="fileList">-->
+<!--        <el-button size="small" type="primary">点击上传</el-button>-->
+<!--        <div slot="tip" class="el-upload__tip">只能上传excel文件</div>-->
+<!--      </el-upload>-->
+      <input class="file" name="file_excel" type="file"  @change="select"/>
+      <el-button size="mini" id="uploadbtn" icon="el-icon-upload2">上传Excel生成学生列表</el-button>
       <el-button size="small" type="primary" @click="downTemplate">下载文件</el-button>
     </div>
 
@@ -221,7 +223,7 @@
       <div>
         该生在本课程网站上签到的缺勤次数：
         <el-divider></el-divider>
-        该生在本课程网站上的作业得分情况：        
+        该生在本课程网站上的作业得分情况：
             <el-table
             :data="homeworkData"
             style="width: 80%;margin-top: 2%">
@@ -249,24 +251,24 @@ export default {
       radio: '1',
       input1: '',
       tableData: [],
-      fileList: [{name: 'student.jpg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],//已上传的文件
+      fileList: [{name: '', url: ''}],//已上传的文件
         homeworkData: [
         {
           homeName: '第一次作业',
-          homeScore: '',           
-        }, 
+          homeScore: '',
+        },
         {
           homeName: '第二次作业',
           homeScore: '',
-        }, 
+        },
         {
           homeName: '第三次作业',
           homeScore: '',
-        }, 
+        },
         {
           homeName: '第四次作业',
           homeScore: '',
-        }, 
+        },
         {
           homeName: '第五次作业',
           homeScore: '',
@@ -310,31 +312,56 @@ export default {
       beforeRemove(file, fileList) {
         return this.$confirm(`确定移除 ${ file.name }？`);
       },
+
       downTemplate () {
-        axios({
-          method: 'get',
-          url:'xxx相对地址xxx',
-          responseType: 'blob'
-        }).then(res => this.downloads(res.data, res.headers.filename))
-      },        
-      // 创建模板下载链接
-      downloads (data, name){
-        if(!data){
-            return
-        }
-        let url = window.URL.createObjectURL(new Blob([data]))
-        let link = document.createElement('a')
-        link.style.display ='none'
-        link.href = url
-        link.setAttribute('download', `前端拼接后端返回的名字${name}.xlsx`)
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        window.URL.revokeObjectURL(url)
+        window.location.href = 'http://1.15.149.222:8080/coursewebsite/teacher/score/down?clazzId='+localStorage.getItem('clazzvalue')
+        // axios({
+        //   method: 'get',
+        //   url:'xxx相对地址xxx',
+        //   responseType: 'blob'
+        // }).then(res => this.downloads(res.data, res.headers.filename))
       },
+
+      // 创建模板下载链接
+      // downloads (data, name){
+      //   if(!data){
+      //       return
+      //   }
+      //   let url = window.URL.createObjectURL(new Blob([data]))
+      //   let link = document.createElement('a')
+      //   link.style.display ='none'
+      //   link.href = url
+      //   link.setAttribute('download', `前端拼接后端返回的名字${name}.xlsx`)
+      //   document.body.appendChild(link)
+      //   link.click()
+      //   document.body.removeChild(link)
+      //   window.URL.revokeObjectURL(url)
+      // },
+
       searchData(){
-        
-      }
+
+      },
+
+      select(e) {
+
+        this.file = e.target.files[0]
+        // console.log(file)
+        let param = new FormData() // 创建form对象
+        param.append('file_excel', this.file, this.file.name) // 通过append向form对象添加数据
+        // withCredentials: true 使得后台可以接收表单数据  跨域请求
+        const instance = this.$axios.create({
+          withCredentials: true
+        })
+        // url为后台接口
+        instance.post('http://1.15.149.222:8080/coursewebsite/teacher/score/excel', param)
+          .then((response) => {
+            console.log(response.data)
+            // this.$router.push('/teacher/manage/studentlist')
+            // this.$router.go(0)
+          }) // 成功返回信息 调用函数  函数需自己定义，此处后面省略
+          .catch(this.serverError) // 服务器错误 调用对应函数  函数需自己定义，此处后面省略
+      },
+
     }
   }
 
@@ -380,5 +407,25 @@ export default {
 }
 .rinput{
   margin-top:5%;
+}
+#uploadbtn{
+  display: inline;
+  margin-left: -178px;
+  margin-right: 10px;
+}
+.file {
+  position: relative;
+  display: inline-block;
+  width: 175px;
+  height: 28px;
+  margin-left: 15px;
+  opacity: 0;
+}
+.file input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
 }
 </style>

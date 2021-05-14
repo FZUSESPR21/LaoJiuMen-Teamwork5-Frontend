@@ -8,32 +8,34 @@
         <el-card class="box-card1">
           <div slot="header" class="clearfix">
             <span>期末笔试成绩：</span>
-            {{writtenScore}}
+            {{writtenScore}}({{Math.round(writtenScore*0.7)}})
           </div>
           <div></div>
         </el-card>
-        <el-card class="box-card2">
-          <div slot="header" class="clearfix">
-            <span>作业成绩：</span>
-            
-          </div>
-          <div></div>
-        </el-card>
+<!--        <el-card class="box-card2">-->
+<!--          <div slot="header" class="clearfix">-->
+<!--            <span>作业成绩：</span>-->
+
+<!--          </div>-->
+<!--          <div></div>-->
+<!--        </el-card>-->
         <el-card class="box-card3">
           <div slot="header" class="clearfix">
             <span>期末总成绩：</span>
             {{totalScore}}
           </div>
-          <div v-for="o in 4" :key="o" class="text item">
-            {{'列表内容 ' + o }}
-          </div>
+          1、70%期末笔试成绩<br>
+          2、30%平时成绩：<br>
+          (1)缺勤1次扣3分，课堂表现积极加1分<br>
+          (2)小测：满分A2/90-80B1/70-30C0/20-OD-1/缺交E-2<br>
+          (3)个人作业<br>
         </el-card>
-        <el-card class="box-card4">
-          <div slot="header" class="clearfix">
-            <span>小测成绩：</span>
-          </div>
-          <div></div>
-        </el-card>
+<!--        <el-card class="box-card4">-->
+<!--          <div slot="header" class="clearfix">-->
+<!--            <span>小测成绩：</span>-->
+<!--          </div>-->
+<!--          <div></div>-->
+<!--        </el-card>-->
         <el-card class="box-card5">
           <div slot="header" class="clearfix">
             <span>平时成绩：</span>
@@ -53,7 +55,7 @@
 <script>
 export default {
   name: "resultshow",
-  
+
   data(){
     return{
       totalScore:'',
@@ -82,7 +84,7 @@ export default {
         this.usualScore=response.data.data.usualScore
         this.totalScore=response.data.data.totalScore
         this.writtenScore=response.data.data.writtenScore
-        
+
       }).catch((error) => {
           console.log(error)       //请求失败返回的数据
         })

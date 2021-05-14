@@ -1,12 +1,15 @@
 <template>
   <div>
   <el-form :inline="true" :model="formInline" class="score-rule">
-    <el-form-item label="班级">
-    <el-select v-model="formInline.region" placeholder="请选择年份班级">
-      <el-option label="2021年S班" value="year"></el-option>
-      <el-option label="2020年S班" value="yearr"></el-option>
+    班级：
+    <el-select v-model="clazzvalue" placeholder="请选择" size="mini" @change="changeClazz">
+      <el-option
+        v-for="item in options"
+        :key="item.id"
+        :label="item.clazzName"
+        :value="item.id+''">
+      </el-option>
     </el-select>
-    </el-form-item>
     <el-form-item class="resultbutton">
       <el-button type="primary" @click="onInput">成绩录入</el-button>
       <el-button type="primary" @click="onAnalysis">成绩分析</el-button>
@@ -28,7 +31,7 @@
         show-overflow-tooltip>
       </el-table-column>
     </el-table>
-  
+
   </div>
 </template>
 
@@ -52,6 +55,8 @@ export default {
         {prop: "totalScore", label: "最终成绩", width: 200},
 
       ],
+      options:[],
+      clazzvalue:'',
       tableData: []
     }
   },
@@ -62,6 +67,10 @@ export default {
     onAnalysis() {
       console.log('analysis!');
     },
+    changeClazz() {
+      this.scorelistSearch()
+      localStorage.setItem('clazzvalue', this.clazzvalue)
+    },
     scorelistSearch() {
 
         this.$axios({
@@ -69,8 +78,7 @@ export default {
           headers: {
             'Content-type': 'application/json;charset=UTF-8'
           },
-          url: 'http://1.15.149.222:8080/coursewebsite/teacher/score/all?clazzId=1'
-          //+localStorage.getItem('clazzId') ,
+          url: 'http://1.15.149.222:8080/coursewebsite/teacher/score/all?clazzId='+localStorage.getItem('clazzvalue') ,
         }).then((response) => {          //这里使用了ES6的语法
           /*console.log(JSON.stringify(response))       //请求成功返回的数据
           alert(JSON.stringify(response))
@@ -84,11 +92,16 @@ export default {
       },
   },
       created(){
+        this.options = JSON.parse(localStorage.getItem('clazzInfo'))
+        this.clazzvalue = this.options[0].id+''
+        if (!localStorage.getItem('clazzvalue'))
+          localStorage.setItem('clazzvalue', this.clazzvalue)
+        else this.clazzvalue = localStorage.getItem('clazzvalue')
         this.scorelistSearch();
       }
 
-      
-  
+
+
 }
 </script>
 
