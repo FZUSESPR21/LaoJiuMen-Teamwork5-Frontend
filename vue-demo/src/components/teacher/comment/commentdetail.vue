@@ -120,7 +120,7 @@ export default {
           },
           url: 'http://1.15.149.222:8080/coursewebsite/comment/add',
           data: {
-            account: "221801102",
+            account: localStorage.getItem('account'),
             topicId: this.topicID,
             content: this.comment
           }
@@ -157,6 +157,7 @@ export default {
   box-shadow: 5px 5px 10px #b6b4b4 ;
   margin-bottom: 10px;
 }
+
 
 /*searchPart*/
 .searchPart{

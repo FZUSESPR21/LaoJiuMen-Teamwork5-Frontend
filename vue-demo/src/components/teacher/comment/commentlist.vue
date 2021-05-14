@@ -115,7 +115,7 @@ export default {
           },
           url: 'http://1.15.149.222:8080/coursewebsite/topic/add',
           data: {
-            account: "221801102",
+            account: localStorage.getItem('account'),
             title: this.newTitle,
             content: this.newContain
           }

@@ -1,5 +1,9 @@
 <template>
 <div>
+<div>
+  <span>sssssss</span>
+  {{}}
+</div>
   <div>
     <div id="main"></div>
   </div>
@@ -9,9 +13,18 @@
 <script>
   import echarts from 'echarts'
   export default {
-    name: 'taskanalysis',
+    name: 'finalechart',
     data() {
-      return {}
+      return {
+        
+        A:1,
+        B:1,
+        C:1,
+        D:1,
+        G:1,
+        E:1,
+        F:1
+      }
     },
     mounted: function() {
       this.$nextTick(function() {
@@ -23,6 +36,7 @@
         // 绘制图表
         var myChart = echarts.init(document.getElementById('main'))
         // 指定图表的配置项和数据
+        
         var option = {
           //标题
           title: {           
@@ -60,39 +74,11 @@
                   , '#D8BFD8', '#BFEFFF', '#F4A460'],
 
         
-          // 饼图数据
-            //动态获取饼状图的数据
-            /*
-            async initData() {
-            var url="";
-            this.axios.post(url,{}).then(res=>{
-                console.log(res.data);
-                var getData = [];
-                //先进行赋值
-                console.log(res.data.length)
-                //for循环赋值
-                for(let i=0; i<res.data.length; i++) {
-                    var obj = new Object();
-                    obj.name = res.data[i].typeName;
-                    obj.value = res.data[i].num;
-                    getData[i] = obj;
-                }
-                //然后再给饼状图赋值
-                this.chartPie.setOption({
-                    legend: {
-                    data: res.data.typeName,
-                    },
-                    series:[{
-                        data: getData,
-                    }]
-                });
-            })
-            
-            
-            },
+ 
             drawCharts() {
                 this.drawPieChart();
             },
+            
 
             //页面一加载就调用方法
             mounted () {
@@ -100,22 +86,23 @@
                 this.initData();
                 //再调用饼状图方法
                 this.drawCharts();
-            }
-            */
+            },
+            
           series: {
-            // name: 'bug分布',
             type: 'pie',             //echarts图的类型   pie代表饼图
             radius: '90%',           //饼图中饼状部分的大小所占整个父元素的百分比
             center: ['50%', '50%'],  //整个饼图在整个父元素中的位置
             // data:''               //饼图数据
             data: [                  //每个模块的名字和值
-              { name: '0-59', value: 10 },
-              { name: '60-69', value: 10},
-              { name: '70-79', value: 10 },
-              { name: '80-84', value: 15},
-              { name: '85-89', value: 15 },
-              { name: '90-99', value: 20},
-              { name: '100', value: 20 }
+            
+              { name: '0-59', value:data.A},
+              { name: '60-69', value: data.B},
+              { name: '70-79', value: data.C},
+              { name: '80-84', value: data.D},
+              { name: '85-89', value:data.E},
+              { name: '90-99', value: this.data.F},
+              { name: '100', value: this.data.G }
+              
             ],
             itemStyle: {
               normal: {
@@ -133,10 +120,33 @@
         }
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option)
-      }
+      },
+      finalSearch() {
+        let info = {
+
+        }
+        this.$axios({
+          method: 'get',
+          headers: {
+            'Content-type': 'application/json;charset=UTF-8'
+          },
+          url: 'http://1.15.149.222:8080/coursewebsite/teacher/score/final?cid=1',
+        }).then((response) => {          //这里使用了ES6的语法
+
+          console.log(response.data.data)
+          this.data = response.data.data
+
+        }).catch((error) => {
+          console.log(error)       //请求失败返回的数据
+        })
+      },
+    },
+    created () {
+      this.finalSearch();
+    }
     }
 
-  }
+  
 
 </script>
 

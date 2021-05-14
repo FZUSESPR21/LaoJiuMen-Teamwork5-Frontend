@@ -86,6 +86,8 @@ export default {
       created(){
         this.scorelistSearch();
       }
+
+      
   
 }
 </script>
