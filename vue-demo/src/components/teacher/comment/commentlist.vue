@@ -44,6 +44,7 @@
               <span class="comment-name">{{item.account}}</span>
               <span>发布于</span>
               <span class="comment-time">{{item.releasedAt}}</span>
+              <el-button size="mini" @click="deleteOne(item.id)" id="deletebtn">删除</el-button>
             </div>
           </div>
         </li>
@@ -69,12 +70,12 @@ export default {
   methods:{
     ToOwnlist:function (){
       this.$router.push({
-        path: '/student/comment/owncommentlist',
+        path: '/teacher/comment/owncommentlist',
       })
     },
     ToDetail:function (e){
       this.$router.push({
-        path: '/student/comment/commentdetail',
+        path: '/teacher/comment/commentdetail',
         query:{
           detailID:e.id,
           topic:{
@@ -127,8 +128,25 @@ export default {
         this.$refs.containValue.value=''
         this.$refs.titleValue.value=''
         this.getCommentInfo()
-        this.$router.go(0)
+        // this.$router.go(0)
       }
+    },
+    deleteOne(topicId){
+      let info = {
+        id: topicId
+      }
+      this.$axios({
+        method: 'post',
+        headers: {
+          'Content-type': 'application/json;charset=UTF-8'
+        },
+        data: JSON.stringify(info),
+        url: 'http://1.15.149.222:8080/coursewebsite/topic/delete',
+      }).catch((error) => {
+        console.log(error)       //请求失败返回的数据
+      })
+      this.getCommentInfo();
+      // this.$router.go(0)
     }
   }
 }
@@ -143,6 +161,12 @@ export default {
   margin-top: 8%;
   margin-left: 4%;
   margin-bottom: 6%;
+}
+
+.english{
+  color: rgb(179, 179, 179);
+  margin-top: 0;
+  font-size: 15px;
 }
 
 .part{
@@ -299,6 +323,12 @@ li{
   margin-top: 10px;
   width: 82%;
   margin-right: 4.5%;
+}
+#deletebtn{
+  border-color: red;
+  color: red;
+  float: right;
+  margin-right: 50px;
 }
 
 </style>

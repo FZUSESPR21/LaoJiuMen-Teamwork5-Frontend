@@ -1,9 +1,5 @@
 <template>
 <div>
-<div>
-  <span>sssssss</span>
-  {{}}
-</div>
   <div>
     <div id="main"></div>
   </div>
@@ -14,136 +10,72 @@
   import echarts from 'echarts'
   export default {
     name: 'finalechart',
+    
     data() {
       return {
-        
-        A:1,
-        B:1,
-        C:1,
-        D:1,
-        G:1,
-        E:1,
-        F:1
+        list: [],
+        a:'',
+        b:'',
+        c:'',
+        d:'',
+        e:'',
+        f:'',
+        g:'',
+    
       }
     },
+    
     mounted: function() {
-      this.$nextTick(function() {
-        this.getPie()
-      })
-    },
-    methods: {
-      getPie() {
-        // 绘制图表
-        var myChart = echarts.init(document.getElementById('main'))
-        // 指定图表的配置项和数据
-        
-        var option = {
-          //标题
-          title: {           
-            text: '学生成绩饼图',
-            x: 'left' ,             //标题位置
-            // textStyle: { //标题内容的样式
-            //   color: '#000',
-            //   fontStyle: 'normal',
-            //   fontWeight: 100,
-            //   fontSize: 16 //主题文字字体大小，默认为18px
-            // },
-          },
-          // stillShowZeroSum: true,
-          //鼠标划过时饼状图上显示的数据
-          tooltip: {
-            trigger: 'item',
-            formatter: '{a}<br/>{b}:{c} ({d}%)'
-          },
-          //图例
-          legend: {//图例  标注各种颜色代表的模块
-            orient: 'vertical',//图例的显示方式  默认横向显示
-            bottom: 0,//控制图例出现的距离  默认左上角
-            left: 'left',//控制图例的位置
-            // itemWidth: 16,//图例颜色块的宽度和高度
-            // itemHeight: 12,
-            textStyle: {//图例中文字的样式
-              color: '#000',
-              fontSize: 16
-            },
-            data: ['0-59', '60-69', '70-79', '80-84'
-                  , '85-89', '90-99', '100']//图例上显示的饼图各模块上的名字
-          },
-          //饼图中各模块的颜色
-          color: ['#FFF68F', '#FFE4E1', '#B4EEB4', '#B0C4DE'
-                  , '#D8BFD8', '#BFEFFF', '#F4A460'],
-
-        
- 
-            drawCharts() {
-                this.drawPieChart();
-            },
-            
-
-            //页面一加载就调用方法
-            mounted () {
-                //先调用这个方法赋值
-                this.initData();
-                //再调用饼状图方法
-                this.drawCharts();
-            },
-            
-          series: {
-            type: 'pie',             //echarts图的类型   pie代表饼图
-            radius: '90%',           //饼图中饼状部分的大小所占整个父元素的百分比
-            center: ['50%', '50%'],  //整个饼图在整个父元素中的位置
-            // data:''               //饼图数据
-            data: [                  //每个模块的名字和值
-            
-              { name: '0-59', value:data.A},
-              { name: '60-69', value: data.B},
-              { name: '70-79', value: data.C},
-              { name: '80-84', value: data.D},
-              { name: '85-89', value:data.E},
-              { name: '90-99', value: this.data.F},
-              { name: '100', value: this.data.G }
-              
-            ],
-            itemStyle: {
-              normal: {
-                label: {
-                  show: true,//饼图上是否出现标注文字 标注各模块代表什么  默认是true
-                  // position: 'inner',//控制饼图上标注文字相对于饼图的位置  默认位置在饼图外
-                },
-                labelLine: {
-                  show: true//官网demo里外部标注上的小细线的显示隐藏    默认显示
-                }
-              }
-            },
-          }
-
-        }
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option)
-      },
-      finalSearch() {
-        let info = {
-
-        }
-        this.$axios({
-          method: 'get',
-          headers: {
-            'Content-type': 'application/json;charset=UTF-8'
-          },
-          url: 'http://1.15.149.222:8080/coursewebsite/teacher/score/final?cid=1',
-        }).then((response) => {          //这里使用了ES6的语法
-
-          console.log(response.data.data)
-          this.data = response.data.data
-
-        }).catch((error) => {
-          console.log(error)       //请求失败返回的数据
-        })
-      },
+      // this.$nextTick(function() {
+      //   this.getPie()
+      // })
+      this.initChart();
     },
     created () {
-      this.finalSearch();
-    }
+      this.initChart();
+    },
+    methods: {
+      initChart() {
+         this.char=echarts.init(document.getElementById("main"));
+         this.char.setOption({
+             tooltip:{},
+             series:[
+                 {
+                     name: '访问来源',
+                     type: 'pie',
+                     radius: '80%',
+                     data: []
+                 }
+             ]
+         });
+         this.$axios.get('http://1.15.149.222:8080/coursewebsite/teacher/score/final?cid=1')
+             .then((res)=>{
+                 console.log('访问后台');
+                 // console.log(res.data);
+                 var list = [{'name': '100', 'value':res.data.data.a}, 
+                             {'name': '90-99', 'value':res.data.data.b},
+                             {'name': '85-89', 'value':res.data.data.c}, 
+                             {'name': '80-84', 'value':res.data.data.d},
+                             {'name': '70-79', 'value':res.data.data.e}, 
+                             {'name': '60-69', 'value':res.data.data.f},
+                             {'name': '0-59', 'value':res.data.data.g} ];
+                 console.log(list);  
+                 this.char.setOption({
+                     series:[
+                         {
+                             name: '访问来源',
+                             type: 'pie',
+                             radius: '80%',
+                             data:list//赋值
+                         }
+                     ]
+                 })
+             });
+     },
+
+      
+    },
+
     }
 
   
