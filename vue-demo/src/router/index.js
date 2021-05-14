@@ -38,7 +38,7 @@ const TeacherSignin = () =>
 const TeacherResult = () =>
     import ('../components/teacher/result/resultmain')
 const TeacherComment = () =>
-    import ('../components/teacher/comment/commentlist')
+    import ('../components/teacher/comment/commentmain')
 const TeacherSetPassword = () =>
     import ('../components/Login/SetPassword')
 const TeacherLogin = () =>
@@ -81,6 +81,15 @@ const createstudent = () =>
     import ('../components/teacher/manage/createstudent')
 const createclass = () =>
     import ('../components/teacher/manage/createclass')
+
+const tchcommentlist = () =>
+  import ('../components/teacher/comment/commentlist')
+const tchcommentdetail = () =>
+  import ('../components/teacher/comment/commentdetail')
+const tchowncommentlist = () =>
+  import ('../components/teacher/comment/owncommentlist')
+const tchowncommentdetail = () =>
+  import ('../components/teacher/comment/owncommentdetail')
 
 /*教师成绩页面跳转路由*/
 const TeacherResultMain = () =>
@@ -345,7 +354,28 @@ const routes = [{
             },
             {
                 path: '/teacher/comment',
-                component: TeacherComment
+                component: TeacherComment,
+                children: [{
+                    path: '',
+                    redirect: '/teacher/comment/commentlist'
+                  },
+                  {
+                    path: '/teacher/comment/commentlist',
+                    component: tchcommentlist
+                  },
+                  {
+                    path: '/teacher/comment/commentdetail',
+                    component: tchcommentdetail
+                  },
+                  {
+                    path: '/teacher/comment/owncommentlist',
+                    component: tchowncommentlist
+                  },
+                  {
+                    path: '/teacher/comment/owncommentdetail',
+                    component: tchowncommentdetail
+                  }
+                ]
             },
             {
                 path: '/teacher/manage',

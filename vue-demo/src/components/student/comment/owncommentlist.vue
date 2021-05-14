@@ -82,7 +82,7 @@ export default {
         headers: {
           'Content-type': 'application/json;charset=UTF-8'
         },
-        url: 'http://1.15.149.222:8080/coursewebsite/topic/my?account=221801102',
+        url: 'http://1.15.149.222:8080/coursewebsite/topic/my?account='+localStorage.getItem('account'),
       }).then((response) => {          //这里使用了ES6的语法
         console.log(JSON.stringify(response))       //请求成功返回的数据
         // console.log(response.data.data.list)
@@ -122,7 +122,7 @@ export default {
           },
           url: 'http://1.15.149.222:8080/coursewebsite/topic/add',
           data: {
-            account: "221801102",
+            account: localStorage.getItem('account'),
             title: this.newTitle,
             content: this.newContain
           }
@@ -186,7 +186,6 @@ export default {
   padding-left: 5px;
   width: 700px;
   text-align: center;
-  border: none;
   margin-left: 4%;
 }
 /*讨论详情style*/

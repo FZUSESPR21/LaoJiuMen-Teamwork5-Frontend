@@ -70,7 +70,7 @@ export default {
             url: 'http://1.15.149.222:8080/coursewebsite/login',
           }).then((response) => {          //这里使用了ES6的语法
             // console.log(JSON.stringify(response))       //请求成功返回的数据
-            // console.log(response.data.data)
+            console.log(response.data.data)
             if (response.data.code === '200'){
               alert('登录成功！');
               if (userMessage.type === '0') {
