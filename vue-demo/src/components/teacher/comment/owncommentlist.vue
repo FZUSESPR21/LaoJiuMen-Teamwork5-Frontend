@@ -1,29 +1,37 @@
 <template>
   <div>
     <div class="part">
+      <!--      search部分-->
+      <div class="searchPart">
+        <form>
+          <input type="text" placeholder="搜索" id="search"></input>
+          <el-button class="searchBtn" @click="insertTopic()">发表新话题</el-button>
+        </form>
+
+      </div>
+      <!--      title&contain-->
+      <div class="titleContain">
+        <div class="title">
+          标题：
+        </div>
+        <input type="text"  placeholder="输入标题" class="titleText" ref="titleValue">
+
+        </input>
+        <div class="contain">
+          内容：
+        </div>
+        <input type="text"  placeholder="输入内容" class="containText" ref="containValue">
+
+        </input>
+      </div>
       <!--      讨论列表-->
       <ul id="app">
-        <li>
+        <li v-for="item in ownCommentList">
           <div class="comment-item">
             <div class="comment-title">
               {{item.title}}
             </div>
-            <div class="comment-contains">
-              {{item.content}}
-            </div>
-            <div class="comment-info">
-              <span class="comment-name">{{item.account}}</span>
-              <span>发布于</span>
-              <span class="comment-time">{{item.releasedAt}}</span>
-            </div>
-          </div>
-        </li>
-        <li v-for="item in commentList">
-          <div class="comment-item">
-            <div class="comment-title">
-
-            </div>
-            <div class="comment-contains">
+            <div class="comment-contains" @click="ToOwnDetails(item)">
               {{item.content}}
             </div>
             <div class="comment-info">
@@ -32,64 +40,58 @@
               <span class="comment-time">{{item.releasedAt}}</span>
               <el-button class="deleteBtn" @click="deleteComment(item.id)">删除</el-button>
             </div>
+
           </div>
         </li>
+
       </ul>
     </div>
-    <!--    虚线-->
-    <div class="dash">
 
-    </div>
-    <div class="commentBottom">
-      <div class="comment-left">
-        评论：
-      </div>
-      <textarea  placeholder="输入评论" class="comment-text" ref="commentValue">
-
-      </textarea>
-      <el-button type="submit" class="submitBtn" @click="addComment">
-        发表评论
-      </el-button>
-    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "commentdetail",
-  data(){
-    return{
-      commentList:[],
-      topicID:'',
-      comment:'',
-      item:{}
+  name: "owncommentlist",
+  data() {
+    return {
+      ownCommentList: [],
     }
   },
   created() {
-    this.topicID=this.$route.query.detailID
-    this.item=this.$route.query.topic
     this.getCommentInfo();
   },
-  methods:{
-    getCommentInfo:function (){
-      let id = this.topicID
+  methods: {
+    ToOwnDetails: function (e) {
+      this.$router.push({
+        path: '/teacher/comment/owncommentdetail',
+        query: {
+          detailId: e.id,
+          topic:{
+            title:e.title,
+            account:e.account,
+            content:e.content,
+            released_at:e.released_at
+          }
+        }
+      })
+    },
+    getCommentInfo: function () {
       this.$axios({
         method: 'get',
         headers: {
           'Content-type': 'application/json;charset=UTF-8'
         },
-        url: 'http://1.15.149.222:8080/coursewebsite/comment/all?topicId='+id,
+        url: 'http://1.15.149.222:8080/coursewebsite/topic/my?account='+localStorage.getItem('account'),
       }).then((response) => {          //这里使用了ES6的语法
-        // console.log(JSON.stringify(response))
-        console.log("6666666666666666")
-        // console.log(this.topicID)//请求成功返回的数据
-        console.log(response)
-        this.commentList = response.data.data.list
+        console.log(JSON.stringify(response))       //请求成功返回的数据
+        // console.log(response.data.data.list)
+        this.ownCommentList = response.data.data.list
       }).catch((error) => {
         console.log(error)       //请求失败返回的数据
       })
     },
-    deleteComment:function (e){
+    deleteComment: function (e) {
       let info = {
         id: e
       }
@@ -99,37 +101,38 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://1.15.149.222:8080/coursewebsite/comment/delete',
-      }).then((response) => {
-        // console.log(6666666666666666)
-        console.log(e)
+        url: 'http://1.15.149.222:8080/coursewebsite/topic/delete',
       }).catch((error) => {
         console.log(error)       //请求失败返回的数据
       })
       this.getCommentInfo();
+      // this.$router.go(0)
     },
-    addComment:function (){
-      this.comment=this.$refs.commentValue.value
-      if(this.comment=='')
-        alert("请输入评论！")
+    insertTopic: function () {
+      this.newContain = this.$refs.containValue.value
+      this.newTitle = this.$refs.titleValue.value
+      console.log(this.newTitle)
+      if (this.newContain == '' || this.newTitle == '')
+        alert("请输入话题！")
       else {
         this.$axios({
           method: 'post',
           headers: {
             'Content-type': 'application/json;charset=UTF-8'
           },
-          url: 'http://1.15.149.222:8080/coursewebsite/comment/add',
+          url: 'http://1.15.149.222:8080/coursewebsite/topic/add',
           data: {
             account: localStorage.getItem('account'),
-            topicId: this.topicID,
-            content: this.comment
+            title: this.newTitle,
+            content: this.newContain
           }
-        }).then((response) =>{
+        }).then((response) => {
           console.log(response.data)
         }).catch((error) => {
           console.log(error)       //请求失败返回的数据
         })
-        this.$refs.commentValue.value=''
+        this.$refs.containValue.value = ''
+        this.$refs.titleValue.value = ''
         this.getCommentInfo()
         this.$router.go(0)
       }
@@ -183,7 +186,6 @@ export default {
   padding-left: 5px;
   width: 700px;
   text-align: center;
-  border: none;
   margin-left: 4%;
 }
 /*讨论详情style*/

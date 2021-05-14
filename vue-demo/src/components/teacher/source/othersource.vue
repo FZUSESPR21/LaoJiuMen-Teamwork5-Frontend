@@ -100,8 +100,8 @@ export default {
     deleteClick(index,row) {
       this.id = row.id
       this.queryDelete()
-      this.$router.push('/teacher/source/other')
-      this.$router.go(0)
+      /*this.$router.push('/teacher/source/other')
+      this.$router.go(0)*/
     },
 
     addClick() {
