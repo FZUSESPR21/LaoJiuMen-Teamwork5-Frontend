@@ -92,7 +92,7 @@ export default {
         headers: {
           'Content-type': 'application/json;charset=UTF-8'
         },
-        url: 'http://localhost:8088/coursewebsite_war_exploded/topic/all',
+        url: 'http://1.15.149.222:8080/coursewebsite/topic/all',
       }).then((response) => {          //这里使用了ES6的语法
         console.log(JSON.stringify(response))       //请求成功返回的数据
         // console.log(response.data.data.list)
@@ -113,9 +113,9 @@ export default {
           headers: {
             'Content-type': 'application/json;charset=UTF-8'
           },
-          url: 'http://localhost:8088/coursewebsite_war_exploded/topic/add',
+          url: 'http://1.15.149.222:8080/coursewebsite/topic/add',
           data: {
-            account: "221801102",
+            account: localStorage.getItem('account'),
             title: this.newTitle,
             content: this.newContain
           }

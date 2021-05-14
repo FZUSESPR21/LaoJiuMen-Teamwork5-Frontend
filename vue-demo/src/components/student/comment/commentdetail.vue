@@ -78,7 +78,7 @@ export default {
         headers: {
           'Content-type': 'application/json;charset=UTF-8'
         },
-        url: 'http://localhost:8088/coursewebsite_war_exploded/comment/all?topicId='+id,
+        url: 'http://1.15.149.222:8080/coursewebsite/comment/all?topicId='+id,
       }).then((response) => {          //这里使用了ES6的语法
         // console.log(JSON.stringify(response))
         console.log("6666666666666666")
@@ -99,7 +99,7 @@ export default {
           'Content-type': 'application/json;charset=UTF-8'
         },
         data: JSON.stringify(info),
-        url: 'http://localhost:8088/coursewebsite_war_exploded/comment/delete',
+        url: 'http://1.15.149.222:8080/coursewebsite/comment/delete',
       }).then((response) => {
         // console.log(6666666666666666)
         console.log(e)
@@ -118,7 +118,7 @@ export default {
           headers: {
             'Content-type': 'application/json;charset=UTF-8'
           },
-          url: 'http://localhost:8088/coursewebsite_war_exploded/comment/add',
+          url: 'http://1.15.149.222:8080/coursewebsite/comment/add',
           data: {
             account: "221801102",
             topicId: this.topicID,
