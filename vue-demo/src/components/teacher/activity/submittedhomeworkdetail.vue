@@ -9,7 +9,7 @@
     <div>
       <div>
         <i class="el-icon-folder-opened"></i>
-        <span>{{filepath}}</span>
+        <span>{{filename}}</span>
         <el-button type="primary" plain size="mini" class="button" @click="downloadClick" icon="el-icon-download">下载</el-button>
 
       </div>
@@ -92,7 +92,7 @@ export default {
 
       id: this.$route.query.id,
       hwId: this.$route.query.hwId,
-      filepath: this.$route.query.filepath
+      filename: this.$route.query.filepath.split("\\")[this.$route.query.filepath.split("\\").length-1],
 
     }
   },

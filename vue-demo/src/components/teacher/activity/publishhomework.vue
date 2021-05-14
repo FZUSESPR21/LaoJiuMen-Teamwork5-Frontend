@@ -99,7 +99,7 @@ export default {
       }
     };
 
-    var validateTime1 = (rule, value, callback) => {
+    /*var validateTime1 = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('发布时间不能为空，请选择'));
       } else {
@@ -113,7 +113,7 @@ export default {
       } else {
         callback();
       }
-    };
+    };*/
 
     return {
       options: [],
@@ -152,8 +152,8 @@ export default {
       rules: {
         title:  { validator: validateTitle, trigger: 'blur' },
         content: { validator: validateContent, trigger: 'blur' },
-        time1: { validator: validateTime1, trigger: 'blur' },
-        time2: { validator: validateTime2, trigger: 'blur' },
+        /*time1: { validator: validateTime1, trigger: 'blur' },
+        time2: { validator: validateTime2, trigger: 'blur' },*/
       },
 
       tipBox: false,

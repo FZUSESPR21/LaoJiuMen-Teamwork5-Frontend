@@ -22,12 +22,13 @@ axios.interceptors.request.use((request) => {
     return request;
 });
 
-axios.interceptors.response.use((response) => {
-    if (response.data.data.code === '401' && response.data.message === 'Unauthorized!') {
-        router.push('/login')
-    } else {
-        return response;
-    }
+axios.interceptors.response.use(function (response) {
+  if (response.data.code === '401' && response.data.message !== '账号或密码错误！') {
+    localStorage.clear();
+    router.push('/login');
+  } else {
+    return response;
+  }
 });
 
 /* eslint-disable no-new */
