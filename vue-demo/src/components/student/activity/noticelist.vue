@@ -29,14 +29,18 @@
     name: "noticelist",
     data() {
       return {
-        tableCol: [
-          {prop: "id", label: "id", width: 110},
-          {prop: "notificationName", label: "通知名称", width: 100},
-          {prop: "content", label: "通知内容", width: 200},
-          {prop: "issuer", label: "发布人", width: 150},
-          {prop: "releasedAt", label: "发布时间", width: 200},
+              formInline: {
+      user: '',
+      region: ''
+      },
+      tableCol: [
+        {prop: "id", label: "id", width: 80},
+        {prop: "notificationName", label: "通知名称", width: 100},
+        {prop: "content", label: "通知内容", width: 150},
+        {prop: "issuer", label: "发布人", width: 80},
+        {prop: "releasedAt", label: "发布时间", width: 200},
 
-        ],
+      ],
 
         tableData: [
 
@@ -76,7 +80,6 @@
           headers: {
             'Content-type': 'application/json;charset=UTF-8'
           },
-          data: JSON.stringify(info),
           url: 'http://1.15.149.222:8080/coursewebsite/notice/all?clazzId='+localStorage.getItem('clazzId') ,
         }).then((response) => {          //这里使用了ES6的语法
           /*console.log(JSON.stringify(response))       //请求成功返回的数据
@@ -89,10 +92,11 @@
           console.log(error)       //请求失败返回的数据
         })
       },
+    },
     created () {
       this.querySearch();
     }
-    },
+    
 
 
   };

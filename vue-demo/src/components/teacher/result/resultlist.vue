@@ -13,49 +13,22 @@
       <el-button class="filter-item" type="primary" @click="$router.push('/resultlist/resultinput')">成绩录入new</el-button>
     </el-form-item>
   </el-form>
-  <el-table
-    :data="tableData"
-    stripe
-    style="width: 100%"
-  >
-    <el-table-column
-      prop="num"
-      label="学号"
-      align="center"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="name"
-      label="姓名"
-      align="center"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="clazzz"
-      label="考勤课堂10%"
-      align="center">
-    </el-table-column>
-    <el-table-column
-      prop="test"
-      label="小测10%"
-      align="center">
-    </el-table-column>
-    <el-table-column
-      prop="homework"
-      label="作业10%"
-      align="center">
-    </el-table-column>
-    <el-table-column
-      prop="final"
-      label="期末笔试70%"
-      align="center">
-    </el-table-column>
-    <el-table-column
-      prop="add"
-      label="综合成绩"
-      align="center">
-    </el-table-column>
-  </el-table>
+    <el-table id="table"
+              :data="tableData"
+              stripe
+              style="width: 100%"
+              :header-cell-style="headeRowClass">
+      <el-table-column
+        v-for="(item,i) in tableCol"
+        :key="i"
+        :prop="item.prop"
+        :label="item.label"
+        :width="item.width"
+        align="center"
+        show-overflow-tooltip>
+      </el-table-column>
+    </el-table>
+  
   </div>
 </template>
 
@@ -71,23 +44,15 @@ export default {
       user: '',
       region: ''
       },
-      tableData: [{
-        num: '2218',
-        name: '王小虎',
-        clazzz: '10',
-        test:'8',
-        homework:'7',
-        final:'80(56)',
-        add:'81'
-      }, {
-        num: '2218',
-        name: '王小虎',
-        clazzz: '10',
-        test:'8',
-        homework:'7',
-        final:'80(56)',
-        add:'81'
-      }]
+      tableCol: [
+        {prop: "account", label: "学号", width: 80},
+        {prop: "studentName", label: "姓名", width: 100},
+        {prop: "usualScore", label: "平时成绩", width: 150},
+        {prop: "writtenScore", label: "笔试成绩", width: 80},
+        {prop: "totalScore", label: "最终成绩", width: 200},
+
+      ],
+      tableData: []
     }
   },
   methods: {
@@ -96,8 +61,32 @@ export default {
     },
     onAnalysis() {
       console.log('analysis!');
-    }
-  }
+    },
+    scorelistSearch() {
+
+        this.$axios({
+          method: 'get',
+          headers: {
+            'Content-type': 'application/json;charset=UTF-8'
+          },
+          url: 'http://1.15.149.222:8080/coursewebsite/teacher/score/all?clazzId=1'
+          //+localStorage.getItem('clazzId') ,
+        }).then((response) => {          //这里使用了ES6的语法
+          /*console.log(JSON.stringify(response))       //请求成功返回的数据
+          alert(JSON.stringify(response))
+          alert("成功")*/
+
+          console.log(response.data.data.list)
+          this.tableData = response.data.data.list
+        }).catch((error) => {
+          console.log(error)       //请求失败返回的数据
+        })
+      },
+  },
+      created(){
+        this.scorelistSearch();
+      }
+  
 }
 </script>
 

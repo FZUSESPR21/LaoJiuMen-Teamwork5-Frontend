@@ -112,11 +112,13 @@ const teacherOtherSource = () =>
 const teacherAddSource = () =>
     import ('../components/teacher/source/addsource')
 
+
 const teacherNoticeList = () =>
     import ('../components/teacher/activity/noticelist')
-
 const noticeDeliver = () =>
     import ('../components/teacher/activity/noticedeliver')
+const teacherNoticeDetail = () =>
+    import ('../components/teacher/activity/noticedetail')
 
 //1.安装插件
 Vue.use(Router)
@@ -309,7 +311,11 @@ const routes = [{
                     {
                         path: '/teacher/activity/noticedeliver',
                         component: noticeDeliver
-                    }
+                    },
+                    {
+                        path: '/teacher/activity/noticedetail',
+                        component: teacherNoticeDetail
+                    },
                 ]
             },
             {
