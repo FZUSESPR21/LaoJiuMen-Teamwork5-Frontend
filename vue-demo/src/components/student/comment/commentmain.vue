@@ -1,9 +1,9 @@
 <template>
   <div>
     <div id="head">答疑讨论
-      <p className="english">QA</p>
+      <p class="english">QA</p>
     </div>
-    <div className="part">
+    <div class="part">
       <router-view></router-view>
     </div>
   </div>
@@ -22,22 +22,24 @@ export default {
 </script>
 
 <style scoped>
-#head {
+#head{
+  background-color: white;
   font-size: 20px;
-  height: 100px;
+  height: 100%;
+  margin-top: 8%;
+  margin-left: 4%;
+  margin-bottom: 6%;
 }
 
-.english {
+.english{
   color: rgb(179, 179, 179);
   margin-top: 0;
   font-size: 15px;
 }
 
-.part {
-  margin-top: 0%;
+.part{
+  margin-top: -15px;
   background-color: rgb(228, 228, 228);
-  float: left;
-
 }
 
 .sidebar {

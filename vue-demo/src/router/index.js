@@ -18,7 +18,7 @@ const Signin = () =>
 const Result = () =>
     import ('../components/student/result/resultshow')
 const Comment = () =>
-    import ('../components/student/comment/commentlist')
+    import ('../components/student/comment/commentmain')
 const SetPassword = () =>
     import ('../components/Login/SetPassword')
 const Login = () =>
