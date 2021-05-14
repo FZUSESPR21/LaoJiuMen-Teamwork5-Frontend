@@ -71,7 +71,7 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button type="primary" plain size="mini" @click="publishClick" class="button" id="publishbutton">发布</el-button>
+          <el-button type="primary" plain size="mini" @click="publishClick('publishForm')" class="button" id="publishbutton">发布</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -166,7 +166,7 @@ export default {
   },
 
   methods: {
-    publishClick() {
+    publishClick(formName) {
       let info = {
         id:"",
         clazzId: this.value,
@@ -175,6 +175,10 @@ export default {
         startAt: this.date2,
         endAt: this.date1
       }
+
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+
       this.$axios({
         method: 'post',
         headers: {
@@ -186,28 +190,34 @@ export default {
         /*alert('LQ')
         console.log('LQ')
         console.log(JSON.stringify(response))       //请求成功返回的数据
-        alert(JSON.stringify(response))
+        alert(JSON.stringify(response))*/
         if (response.data.code==='200') {
+          alert('发布成功')
           this.$router.push('/teacher/activity/homeworklist')
           this.$router.go(0)
 
         }
         console.log(response)
         if (response.data.code==='500') {
-          console.log(JSON.stringify(response))       //请求成功返回的数据
-          alert(JSON.stringify(response))
-          alert("标题重复")
+          //console.log(JSON.stringify(response))       //请求成功返回的数据
+          //alert(JSON.stringify(response))
+          alert("标题重复,请修改")
 
-        }*/
-        alert('发布作业成功')
+        }
+
 
       }).catch((error) => {
         console.log(error)
-        alert("标题重复,请重新输入")//请求失败返回的数据
+        //alert("标题重复,请重新输入")//请求失败返回的数据
         // this.tipBox = true
       })
 
 
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
     }
   }
 }
